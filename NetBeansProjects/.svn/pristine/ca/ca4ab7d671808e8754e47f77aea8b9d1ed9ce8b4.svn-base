@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://devas01.estrellaroja.com.mx:8083/ERTMSWSImplService/ERTMSWSImpl?WSDL" uri="xml-resources/web-service-references/ERTMSWSImpl/wsdl/devas01.estrellaroja.com.mx_8083/ERTMSWSImplService/ERTMSWSImpl.wsdl"/>
+    <system systemId="http://devas01.estrellaroja.com.mx:8083/ERTMSWSImplService/ERTMSWSImpl/__container$publishing$subctx/META-INF/wsdl/ERTMSWSImplService_schema1.xsd" uri="xml-resources/web-service-references/ERTMSWSImpl/wsdl/devas01.estrellaroja.com.mx_8083/ERTMSWSImplService/ERTMSWSImpl/__container_publishing_subctx/META-INF/wsdl/ERTMSWSImplService_schema1.xsd"/>
+    <system systemId="http://localhost:8080/ERTMSWSImplService/ERTMSWSImpl?WSDL" uri="xml-resources/web-service-references/ERTMSWSImpl/wsdl/localhost_8080/ERTMSWSImplService/ERTMSWSImpl.wsdl"/>
+    <system systemId="http://localhost:8080/ERTMSWSImplService/ERTMSWSImpl?xsd=1" uri="xml-resources/web-service-references/ERTMSWSImpl/wsdl/localhost_8080/ERTMSWSImplService/ERTMSWSImpl.xsd_1.xsd"/>
+    <system systemId="http://devas01.estrellaroja.com.mx:8083/ER_WS_CONTROL/ERWSINFRAService?WSDL" uri="xml-resources/web-service-references/ERWSINFRAService/wsdl/devas01.estrellaroja.com.mx_8083/ER_WS_CONTROL/ERWSINFRAService.wsdl"/>
+    <system systemId="http://devas01.estrellaroja.com.mx:8083/ER_WS_CONTROL/ERWSINFRAService/__container$publishing$subctx/WEB-INF/wsdl/ERWSINFRAService_schema1.xsd" uri="xml-resources/web-service-references/ERWSINFRAService/wsdl/devas01.estrellaroja.com.mx_8083/ER_WS_CONTROL/ERWSINFRAService/__container_publishing_subctx/WEB-INF/wsdl/ERWSINFRAService_schema1.xsd"/>
+</catalog>

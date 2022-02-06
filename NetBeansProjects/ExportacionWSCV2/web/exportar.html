@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+         <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+  
+      <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<!--JQUERY-->
+       <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+       <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+      
+       
+       <title>TODO supply a title</title>
+       <link href="css/bootstrap.min.css" rel="stylesheet">
+        </head>
+    <body>
+    <center>
+        <h2>Exportación de BD a Excel</h2>
+        <hr style="width: 35%; color: black; height: 1px; background-color:black;" />
+        <div class="container">
+            <div class="col-md-3"></div>
+            <div class="row">
+                <div class="col-md-3">
+        <form  method="POST" action="Accion">
+    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Exportar (Sábana)</button>
+    </form>
+                    </div>
+                <div class="col-md-3">
+    <form method="POST" action="Accion2">
+        <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#myModal" >Exportar (Pestañas)</button>
+    </form>
+                    </div>
+                </div>
+        </div>
+    </center>
+<div class="modal fade " id="myModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-md">
+    <div class="modal-content">
+        <div class="modal-header">
+            <center><h4 class="modal-title"> <b>EXPORTANDO BASE DE DATOS</b></h4></center>
+        </div>
+        <div class="modal-body">
+            <p> <b>Por favor:</b> Espere a que la ventana de descarga aparezca, seleccione donde desea guardar su archivo y al fnalizar cierre esta ventana.</p>
+      </div>
+    </div>
+  </div>
+</div>       
+ <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
+    </body>
+</html>

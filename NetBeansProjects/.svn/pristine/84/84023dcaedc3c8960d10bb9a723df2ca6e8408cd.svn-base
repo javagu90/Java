@@ -1,0 +1,1564 @@
+
+/*
+ * JIFGuardia.java
+ *
+ * Created on 7 de noviembre de 2007, 06:47 PM
+ */
+
+package tms_guardias;
+
+import Dialogos.JDlgAceptar;
+import Dialogos.JDlgCalendario;
+import Dialogos.JDlgDatosAdicionales;
+import Dialogos.JDlgOperador;
+import Dialogos.JDlgSiNo;
+import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.beans.PropertyVetoException;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Vector;
+import javax.swing.JComponent;
+import javax.swing.KeyStroke;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import tms_TextFields.JDateTextField;
+import tms_TextFields.JHourTextField;
+import tms_TextFields.JNumberTextField;
+import tms_guardias.entidad.TmsOperadorIncidenciasTbl;
+import javax.swing.JOptionPane;
+import tms_guardias.solicitud.TmsGuardiasFacadeBean;
+
+/**
+ *
+ * @author  ocruz
+ */
+public class JIFGuardia extends javax.swing.JInternalFrame {
+    /**
+     * Creates new form JIFGuardia
+     */
+    public JIFGuardia(Vector datosIniciales) {
+        InicioGral = true;
+        this.USUARIO_ID = Long.valueOf(datosIniciales.get(0).toString());
+        this.USUARIO_NUMERO = datosIniciales.get(1).toString();
+        this.USUARIO_NOMBRE = datosIniciales.get(2).toString();
+        this.SESION_ID = Long.valueOf(datosIniciales.get(3).toString());
+        this.MENU_ID = Long.valueOf(datosIniciales.get(4).toString());
+        sesionVenta = new SesionVenta();
+        int error = sesionVenta.proceso(MENU_ID,
+                datosIniciales.get(5).toString(),
+                Integer.valueOf(datosIniciales.get(6).toString()));
+        switch(error){
+            case -1: DialogoAceptar = new JDlgAceptar("¡No existe una conexión válida con la Base de Datos!","Contacte al administrador del sistema.",Color.RED);
+            break;
+            case 1: DialogoAceptar = new JDlgAceptar("¡No es posible iniciar la sesion!","<html>Terminal incorrecta.<br>Contacte al administrador del sistema.</html>",Color.RED);
+            break;
+            case 2: DialogoAceptar = new JDlgAceptar("¡No es posible iniciar la sesion!","<html>Configuracion incorrecta (Datos Guardia).<br>Contacte al administrador del sistema.</html>",Color.RED);
+            break;
+            case 3: DialogoAceptar = new JDlgAceptar("¡No es posible iniciar la sesion!","<html>Configuracion incorrecta (Servicios).<br>Contacte al administrador del sistema.</html>",Color.RED);
+            break;
+            case 4: DialogoAceptar = new JDlgAceptar("¡No es posible iniciar la sesion!","<html>Configuracion incorrecta (Estados).<br>Contacte al administrador del sistema.</html>",Color.RED);
+            break;
+            case 5: DialogoAceptar = new JDlgAceptar("¡No es posible iniciar la sesion!","<html>Configuracion incorrecta (Duracion Guardia).<br>Contacte al administrador del sistema.</html>",Color.RED);
+            break;
+        }
+        if(error != 0){
+            InicioGral=false;
+            return;
+        }
+        initComponents();
+        //((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
+        inhabilitarF10();
+        
+        int i;
+        jCboServicio.addItem("TODOS");
+        for(i=0; i<sesionVenta.getTmsServiciosTbl().size(); i++)
+            jCboServicio.addItem(sesionVenta.getTmsServiciosTbl().get(i).getServicioNombre());
+        
+       
+    }
+    
+    private void inhabilitarF10() {
+        this.jTxtNumeroOperador.registerKeyboardAction(new ActionListener() { 
+        public void actionPerformed(ActionEvent e) { ; }}, KeyStroke.getKeyStroke(KeyEvent.VK_F10, 0), JComponent.WHEN_FOCUSED);
+        this.jCboServicio.registerKeyboardAction(new ActionListener() { 
+        public void actionPerformed(ActionEvent e) { ; }}, KeyStroke.getKeyStroke(KeyEvent.VK_F10, 0), JComponent.WHEN_FOCUSED);
+        this.jTxtFechaInicial.registerKeyboardAction(new ActionListener() { 
+        public void actionPerformed(ActionEvent e) { ; }}, KeyStroke.getKeyStroke(KeyEvent.VK_F10, 0), JComponent.WHEN_FOCUSED);
+        this.jTxtHoraInicial.registerKeyboardAction(new ActionListener() { 
+        public void actionPerformed(ActionEvent e) { ; }}, KeyStroke.getKeyStroke(KeyEvent.VK_F10, 0), JComponent.WHEN_FOCUSED);
+        this.jTxtFechaFinal.registerKeyboardAction(new ActionListener() { 
+        public void actionPerformed(ActionEvent e) { ; }}, KeyStroke.getKeyStroke(KeyEvent.VK_F10, 0), JComponent.WHEN_FOCUSED);
+        this.jTxtHoraFinal.registerKeyboardAction(new ActionListener() { 
+        public void actionPerformed(ActionEvent e) { ; }}, KeyStroke.getKeyStroke(KeyEvent.VK_F10, 0), JComponent.WHEN_FOCUSED);
+        this.jCboEstado.registerKeyboardAction(new ActionListener() { 
+        public void actionPerformed(ActionEvent e) { ; }}, KeyStroke.getKeyStroke(KeyEvent.VK_F10, 0), JComponent.WHEN_FOCUSED);
+        this.jTblDetalle.registerKeyboardAction(new ActionListener() { 
+        public void actionPerformed(ActionEvent e) { ; }}, KeyStroke.getKeyStroke(KeyEvent.VK_F10, 0), JComponent.WHEN_FOCUSED);
+    }
+    
+    public boolean getInicioGral(){ return this.InicioGral; }
+    
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
+    private void initComponents() {
+        jPanel1 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jTxtNumeroOperador = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jTxtNombreOperador = new javax.swing.JTextField();
+        jLabel5 = new javax.swing.JLabel();
+        jTxtValorIncidencia = new javax.swing.JTextField();
+        new JNumberTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jTxtFechaInicial = new javax.swing.JTextField();
+        jTxtFechaInicial = new JDateTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jTxtFechaFinal = new javax.swing.JTextField();
+        jTxtFechaFinal = new JDateTextField();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jCboServicio = new javax.swing.JComboBox();
+        jCboEstado = new javax.swing.JComboBox();
+        jLabel12 = new javax.swing.JLabel();
+        jTxtDuracionGuardia = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        jTxtHoraInicial = new javax.swing.JTextField();
+        jTxtHoraInicial = new JHourTextField();
+        jTxtHoraFinal = new javax.swing.JTextField();
+        jTxtHoraFinal = new JHourTextField();
+        jLabel6 = new javax.swing.JLabel();
+        jTxtCalculo = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jTxtObservacion = new javax.swing.JTextField();
+        jLabel13 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jScpDetalle = new javax.swing.JScrollPane();
+        jTblDetalle = new javax.swing.JTable();
+        jLblBarraEstado = new javax.swing.JLabel();
+
+        setIconifiable(true);
+        setTitle("Guardias");
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel2.setText("Operador");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel3.setText("Numero");
+
+        jTxtNumeroOperador.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jTxtNumeroOperador.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jTxtNumeroOperador.setText("%");
+        jTxtNumeroOperador.setFocusTraversalKeysEnabled(false);
+        jTxtNumeroOperador.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTxtNumeroOperadorKeyPressed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel4.setText("Nombre");
+
+        jTxtNombreOperador.setEditable(false);
+        jTxtNombreOperador.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jTxtNombreOperador.setFocusable(false);
+        jTxtNombreOperador.setFocusTraversalKeysEnabled(false);
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel5.setForeground(java.awt.Color.red);
+        jLabel5.setText("Guardia");
+
+        jTxtValorIncidencia.setEditable(false);
+        jTxtValorIncidencia.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jTxtValorIncidencia.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTxtValorIncidencia.setFocusTraversalKeysEnabled(false);
+        jTxtValorIncidencia.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTxtValorIncidenciaKeyPressed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel8.setForeground(java.awt.Color.red);
+        jLabel8.setText("Valor");
+
+        jTxtFechaInicial.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jTxtFechaInicial.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTxtFechaInicial.setFocusTraversalKeysEnabled(false);
+        jTxtFechaInicial.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTxtFechaInicialKeyPressed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel9.setForeground(java.awt.Color.red);
+        jLabel9.setText("Fecha hora inicial");
+
+        jTxtFechaFinal.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jTxtFechaFinal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTxtFechaFinal.setFocusTraversalKeysEnabled(false);
+        jTxtFechaFinal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTxtFechaFinalKeyPressed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel10.setForeground(java.awt.Color.red);
+        jLabel10.setText("Fecha hora final");
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel11.setForeground(java.awt.Color.red);
+        jLabel11.setText("Estado");
+
+        jCboServicio.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jCboServicio.setFocusTraversalKeysEnabled(false);
+        jCboServicio.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jCboServicioKeyPressed(evt);
+            }
+        });
+
+        jCboEstado.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jCboEstado.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "TODOS", "AUTORIZADA", "NO AUTORIZADA" }));
+        jCboEstado.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jCboEstadoKeyPressed(evt);
+            }
+        });
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel12.setText("Servicio");
+
+        jTxtDuracionGuardia.setEditable(false);
+        jTxtDuracionGuardia.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jTxtDuracionGuardia.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel1.setForeground(java.awt.Color.red);
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Guardia");
+
+        jTxtHoraInicial.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jTxtHoraInicial.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTxtHoraInicial.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTxtHoraInicialKeyPressed(evt);
+            }
+        });
+
+        jTxtHoraFinal.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jTxtHoraFinal.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTxtHoraFinal.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTxtHoraFinalKeyPressed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        jLabel6.setText("Rev.010310");
+
+        jTxtCalculo.setEditable(false);
+        jTxtCalculo.setFont(new java.awt.Font("Tahoma", 1, 11));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel7.setForeground(java.awt.Color.red);
+        jLabel7.setText("Total $:");
+
+        jTxtObservacion.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jTxtObservacion.setEnabled(false);
+        jTxtObservacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTxtObservacionActionPerformed(evt);
+            }
+        });
+        jTxtObservacion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTxtObservacionKeyPressed(evt);
+            }
+        });
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLabel13.setText("Observaci\u00f3n:");
+
+        org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jLabel2)
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jPanel1Layout.createSequentialGroup()
+                                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jTxtNumeroOperador, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 91, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                    .add(jLabel3))
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jPanel1Layout.createSequentialGroup()
+                                        .add(jLabel4)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 499, Short.MAX_VALUE))
+                                    .add(jTxtNombreOperador, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 543, Short.MAX_VALUE)))
+                            .add(jPanel1Layout.createSequentialGroup()
+                                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jTxtValorIncidencia, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                    .add(jLabel8))
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                                    .add(org.jdesktop.layout.GroupLayout.LEADING, jTxtObservacion, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                                    .add(jPanel1Layout.createSequentialGroup()
+                                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                            .add(jPanel1Layout.createSequentialGroup()
+                                                .add(jTxtFechaInicial, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 95, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                                .add(jTxtHoraInicial, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 74, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                            .add(jLabel9, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE))
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                            .add(jLabel10)
+                                            .add(jTxtFechaFinal, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 101, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(jTxtHoraFinal, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 64, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                        .add(65, 65, 65)))
+                                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jPanel1Layout.createSequentialGroup()
+                                        .add(5, 5, 5)
+                                        .add(jLabel1))
+                                    .add(jPanel1Layout.createSequentialGroup()
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(jTxtDuracionGuardia, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 58, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jPanel1Layout.createSequentialGroup()
+                                .add(192, 192, 192)
+                                .add(jLabel6))
+                            .add(jPanel1Layout.createSequentialGroup()
+                                .add(10, 10, 10)
+                                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jCboServicio, 0, 249, Short.MAX_VALUE)
+                                    .add(jPanel1Layout.createSequentialGroup()
+                                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                            .add(jLabel12)
+                                            .add(jTxtCalculo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 76, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                            .add(jLabel7))
+                                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                                            .add(jPanel1Layout.createSequentialGroup()
+                                                .add(56, 56, 56)
+                                                .add(jLabel11)
+                                                .add(79, 79, 79))
+                                            .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel1Layout.createSequentialGroup()
+                                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                                .add(jCboEstado, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 167, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))))))
+                        .add(86, 86, 86))
+                    .add(jLabel5)
+                    .add(jLabel13)))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel1Layout.createSequentialGroup()
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabel2)
+                    .add(jLabel6))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabel3)
+                    .add(jLabel4)
+                    .add(jLabel12))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jTxtNumeroOperador, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jTxtNombreOperador, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jCboServicio, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(jLabel5)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(jLabel11)
+                            .add(jLabel7)
+                            .add(jLabel9)
+                            .add(jLabel8)
+                            .add(jLabel1))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(jTxtValorIncidencia, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jTxtCalculo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jCboEstado, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jTxtFechaInicial, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jTxtDuracionGuardia, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jTxtHoraInicial, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(jLabel10)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(jTxtFechaFinal, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jTxtHoraFinal, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabel13)
+                    .add(jTxtObservacion, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        jTblDetalle.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jTblDetalle.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jTblDetalle.setModel(xTabla);
+        jTblDetalle.setFocusTraversalKeysEnabled(false);
+        jTblDetalle.getTableHeader().setReorderingAllowed(false);
+        jTblDetalle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTblDetalleKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTblDetalleKeyReleased(evt);
+            }
+        });
+
+        jScpDetalle.setViewportView(jTblDetalle);
+
+        jLblBarraEstado.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLblBarraEstado.setText("<html><font color=ff0000>IZQ/DER</font> Ingrese Criterio de Busqueda | <font color=ff0000>ENTER</font> Buscar <font color=ff0000>IZQ/DER</font> Ingrese Criterio de Busqueda |</html>");
+
+        org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jPanel2Layout.createSequentialGroup()
+                        .add(jScpDetalle, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 995, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jLblBarraEstado, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 1005, Short.MAX_VALUE)))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(jScpDetalle, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 465, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLblBarraEstado)
+                .addContainerGap())
+        );
+
+        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(layout.createSequentialGroup()
+                .addContainerGap()
+                .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(20, 20, 20))
+        );
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jTxtObservacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTxtObservacionActionPerformed
+// TODO add your handling code here:
+    }//GEN-LAST:event_jTxtObservacionActionPerformed
+
+    private void jTxtObservacionKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtObservacionKeyPressed
+// TODO add your handling code here:
+            switch(evt.getKeyCode()){
+            case KeyEvent.VK_U:
+                if(evt.isControlDown()){
+                    JDlgCalendario uCalendario = new JDlgCalendario();
+                    uCalendario.setVisible(true);
+                }
+                break;  // 
+            case KeyEvent.VK_ESCAPE: if(transaccion==TXREG){ this.transaccion = TXBUSQ;  limpieza(); } 
+                if(transaccion==TXMOD){
+                    this.transaccion = TXBUSQ;
+                    
+                    jTxtFechaFinal.setText(xTabla.getValueAt(sesionVenta.getFilaIncidenciaSeleccionada(),3).toString());
+                    jLblBarraEstado.setText(mensajes.getMensajeComun(3)); 
+                    jTblDetalle.requestFocusInWindow();
+                } 
+                break;
+            case KeyEvent.VK_F1: if(transaccion==TXBUSQ){ transaccion=TXREG; limpiezaRegistrar(); } break;
+            case KeyEvent.VK_1: if(evt.isControlDown()){
+                                    this.eventoTeclado=evt;
+                                    try {this.setIcon(true);} catch (PropertyVetoException ex) { ; }
+                                  }
+                                  break;
+            case KeyEvent.VK_2: if(evt.isControlDown()) 
+                                try {this.setIcon(true);
+                                } catch (PropertyVetoException ex) { ; } break;
+            case KeyEvent.VK_F4: CerrarVentana(); break;
+            case KeyEvent.VK_ENTER: ejecutaConsulta(); break;
+            case KeyEvent.VK_F5: seleccionarOperador(); break;
+            case KeyEvent.VK_F7:  registrarIncidencia(); break; //if(transaccion==TXMOD)
+     
+            case KeyEvent.VK_RIGHT:  
+                if(transaccion==TXMOD){
+                    jTxtFechaFinal.selectAll();
+                    jTxtFechaFinal.requestFocusInWindow();
+                    return;
+                }
+                jTxtNumeroOperador.selectAll();
+                jTxtNumeroOperador.requestFocusInWindow();
+                break;
+            case KeyEvent.VK_LEFT:
+                if(transaccion == TXREG){
+                    jCboEstado.requestFocusInWindow();
+                    return;
+                }
+                jTxtHoraFinal.selectAll();
+                jTxtHoraFinal.requestFocusInWindow();
+                break;
+        }
+    }//GEN-LAST:event_jTxtObservacionKeyPressed
+
+    private void jTxtHoraFinalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtHoraFinalKeyPressed
+// TODO add your handling code here:
+        switch(evt.getKeyCode()){
+            case KeyEvent.VK_U:
+                if(evt.isControlDown()){
+                    JDlgCalendario uCalendario = new JDlgCalendario();
+                    uCalendario.setVisible(true);
+                }
+                break;
+            case KeyEvent.VK_ESCAPE: if(transaccion==TXREG){ this.transaccion = TXBUSQ;  limpieza(); } 
+                if(transaccion==TXMOD){
+                    this.transaccion = TXBUSQ;
+                    
+                    jTxtFechaFinal.setText(xTabla.getValueAt(sesionVenta.getFilaIncidenciaSeleccionada(),3).toString());
+                    jLblBarraEstado.setText(mensajes.getMensajeComun(3)); 
+                    jTblDetalle.requestFocusInWindow();
+                } 
+                break;
+            case KeyEvent.VK_F1: if(transaccion==TXBUSQ){ transaccion=TXREG; limpiezaRegistrar(); } break;
+            case KeyEvent.VK_1: if(evt.isControlDown()){
+                                    this.eventoTeclado=evt;
+                                    try {this.setIcon(true);} catch (PropertyVetoException ex) { ; }
+                                  }
+                                  break;
+            case KeyEvent.VK_2: if(evt.isControlDown()) 
+                                try {this.setIcon(true);
+                                } catch (PropertyVetoException ex) { ; } break;
+            case KeyEvent.VK_F4: CerrarVentana(); break;
+            case KeyEvent.VK_ENTER: ejecutaConsulta(); break;
+            case KeyEvent.VK_F5: seleccionarOperador(); break;
+            case KeyEvent.VK_F7: if(transaccion==TXMOD) registrarIncidencia(); break;
+            case 82: if(transaccion==TXMOD) registrarIncidencia(); break;
+            case KeyEvent.VK_RIGHT:
+                calculoDuracionGuardia();
+                if(transaccion==TXMOD){
+                    jTxtObservacion.selectAll();
+                    jTxtObservacion.requestFocusInWindow();
+                    return;
+                }
+                jCboEstado.requestFocusInWindow();
+                break;
+            case KeyEvent.VK_LEFT:
+                calculoDuracionGuardia();
+                jTxtFechaFinal.selectAll();
+                jTxtFechaFinal.requestFocusInWindow();
+                break;
+        }
+    }//GEN-LAST:event_jTxtHoraFinalKeyPressed
+
+    private void jTxtHoraInicialKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtHoraInicialKeyPressed
+// TODO add your handling code here:
+        switch(evt.getKeyCode()){
+            case KeyEvent.VK_U:
+                if(evt.isControlDown()){
+                    JDlgCalendario uCalendario = new JDlgCalendario();
+                    uCalendario.setVisible(true);
+                }
+                break;
+            case KeyEvent.VK_ESCAPE: if(transaccion==TXREG){ this.transaccion = TXBUSQ;  limpieza(); } 
+                if(transaccion==TXMOD){
+                    this.transaccion = TXBUSQ;
+                    
+                    jTxtFechaFinal.setText(xTabla.getValueAt(sesionVenta.getFilaIncidenciaSeleccionada(),3).toString());
+                    jLblBarraEstado.setText(mensajes.getMensajeComun(3)); 
+                    jTblDetalle.requestFocusInWindow();
+                } 
+                break;
+            case KeyEvent.VK_F1: if(transaccion==TXBUSQ){ transaccion=TXREG; limpiezaRegistrar(); } break;
+            case KeyEvent.VK_1: if(evt.isControlDown()){
+                                    this.eventoTeclado=evt;
+                                    try {this.setIcon(true);} catch (PropertyVetoException ex) { ; }
+                                  }
+                                  break;
+            case KeyEvent.VK_2: if(evt.isControlDown()) 
+                                try {this.setIcon(true);
+                                } catch (PropertyVetoException ex) { ; } break;
+            case KeyEvent.VK_F4: CerrarVentana(); break;
+            case KeyEvent.VK_ENTER: ejecutaConsulta(); break;
+            case KeyEvent.VK_F5: seleccionarOperador(); break;
+            //case KeyEvent.VK_F7: registrarIncidencia(); break;
+            case KeyEvent.VK_RIGHT:
+                jTxtFechaFinal.selectAll();
+                jTxtFechaFinal.requestFocusInWindow();
+                break;
+            case KeyEvent.VK_LEFT:
+                jTxtFechaInicial.selectAll();
+                jTxtFechaInicial.requestFocusInWindow();
+                break;
+        }
+    }//GEN-LAST:event_jTxtHoraInicialKeyPressed
+
+    private void jTblDetalleKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTblDetalleKeyReleased
+// TODO add your handling code here:
+        switch(evt.getKeyCode()){
+            case KeyEvent.VK_UP: case KeyEvent.VK_PAGE_UP:
+            case KeyEvent.VK_DOWN: case KeyEvent.VK_PAGE_DOWN: encabezado(); break;
+        }
+    }//GEN-LAST:event_jTblDetalleKeyReleased
+
+    private void jTblDetalleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTblDetalleKeyPressed
+// TODO add your handling code here:
+        switch(evt.getKeyCode()){
+            case KeyEvent.VK_U:
+                if(evt.isControlDown()){
+                    JDlgCalendario uCalendario = new JDlgCalendario();
+                    uCalendario.setVisible(true);
+                }
+                break;
+            case KeyEvent.VK_F6: modificarIncidencia(); break;
+            case KeyEvent.VK_F9: autorizarIncidencia(); break;
+            case KeyEvent.VK_ESCAPE: limpieza(); break;
+        }
+    }//GEN-LAST:event_jTblDetalleKeyPressed
+
+    private void jCboEstadoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCboEstadoKeyPressed
+// TODO add your handling code here:
+        switch(evt.getKeyCode()){
+            case KeyEvent.VK_U:
+                if(evt.isControlDown()){
+                    JDlgCalendario uCalendario = new JDlgCalendario();
+                    uCalendario.setVisible(true);
+                }
+                break;
+            case KeyEvent.VK_ESCAPE: if(transaccion==TXREG){ this.transaccion = TXBUSQ;  limpieza(); } 
+                if(transaccion==TXMOD){
+                    this.transaccion = TXBUSQ;
+                    
+                    jTxtFechaFinal.setText(xTabla.getValueAt(sesionVenta.getFilaIncidenciaSeleccionada(),3).toString());
+                    jLblBarraEstado.setText(mensajes.getMensajeComun(3));
+                    jTblDetalle.requestFocusInWindow();
+                } 
+                break;
+            case KeyEvent.VK_F1: if(transaccion==TXBUSQ){ transaccion=TXREG; limpiezaRegistrar(); } break;
+            case KeyEvent.VK_1: if(evt.isControlDown()){
+                                    this.eventoTeclado=evt;
+                                    try {this.setIcon(true);} catch (PropertyVetoException ex) { ; }
+                                  }
+                                  break;
+            case KeyEvent.VK_2: if(evt.isControlDown()) 
+                                try {this.setIcon(true);
+                                } catch (PropertyVetoException ex) { ; } break;
+            case KeyEvent.VK_F4: CerrarVentana(); break;
+            case KeyEvent.VK_ENTER: ejecutaConsulta(); break;
+            case KeyEvent.VK_F5: seleccionarOperador(); break;
+            case KeyEvent.VK_F7: registrarIncidencia(); break;
+            case 82: registrarIncidencia(); break;
+            case KeyEvent.VK_RIGHT:
+                if(transaccion == TXREG){
+                    jTxtObservacion.selectAll();
+                    jTxtObservacion.requestFocusInWindow();
+                    return;
+                }
+                jTxtNumeroOperador.selectAll();
+                jTxtNumeroOperador.requestFocusInWindow();
+                break;
+            case KeyEvent.VK_LEFT:
+                jTxtHoraFinal.selectAll();
+                jTxtHoraFinal.requestFocusInWindow();
+                break;
+        }
+    }//GEN-LAST:event_jCboEstadoKeyPressed
+
+    private void jCboServicioKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jCboServicioKeyPressed
+      
+        switch(evt.getKeyCode()){
+            case KeyEvent.VK_U:
+                 trace("KeyEvent.VK_U     ");
+                if(evt.isControlDown()){
+                    JDlgCalendario uCalendario = new JDlgCalendario();
+                    uCalendario.setVisible(true);
+                }
+                break;
+            case KeyEvent.VK_ESCAPE: if(transaccion==TXREG){ this.transaccion = TXBUSQ;  limpieza(); } 
+                if(transaccion==TXMOD){
+                    this.transaccion = TXBUSQ;
+                    
+                    jTxtFechaFinal.setText(xTabla.getValueAt(sesionVenta.getFilaIncidenciaSeleccionada(),3).toString());
+                    jLblBarraEstado.setText(mensajes.getMensajeComun(3)); 
+                    jTblDetalle.requestFocusInWindow();
+                } 
+                break;
+            case KeyEvent.VK_F1: if(transaccion==TXBUSQ){ transaccion=TXREG; limpiezaRegistrar(); } break;
+            case KeyEvent.VK_1:   trace("KeyEvent.VK_1");
+                if(evt.isControlDown()){
+                                    this.eventoTeclado=evt;
+                                    try {this.setIcon(true);} catch (PropertyVetoException ex) { ; }
+                                  }
+                                  break;
+            case KeyEvent.VK_2: trace("KeyEvent.VK_2");   if(evt.isControlDown()) 
+                                try {this.setIcon(true);
+                                } catch (PropertyVetoException ex) { ; } break;
+            case KeyEvent.VK_F4: CerrarVentana(); break;
+            case KeyEvent.VK_ENTER:   muestraValor(true);  ejecutaConsulta(); break;
+            case KeyEvent.VK_F5: seleccionarOperador(); break;
+            //case KeyEvent.VK_F7: registrarIncidencia(); break;
+            case KeyEvent.VK_RIGHT: muestraValor(true); break;
+            case KeyEvent.VK_LEFT: muestraValor(false); break;
+        }
+    }//GEN-LAST:event_jCboServicioKeyPressed
+
+    private void jTxtFechaFinalKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtFechaFinalKeyPressed
+// TODO add your handling code here:
+        switch(evt.getKeyCode()){
+            case KeyEvent.VK_U:
+                if(evt.isControlDown()){
+                    JDlgCalendario uCalendario = new JDlgCalendario();
+                    uCalendario.setVisible(true);
+                }
+                break;
+            case KeyEvent.VK_ESCAPE: if(transaccion==TXREG){ this.transaccion = TXBUSQ;  limpieza(); } 
+                if(transaccion==TXMOD){
+                    this.transaccion = TXBUSQ;
+                    
+                    jTxtFechaFinal.setText(xTabla.getValueAt(sesionVenta.getFilaIncidenciaSeleccionada(),3).toString());
+                    jLblBarraEstado.setText(mensajes.getMensajeComun(3)); 
+                    jTblDetalle.requestFocusInWindow();
+                } 
+                break;
+            case KeyEvent.VK_F1: if(transaccion==TXBUSQ){ transaccion=TXREG; limpiezaRegistrar(); } break;
+            case KeyEvent.VK_1: if(evt.isControlDown()){
+                                    this.eventoTeclado=evt;
+                                    try {this.setIcon(true);} catch (PropertyVetoException ex) { ; }
+                                  }
+                                  break;
+            case KeyEvent.VK_2: if(evt.isControlDown()) 
+                                try {this.setIcon(true);
+                                } catch (PropertyVetoException ex) { ; } break;
+            case KeyEvent.VK_F4: CerrarVentana(); break;
+            case KeyEvent.VK_ENTER: ejecutaConsulta(); break;
+            case KeyEvent.VK_F5: seleccionarOperador(); break;
+            case KeyEvent.VK_F7: if(transaccion==TXMOD) registrarIncidencia(); break;
+            case 82: if(transaccion==TXMOD) registrarIncidencia(); break;
+            case KeyEvent.VK_RIGHT:
+                calculoDuracionGuardia();
+                jTxtHoraFinal.selectAll();
+                jTxtHoraFinal.requestFocusInWindow();
+                break;
+            case KeyEvent.VK_LEFT:
+                calculoDuracionGuardia();
+                if(transaccion==TXMOD){
+                    jTxtObservacion.selectAll();
+                    jTxtObservacion.requestFocusInWindow();
+                    return;
+                }
+                jTxtHoraInicial.selectAll();
+                jTxtHoraInicial.requestFocusInWindow();
+                break;
+        }
+    }//GEN-LAST:event_jTxtFechaFinalKeyPressed
+
+    private void jTxtFechaInicialKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtFechaInicialKeyPressed
+// TODO add your handling code here:
+        switch(evt.getKeyCode()){
+            case KeyEvent.VK_U:
+                if(evt.isControlDown()){
+                    JDlgCalendario uCalendario = new JDlgCalendario();
+                    uCalendario.setVisible(true);
+                }
+                break;
+            case KeyEvent.VK_ESCAPE: if(transaccion==TXREG){ this.transaccion = TXBUSQ;  limpieza(); } 
+                if(transaccion==TXMOD){
+                    this.transaccion = TXBUSQ;
+                    
+                    jTxtFechaFinal.setText(xTabla.getValueAt(sesionVenta.getFilaIncidenciaSeleccionada(),3).toString());
+                    jLblBarraEstado.setText(mensajes.getMensajeComun(3)); 
+                    jTblDetalle.requestFocusInWindow();
+                } 
+                break;
+            case KeyEvent.VK_F1: if(transaccion==TXBUSQ){ transaccion=TXREG; limpiezaRegistrar(); } break;
+            case KeyEvent.VK_1: if(evt.isControlDown()){
+                                    this.eventoTeclado=evt;
+                                    try {this.setIcon(true);} catch (PropertyVetoException ex) { ; }
+                                  }
+                                  break;
+            case KeyEvent.VK_2: if(evt.isControlDown()) 
+                                try {this.setIcon(true);
+                                } catch (PropertyVetoException ex) { ; } break;
+            case KeyEvent.VK_F4: CerrarVentana(); break;
+            case KeyEvent.VK_ENTER: ejecutaConsulta(); break;
+            case KeyEvent.VK_F5: seleccionarOperador(); break;
+            //case KeyEvent.VK_F10: registrarIncidencia(); break;
+            case KeyEvent.VK_RIGHT:
+                jTxtHoraInicial.selectAll();
+                jTxtHoraInicial.requestFocusInWindow();
+                break;
+            case KeyEvent.VK_LEFT:
+                jCboServicio.requestFocusInWindow();
+                break;
+        }
+    }//GEN-LAST:event_jTxtFechaInicialKeyPressed
+
+    private void jTxtValorIncidenciaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtValorIncidenciaKeyPressed
+// TODO add your handling code here:
+        switch(evt.getKeyCode()){
+            case KeyEvent.VK_U:
+                if(evt.isControlDown()){
+                    JDlgCalendario uCalendario = new JDlgCalendario();
+                    uCalendario.setVisible(true);
+                }
+                break;
+            case KeyEvent.VK_ESCAPE: if(transaccion==TXREG){ this.transaccion = TXBUSQ;  limpieza(); } 
+                if(transaccion==TXMOD){
+                    this.transaccion = TXBUSQ;
+                    
+                    jTxtFechaFinal.setText(xTabla.getValueAt(sesionVenta.getFilaIncidenciaSeleccionada(),3).toString());
+                    jLblBarraEstado.setText(mensajes.getMensajeComun(3)); 
+                    jTblDetalle.requestFocusInWindow();
+                } 
+                break;
+            case KeyEvent.VK_F1: if(transaccion==TXBUSQ){ transaccion=TXREG; limpiezaRegistrar(); } break;
+            case KeyEvent.VK_1: if(evt.isControlDown()){
+                                    this.eventoTeclado=evt;
+                                    try {this.setIcon(true);} catch (PropertyVetoException ex) { ; }
+                                  }
+                                  break;
+            case KeyEvent.VK_2: if(evt.isControlDown()) 
+                                try {this.setIcon(true);
+                                } catch (PropertyVetoException ex) { ; } break;
+            case KeyEvent.VK_F4: CerrarVentana(); break;
+            case KeyEvent.VK_ENTER: ejecutaConsulta(); break;
+            case KeyEvent.VK_F5: seleccionarOperador(); break;
+            //case KeyEvent.VK_F10: registrarIncidencia(); break;
+            case KeyEvent.VK_RIGHT:
+                if(transaccion == TXMOD){
+                    jTxtFechaFinal.selectAll();
+                    jTxtFechaFinal.requestFocusInWindow();
+                    return;
+                }
+                jTxtFechaInicial.selectAll();
+                jTxtFechaInicial.requestFocusInWindow();
+                break;
+            case KeyEvent.VK_LEFT:
+                if(transaccion == TXMOD){
+                    jTxtFechaFinal.requestFocusInWindow();
+                    return;
+                }
+                jCboServicio.requestFocusInWindow();
+                break;
+        }
+    }//GEN-LAST:event_jTxtValorIncidenciaKeyPressed
+
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+// TODO add your handling code here:
+        AnchoColumnas();
+        jLblBarraEstado.setText(mensajes.getMensajeComun(1));
+        jTxtNumeroOperador.selectAll();
+        setFoco();
+    }//GEN-LAST:event_formComponentShown
+
+    public void setFoco(){
+        if(jTblDetalle.getRowCount()>0){
+            jTblDetalle.requestFocusInWindow();
+            return;
+        }
+        jTxtNumeroOperador.requestFocusInWindow();
+    }
+    
+    private void jTxtNumeroOperadorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTxtNumeroOperadorKeyPressed
+// TODO add your handling code here:
+        switch(evt.getKeyCode()){
+            case KeyEvent.VK_U:
+                if(evt.isControlDown()){
+                    JDlgCalendario uCalendario = new JDlgCalendario();
+                    uCalendario.setVisible(true);
+                }
+                break;
+            case KeyEvent.VK_ESCAPE: if(transaccion==TXREG){ this.transaccion = TXBUSQ;  limpieza(); } 
+                if(transaccion==TXMOD){
+                    this.transaccion = TXBUSQ;
+                    
+                    jTxtFechaFinal.setText(xTabla.getValueAt(sesionVenta.getFilaIncidenciaSeleccionada(),3).toString());
+                    jLblBarraEstado.setText(mensajes.getMensajeComun(3)); 
+                    jTblDetalle.requestFocusInWindow();
+                } 
+                break;
+            case KeyEvent.VK_F1: if(transaccion==TXBUSQ){ transaccion=TXREG; limpiezaRegistrar(); } break;
+            case KeyEvent.VK_1: if(evt.isControlDown()){
+                                    this.eventoTeclado=evt;
+                                    try {this.setIcon(true);} catch (PropertyVetoException ex) { ; }
+                                  }
+                                  break;
+            case KeyEvent.VK_2: if(evt.isControlDown()) 
+                                try {this.setIcon(true);
+                                } catch (PropertyVetoException ex) { ; } break;
+            case KeyEvent.VK_F4: CerrarVentana(); break;
+            case KeyEvent.VK_ENTER: ejecutaConsulta(); break;
+            case KeyEvent.VK_F5: seleccionarOperador(); break;
+            //case KeyEvent.VK_F7: registrarIncidencia(); break;
+            case KeyEvent.VK_RIGHT:
+                jCboServicio.requestFocusInWindow();
+                break;
+            case KeyEvent.VK_LEFT:
+                jCboEstado.requestFocusInWindow();
+                break;
+        }
+    }//GEN-LAST:event_jTxtNumeroOperadorKeyPressed
+    
+    private void CerrarVentana(){
+        if(transaccion!=TXBUSQ) return;
+        DialogoSiNo = new JDlgSiNo("¡Confirme!","¿Desea cerrar la aplicacion?");
+        boolean r = DialogoSiNo.getResultado();
+        if(!r) return;
+        this.dispose();
+    }
+
+    private void seleccionarOperador() {
+        if(transaccion!=TXREG) return;
+        JDlgOperador jDlgOperador = new JDlgOperador(sesionVenta);
+        jDlgOperador.setVisible(true);
+        if(!jDlgOperador.getEvento()) return;
+        jTxtNumeroOperador.setText(sesionVenta.getTmsEstadoOperadoresV().get(sesionVenta.getFilaOperadorSeleccionado()).getClaveOperador());
+        jTxtNombreOperador.setText(sesionVenta.getTmsEstadoOperadoresV().get(sesionVenta.getFilaOperadorSeleccionado()).getOperadorNombreCompleto());
+        jTxtObservacion.setEnabled(true);
+        jTxtNumeroOperador.requestFocusInWindow();
+    }
+
+    private void muestraValor(boolean der) {
+        if(der){
+            jTxtFechaInicial.selectAll();
+            jTxtFechaInicial.requestFocusInWindow();
+        }
+        else{
+            jTxtNumeroOperador.selectAll();
+            jTxtNumeroOperador.requestFocusInWindow();
+        }
+        if(jCboServicio.getSelectedIndex()==0) return;
+        jTxtValorIncidencia.setText(sesionVenta.getDatosGuardia(String.valueOf(sesionVenta.getTmsServiciosTbl().get(jCboServicio.getSelectedIndex()-1).getServicioId())));
+    }
+
+    private void registrarIncidencia() {
+        if(transaccion==TXBUSQ) return;
+        if(!validaDatosIngresados()) return;
+        if(!sesionVenta.actAdicId("GUA")){
+            DialogoAceptar = new JDlgAceptar("¡Imposible registrar guardia!", "No existe un registro de guardia como actividad adicional.", Color.RED);
+            return;
+        }
+        if(transaccion==TXMOD){
+            DialogoSiNo = new JDlgSiNo("¡Confirme!", "¿Realmente desea modificar la guardia?");
+            if(!DialogoSiNo.getResultado()) return;
+            modificarIncidenciaX();
+            return;
+        }
+        trace("registrarIncidencia --->  Checando si el operador tiene Guardias");
+        Vector vguardias=operadorTieneGuardias();
+           // DialogoAceptar = new JDlgAceptar("¡Imposible registrar guardia!", "Este operador tiene otra guardia en estas fechas/horas.", Color.RED);
+            //return;  // Change Ahora el se pueden capturar mas de una guardia en el dia para el operador
+       
+        if(vguardias!= null && vguardias.size()>0 &&  !AseguaraAgregarGuardias(vguardias)) 
+            return;
+        soloAutorizar = false;
+        if(jCboEstado.getSelectedItem().equals("AUTORIZADA") && (jTxtFechaFinal.getText().equals("") || jTxtHoraFinal.getText().equals(""))){
+            DialogoAceptar = new JDlgAceptar("¡Imposible registrar y autorizar la guardia!", "Fecha hora final nula.", Color.RED);
+            return;
+        }else{
+            if(jCboEstado.getSelectedItem().equals("AUTORIZADA")){
+                if(sesionVenta.getCtdGuardia()==0){
+                    DialogoSiNo = new JDlgSiNo("¡El operador no ha completado guardia!", "<html>¿Desea autorizar la guardia<br>sin pre-ingreso de pago en recaudacion?</html>");
+                    if(!DialogoSiNo.getResultado()) return;
+                    soloAutorizar = true;
+                }
+            }
+        }
+        String obsParte1, obsParte2;
+        obsParte1 = (jTxtObservacion.getText().length()>30 ? jTxtObservacion.getText().substring(0,30) : jTxtObservacion.getText());
+        obsParte2 = (jTxtObservacion.getText().length()>30 ? jTxtObservacion.getText().substring(30,jTxtObservacion.getText().length()) : "");
+        Timestamp tmActual = new Timestamp(new Date().getTime());
+        TmsOperadorIncidenciasTbl tmsOperadorIncidenciasTbl = new TmsOperadorIncidenciasTbl();
+        tmsOperadorIncidenciasTbl.setOperadoresId(sesionVenta.getTmsEstadoOperadoresV().get(sesionVenta.getFilaOperadorSeleccionado()).getOperadorId());
+        tmsOperadorIncidenciasTbl.setIncidenciaId(sesionVenta.actAdicionalId);
+        tmsOperadorIncidenciasTbl.setFechaInicial(tmFecha);
+        tmsOperadorIncidenciasTbl.setFechaFinal(tmFecha2);
+        tmsOperadorIncidenciasTbl.setAdicional1(obsParte1);
+        tmsOperadorIncidenciasTbl.setAdicional2(obsParte2);
+        tmsOperadorIncidenciasTbl.setIncidenciaValor(jTxtValorIncidencia.getText());
+        tmsOperadorIncidenciasTbl.setIncidenciaAutorizada(jCboEstado.getSelectedItem().equals("AUTORIZADA") ? "S" : "N");
+        tmsOperadorIncidenciasTbl.setServicioId(sesionVenta.getTmsServiciosTbl().get(jCboServicio.getSelectedIndex()-1).getServicioId());
+        tmsOperadorIncidenciasTbl.setCreadoPor(this.USUARIO_ID);
+        tmsOperadorIncidenciasTbl.setFechaCreacion(tmActual);
+        tmsOperadorIncidenciasTbl.setUltimaActualizacionPor(this.USUARIO_ID);
+        tmsOperadorIncidenciasTbl.setUltimaFechaActualizacion(tmActual);
+        
+    //********  Registra los datos los datos si la incidencia es autorizada y no se oprimio esc en esa pantalla
+      boolean fdooper = true;
+      boolean incid_aplicarecauda = sesionVenta.isRecauda("GUA");
+      if(tmsOperadorIncidenciasTbl.getIncidenciaAutorizada().equals("S") && incid_aplicarecauda) 
+      { 
+           System.out.println("Si es autorizada y requiere ser recaudada");
+           JDlgDatosAdicionales jDlgDatosAdicionales = null;
+           sesionVenta.setOperIncidencia(jTxtNumeroOperador.getText().trim(),"GUA");
+           
+           boolean resultado = sesionVenta.busquedaEspecial(); 
+           boolean fdatosAdiciEsp = sesionVenta.obtenerDatosAdicionalesEspeciales("GUA");
+              System.out.println(" Resultado  Busqueda obtenerDatosAdicionalesEspeciales  "+fdatosAdiciEsp);    
+             if (fdatosAdiciEsp){
+                        jDlgDatosAdicionales = new JDlgDatosAdicionales (sesionVenta);
+                        jDlgDatosAdicionales.setVisible(true);
+                         fdooper= jDlgDatosAdicionales.FDoOperacion;
+                      }             
+        }
+     //********
+      
+     boolean registraoper = false;
+     
+     //****** Si la incidencia no es Autorizada
+        if(!tmsOperadorIncidenciasTbl.getIncidenciaAutorizada().equals("S")  )
+        {   
+           registraoper = sesionVenta.registrarIncidencia(tmsOperadorIncidenciasTbl,
+                sesionVenta.getTmsEstadoOperadoresV().get(sesionVenta.getFilaOperadorSeleccionado()).getOperadorId(),
+                sesionVenta.getTmsEstadoOperadoresV().get(sesionVenta.getFilaOperadorSeleccionado()).getClaveOperador()) ;
+          if (!registraoper)
+                DialogoAceptar = new JDlgAceptar("¡No existe conexion a la base de datos!", "<html>No se registro la guardia.<br>Contacte al administrador del sistema.</html>", Color.RED);
+          else 
+               DialogoAceptar = new JDlgAceptar("¡Guardia registrada!", "Guardia registrada correctamente a operador.", Color.BLUE);
+         limpieza();  
+         return; 
+             
+      }  // Si la incidencia es autorizada
+       else if(tmsOperadorIncidenciasTbl.getIncidenciaAutorizada().equals("S") && fdooper) {
+                registraoper = sesionVenta.registrarIncidencia(tmsOperadorIncidenciasTbl,
+                      sesionVenta.getTmsEstadoOperadoresV().get(sesionVenta.getFilaOperadorSeleccionado()).getOperadorId(),
+                      sesionVenta.getTmsEstadoOperadoresV().get(sesionVenta.getFilaOperadorSeleccionado()).getClaveOperador());
+                     
+                      boolean resultado = sesionVenta.busquedaEspecial();
+                      boolean fdatosAdiciEsp = sesionVenta.obtenerDatosAdicionalesEspeciales("GUA");
+                     
+                      System.out.println("this.USUARIO_ID  "+this.USUARIO_ID);        
+                      if (registraoper) {
+                            if( soloAutorizar){
+                                  System.out.println("sesionVenta.getEspecial().getOperIncidenciaId() "+sesionVenta.getOperIncId());
+                                    
+                                  //if(!sesionVenta.autorizaIncidencia(sesionVenta.getEspecial().getOperIncidenciaId(), this.USUARIO_ID))
+                                  if(!sesionVenta.autorizaIncidencia(sesionVenta.getOperIncId(), this.USUARIO_ID))
+                                    DialogoAceptar = new JDlgAceptar("¡No se autorizo la guardia!", "<html>No existe conexion a la base de datos.<br>Contacte al administrador del sistema.</html>", Color.RED);
+                            }
+                            else{
+                                if(tmsOperadorIncidenciasTbl.getIncidenciaAutorizada().equals("S")){
+                                   if(resultado){
+                                              sesionVenta.setMonto(Double.valueOf(jTxtValorIncidencia.getText()), Double.valueOf(jTxtDuracionGuardia.getText()));
+                                             // if(incid_aplicarecauda){
+                                                   System.out.println("Si es recaudada y llamando a ingresarPreIngresoEspecial");
+                                              if(!sesionVenta.ingresarPreIngresoEspecial(this.USUARIO_ID))
+                                                    DialogoAceptar = new JDlgAceptar("¡No se autorizo la guardia!", "<html>No existe conexion a la base de datos.<br>Contacte al administrador del sistema.</html>", Color.RED);
+                                                else{
+                                                    DialogoAceptar = new JDlgAceptar("¡Autorizacion realizada correctamente!", "Pago preingresado en recaudacion.", Color.RED);
+                                                }
+                                             // }  // if(incid_aplicarecauda)
+                                       } // if resultado
+                                    }
+                                    else{
+                                        DialogoAceptar = new JDlgAceptar("¡El pago no pudo ser preingresado en recaudacion.","Contacte al administrador del sistema.", Color.RED);
+                                    }
+                               }
+                              DialogoAceptar = new JDlgAceptar("¡Guardia registrada!", "Guardia registrada correctamente a operador.", Color.BLUE);
+                       }   // if (registraoper)  
+                      else
+                            DialogoAceptar = new JDlgAceptar("¡No existe conexion a la base de datos!", "<html>No se registro la guardia.<br>Contacte al administrador del sistema.</html>", Color.RED);
+             }
+        limpieza();
+    }
+
+    private boolean AseguaraAgregarGuardias(Vector vguardias)
+    {
+        boolean fagregrar=false;
+        if( vguardias!= null && vguardias.size() >0 ){
+           // DialogoAceptar = new JDlgAceptar("¡Imposible registrar guardia!", "Este operador tiene otra guardia en estas fechas/horas.", Color.RED);
+            //return;  // Change Ahora el se pueden capturar mas de una guardia en el dia para el operador
+          trace("EL operador tienen las siguienets guardias"+ vguardias);  
+          String strmsj="¡El operador tiene otra(s) guardia(s) en el sig horario! <br><br>";
+          for (int i = 0; i < vguardias.size(); i++) {
+              strmsj += ((Vector)vguardias.elementAt(i)).elementAt(9).toString()+ "   -   " +
+                       ((Vector)vguardias.elementAt(i)).elementAt(10).toString()+"<br>";
+          }  
+           strmsj+="  ¿Desea agregar otra guardia?";
+            DialogoSiNo = new JDlgSiNo("¡El operador con guardias!", "<html>"+strmsj+"</html>");
+            trace("Resultado "+DialogoSiNo.getResultado());
+            if(DialogoSiNo.getResultado()) fagregrar=true;
+        }  // if
+        return fagregrar;
+    }
+    
+  
+    
+    private boolean validaDatosIngresados(){
+        if(jTxtNumeroOperador.getText().equals("%") || jTxtNumeroOperador.getText().equals("")){
+            jTxtNumeroOperador.selectAll();
+            DialogoAceptar = new JDlgAceptar("¡Operador invalido!", "Seleccione un operador.", Color.RED);
+            jTxtNumeroOperador.requestFocusInWindow();
+            return false;
+        }
+        
+        if(jTxtNombreOperador.getText().equals("")){
+            jTxtNumeroOperador.selectAll();
+            DialogoAceptar = new JDlgAceptar("¡Operador invalido!", "Seleccione un operador.", Color.RED);
+            jTxtNumeroOperador.requestFocusInWindow();
+            return false;
+        }
+        
+        if(jTxtValorIncidencia.getText().trim().equals("") ){  // BRA|| jTxtValorIncidencia.getText().equals("0")){
+            DialogoAceptar = new JDlgAceptar("¡Valor incorrecto!", "Falta valor de guardia.", Color.RED);
+            jCboServicio.requestFocusInWindow();
+            return false;
+        }
+        if(jTxtFechaInicial.getText().equals("") || jTxtFechaInicial.getText().length()<10){
+            jTxtFechaInicial.selectAll();
+            DialogoAceptar = new JDlgAceptar("¡Fecha inicial es obligatoria!", "Ingrese fecha.", Color.RED);
+            jTxtFechaInicial.requestFocusInWindow();
+            return false;
+        }
+        
+        if(jTxtHoraInicial.getText().equals("") || jTxtHoraInicial.getText().length()<5){
+            jTxtHoraInicial.selectAll();
+            DialogoAceptar = new JDlgAceptar("¡Hora inicial es obligatoria!", "Ingrese hora.", Color.RED);
+            jTxtHoraInicial.requestFocusInWindow();
+            return false;
+        }
+        
+        if(jTxtHoraFinal.getText().length()>1 && jTxtHoraFinal.getText().length()<5){
+            jTxtHoraFinal.selectAll();
+            DialogoAceptar = new JDlgAceptar("¡Hora final invalida!", "Ingrese hora completa o deje el campo vacio.", Color.RED);
+            jTxtHoraFinal.requestFocusInWindow();
+            return false;
+        }
+        
+        if(jTxtFechaFinal.getText().length()>1 && jTxtFechaFinal.getText().length()<10){
+            jTxtFechaFinal.selectAll();
+            DialogoAceptar = new JDlgAceptar("¡Fecha final invalida!", "Ingrese fecha completa o deje el campo vacio.", Color.RED);
+            jTxtFechaFinal.requestFocusInWindow();
+            return false;
+        }
+        try {
+            tmFecha = new Timestamp(formatoFechaHora.parse(jTxtFechaInicial.getText()+" "+jTxtHoraInicial.getText()).getTime());
+        } catch (ParseException ex) {
+            DialogoAceptar = new JDlgAceptar("¡Fecha inicial invalida!", "Ingrese fecha correcta.", Color.RED);
+            return false;
+        }
+        if(!jTxtFechaFinal.getText().equals("") && !jTxtHoraFinal.getText().equals("")){
+            try {
+                tmFecha2 = new Timestamp(formatoFechaHora.parse(jTxtFechaFinal.getText()+" "+jTxtHoraFinal.getText()).getTime());
+            } catch (ParseException ex) {
+                DialogoAceptar = new JDlgAceptar("¡Fecha final invalida!", "Ingrese fecha correcta.", Color.RED);
+                return false;
+            }
+            if(tmFecha.getTime()>tmFecha2.getTime()){
+                DialogoAceptar = new JDlgAceptar("¡Fecha final invalida!", "La fecha final no debe ser menor a la fecha inicial.", Color.RED);
+                return false;
+            }
+        }
+        else
+            tmFecha2 = null;
+        if(jCboServicio.getSelectedItem().equals("TODOS")){
+            DialogoAceptar = new JDlgAceptar("¡Servicio invalido!", "Seleccione un servicio de la lista.", Color.RED);
+            jCboServicio.requestFocusInWindow();
+            return false;
+        }
+        
+        if(jCboEstado.getSelectedItem().equals("TODOS")){
+            DialogoAceptar = new JDlgAceptar("¡Estado invalido!", "Seleccione un estado de la lista.", Color.RED);
+            jCboEstado.requestFocusInWindow();
+            return false;
+        }
+        
+        return true;
+    }
+    
+    private boolean validaDatosIngresadosBusqueda(){
+        if(jTxtFechaInicial.getText().length()>1 && jTxtFechaInicial.getText().length()<10){
+            jTxtFechaInicial.selectAll();
+            DialogoAceptar = new JDlgAceptar("¡Fecha inicial invalida!", "Ingrese fecha completa o deje el campo vacio", Color.RED);
+            jTxtFechaInicial.requestFocusInWindow();
+            return false;
+        }
+        
+        if(jTxtHoraInicial.getText().length()>1 && jTxtHoraInicial.getText().length()<5){
+            jTxtHoraInicial.selectAll();
+            DialogoAceptar = new JDlgAceptar("¡Hora inicial invalida!", "Ingrese hora completa o deje el campo vacio.", Color.RED);
+            jTxtHoraInicial.requestFocusInWindow();
+            return false;
+        }
+        
+        if(!jTxtFechaInicial.getText().equals("")){
+            try {
+                tmFecha = new Timestamp(formatoFechaHora.parse(jTxtFechaInicial.getText()+" "+jTxtHoraInicial.getText()).getTime());
+            } catch (ParseException ex) {
+                DialogoAceptar = new JDlgAceptar("¡Fecha inicial invalida!", "Ingrese fecha correcta.", Color.RED);
+                return false;
+            }
+        }
+        
+        if(jTxtFechaFinal.getText().length()>1 && jTxtFechaFinal.getText().length()<10){
+            jTxtFechaFinal.selectAll();
+            DialogoAceptar = new JDlgAceptar("¡Fecha final invalida!", "Ingrese fecha completa o deje el campo vacio", Color.RED);
+            jTxtFechaFinal.requestFocusInWindow();
+            return false;
+        }
+        
+        if(jTxtHoraFinal.getText().length()>1 && jTxtHoraFinal.getText().length()<5){
+            jTxtHoraFinal.selectAll();
+            DialogoAceptar = new JDlgAceptar("¡Hora final invalida!", "Ingrese hora completa o deje el campo vacio.", Color.RED);
+            jTxtHoraFinal.requestFocusInWindow();
+            return false;
+        }
+        
+        if(!jTxtFechaFinal.getText().equals("")){
+            try {
+                tmFecha2 = new Timestamp(formatoFechaHora.parse(jTxtFechaFinal.getText()+" "+jTxtHoraFinal.getText()).getTime());
+            } catch (ParseException ex) {
+                DialogoAceptar = new JDlgAceptar("¡Fecha final invalida!", "Ingrese fecha correcta.", Color.RED);
+                return false;
+            }
+            if(tmFecha.getTime()>tmFecha2.getTime()){
+                DialogoAceptar = new JDlgAceptar("¡Fecha final invalida!", "La fecha final no debe ser menor a la fecha inicial.", Color.RED);
+                return false;
+            }
+        }
+        
+        return true;
+    }
+    
+    private void limpieza() {
+        transaccion = TXBUSQ;
+        jTxtNumeroOperador.setEnabled(true);
+        jCboServicio.setEnabled(true);
+        jTxtFechaInicial.setEnabled(true);
+        jTxtHoraInicial.setEnabled(true);
+        jTxtObservacion.setEnabled(false);
+        jTxtHoraFinal.setEnabled(true);
+        jCboEstado.setEnabled(true);
+        jTxtNombreOperador.setText("");
+        jTxtNumeroOperador.setText("%");
+        jCboServicio.setSelectedIndex(0);
+        jCboEstado.setSelectedIndex(0);
+        jTxtFechaInicial.setText("");
+        jTxtFechaFinal.setText("");
+        jTxtObservacion.setText("");
+        jTxtHoraFinal.setText("");
+        jTxtHoraInicial.setText("");
+        jTxtValorIncidencia.setText("");
+        jTxtDuracionGuardia.setText("");
+        jTxtCalculo.setText("");
+        
+        xTabla.setDataVector(null, encabezado);
+        AnchoColumnas();
+        jTxtNumeroOperador.selectAll();
+        jLblBarraEstado.setText(mensajes.getMensajeComun(1));
+        jTxtNumeroOperador.requestFocusInWindow();
+    }
+    
+    private void limpiezaRegistrar() {
+        jTxtNumeroOperador.setEnabled(true);
+        jCboServicio.setEnabled(true);
+        jTxtFechaInicial.setEnabled(true);
+        jTxtHoraInicial.setEnabled(true);
+        jTxtFechaFinal.setEnabled(true);
+        jTxtHoraFinal.setEnabled(true);
+        jTxtObservacion.setEnabled(true);
+        jCboEstado.setEnabled(true);
+        jTxtNumeroOperador.setText("");
+        jTxtValorIncidencia.setEditable(false);
+        jTxtFechaInicial.setText("");
+        jTxtFechaFinal.setText("");
+        jTxtObservacion.setText("");
+        jTxtHoraInicial.setText("");
+        jTxtHoraFinal.setText("");
+        jTxtDuracionGuardia.setText("");
+        jTxtValorIncidencia.setText("");
+        jTxtCalculo.setText("");
+        jTxtNumeroOperador.selectAll();
+        jLblBarraEstado.setText(mensajes.getMensajeComun(2)); 
+        jTxtNumeroOperador.requestFocusInWindow();
+    }
+    
+    private void limpiezaMod() {
+        jTxtNumeroOperador.setEnabled(false);
+        jCboServicio.setEnabled(false);
+        jTxtFechaInicial.setEnabled(false);
+        jTxtHoraInicial.setEnabled(false);
+        jCboEstado.setEnabled(false);
+        jLblBarraEstado.setText(mensajes.getMensajeComun(4)); 
+    }
+
+    private void ejecutaConsulta() {
+        if(transaccion!=TXBUSQ) return;
+        if(jCboServicio.getSelectedIndex()!=0)
+            jTxtValorIncidencia.setText(sesionVenta.getDatosGuardia(String.valueOf(sesionVenta.getTmsServiciosTbl().get(jCboServicio.getSelectedIndex()-1).getServicioId())));
+        Object[][] resultado = sesionVenta.busqueda(jTxtNumeroOperador.getText(), jCboServicio.getSelectedItem().toString(),
+                sesionVenta.getGuardiaClave(), jTxtFechaInicial.getText(), jTxtFechaFinal.getText(), jCboEstado.getSelectedItem().toString());
+        if(resultado == null){
+            DialogoAceptar = new JDlgAceptar("¡No existen guardias!", "El criterio de busqueda no genero resultados.", Color.RED);
+            limpieza();
+            return;
+        }
+        jTxtNumeroOperador.setEnabled(false);
+        jCboServicio.setEnabled(false);
+        jTxtFechaInicial.setEnabled(false);
+        jTxtHoraInicial.setEnabled(false);
+        jTxtObservacion.setEnabled(false);
+        jCboEstado.setEnabled(false);
+        xTabla.setDataVector(resultado, encabezado);
+        AnchoColumnas();
+        jTblDetalle.setRowSelectionInterval(0,0);
+        encabezado();
+        jLblBarraEstado.setText(mensajes.getMensajeComun(3)); 
+        jTblDetalle.requestFocusInWindow();
+    }
+    
+    private void AnchoColumnas() {
+        int anchoContenedor = jScpDetalle.getWidth();
+        TableColumn column;
+        for (int i = 0; i < jTblDetalle.getColumnCount(); i++) {
+            column = jTblDetalle.getColumnModel().getColumn(i);
+            switch (i) {
+                case 0: column.setPreferredWidth(Math.round(anchoContenedor*(float)0.15)); break;
+                case 1: column.setPreferredWidth(Math.round(anchoContenedor*(float)0.10)); break;
+                case 2: column.setPreferredWidth(Math.round(anchoContenedor*(float)0.15)); break;
+                case 3: column.setPreferredWidth(Math.round(anchoContenedor*(float)0.15)); break;
+                case 4: column.setPreferredWidth(Math.round(anchoContenedor*(float)0.10)); break;
+                case 5: column.setPreferredWidth(Math.round(anchoContenedor*(float)0.25)); break;
+                case 6: column.setPreferredWidth(Math.round(anchoContenedor*(float)0.10)); break;
+            }
+        }
+    }
+
+    private void encabezado() {
+        sesionVenta.setFilaIncidenciaSeleccionada(jTblDetalle.getSelectedRow());
+        jTxtNumeroOperador.setText(sesionVenta.getVwIncOper().get(sesionVenta.getFilaIncidenciaSeleccionada()).getClaveOperador());
+        jTxtNombreOperador.setText(sesionVenta.getVwIncOper().get(sesionVenta.getFilaIncidenciaSeleccionada()).getOperadorNombreCompleto());
+        jCboServicio.setSelectedItem(sesionVenta.getVwIncOper().get(sesionVenta.getFilaIncidenciaSeleccionada()).getServicioNombre());
+        jTxtValorIncidencia.setText(sesionVenta.getDatosGuardia(String.valueOf(sesionVenta.getVwIncOper().get(sesionVenta.getFilaIncidenciaSeleccionada()).getServicioId())));
+        cadenaFechaHora = xTabla.getValueAt(sesionVenta.getFilaIncidenciaSeleccionada(),2).toString().split(" ");
+            jTxtFechaInicial.setText(cadenaFechaHora[0]);
+            if(cadenaFechaHora.length>1) jTxtHoraInicial.setText(cadenaFechaHora[1]);
+            else jTxtHoraInicial.setText("");
+        cadenaFechaHora = xTabla.getValueAt(sesionVenta.getFilaIncidenciaSeleccionada(),3).toString().split(" ");
+            jTxtFechaFinal.setText(cadenaFechaHora[0]);
+            if(cadenaFechaHora.length>1) jTxtHoraFinal.setText(cadenaFechaHora[1]);
+            else jTxtHoraFinal.setText("");
+        jCboEstado.setSelectedItem(sesionVenta.getVwIncOper().get(sesionVenta.getFilaIncidenciaSeleccionada()).getIncidenciaAutorizada());
+        calculoDuracionGuardia();
+        jTxtObservacion.setText(sesionVenta.getVwIncOper().get(sesionVenta.getFilaIncidenciaSeleccionada()).getObservacion());
+    }
+
+    private void modificarIncidencia() {
+        if(sesionVenta.getVwIncOper().get(sesionVenta.getFilaIncidenciaSeleccionada()).getIncidenciaAutorizada().equals("AUTORIZADA")){
+            DialogoAceptar = new JDlgAceptar("¡Modificacion cancelada!", "La guardia ya esta autorizada.", Color.RED);
+            return;
+        }
+        transaccion = TXMOD;
+        jTxtObservacion.setEnabled(true);
+        jLblBarraEstado.setText(mensajes.getMensajeComun(4)); 
+        jTxtFechaFinal.requestFocusInWindow();
+    }
+
+    private void autorizarIncidencia() {
+        if(sesionVenta.getVwIncOper().get(sesionVenta.getFilaIncidenciaSeleccionada()).getIncidenciaAutorizada().equals("AUTORIZADA")){
+            DialogoAceptar = new JDlgAceptar("¡Autorizacion cancelada!", "La guardia ya esta autorizada.", Color.RED);
+            return;
+        }
+        if(sesionVenta.getVwIncOper().get(sesionVenta.getFilaIncidenciaSeleccionada()).getFechaFinal()==null){
+            DialogoAceptar = new JDlgAceptar("¡Autorizacion cancelada!", "La guardia aun no tiene fecha final.", Color.RED);
+            return;
+        }
+        
+        soloAutorizar = false;
+        calculoDuracionGuardia();
+        if(sesionVenta.getCtdGuardia()==0){
+            DialogoSiNo = new JDlgSiNo("¡El operador no ha completado guardia!", "<html>¿Desea autorizar la guardia<br>sin pre-ingreso de pago en recaudacion?</html>");
+            if(!DialogoSiNo.getResultado()) return;
+            soloAutorizar = true;
+        }
+        DialogoSiNo = new JDlgSiNo("¡Confirme!", "¿Realmente desea autorizar la guardia?");
+        if(!DialogoSiNo.getResultado()) return;
+         JDlgDatosAdicionales jDlgDatosAdicionales  =  null;
+        if(sesionVenta.obtenerDatosAdicionales()){
+            jDlgDatosAdicionales = new JDlgDatosAdicionales (sesionVenta);
+            jDlgDatosAdicionales.setVisible(true);
+        }
+         System.out.println("AL autorizar unicamenrte "+jDlgDatosAdicionales.FDoOperacion);
+        if( jDlgDatosAdicionales != null && jDlgDatosAdicionales.FDoOperacion)
+        {
+                if(soloAutorizar){
+                    if(!sesionVenta.autorizaIncidencia(sesionVenta.getVwIncOper().get(sesionVenta.getFilaIncidenciaSeleccionada()).getOperIncidenciaId(), this.USUARIO_ID))
+                            DialogoAceptar = new JDlgAceptar("¡No se autorizo la guardia!", "<html>No existe conexion a la base de datos.<br>Contacte al administrador del sistema.</html>", Color.RED);
+                }
+                else{
+                    sesionVenta.setMonto(Double.valueOf(jTxtValorIncidencia.getText()), Double.valueOf(jTxtDuracionGuardia.getText()));
+                    if(!sesionVenta.ingresarPreIngreso(this.USUARIO_ID))
+                        DialogoAceptar = new JDlgAceptar("¡No se autorizo la guardia!", "<html>No existe conexion a la base de datos.<br>Contacte al administrador del sistema.</html>", Color.RED);
+                    else{
+                        if(sesionVenta.getVwIncOper().get(sesionVenta.getFilaIncidenciaSeleccionada()).getAplicaRecaudacion().equals("S"))
+                            DialogoAceptar = new JDlgAceptar("¡Autorizacion realizada correctamente!", "Pago preingresado en recaudacion.", Color.RED);
+                        else DialogoAceptar = new JDlgAceptar("¡Autorizacion realizada correctamente!", "Continue...", Color.RED);
+                    }
+                }
+        }  //   if( jDlgDatosAdicionales != null && jDlgDatosAdicionales.FDoOperacion)
+        limpieza();
+    }
+
+    private void modificarIncidenciaX() {
+        String obsParte1, obsParte2;
+        obsParte1 = (jTxtObservacion.getText().length()>30 ? jTxtObservacion.getText().substring(0,30) : jTxtObservacion.getText());
+        obsParte2 = (jTxtObservacion.getText().length()>30 ? jTxtObservacion.getText().substring(30,jTxtObservacion.getText().length()) : "");
+        if(!sesionVenta.modificaIncidencia(sesionVenta.getVwIncOper().get(sesionVenta.getFilaIncidenciaSeleccionada()).getOperIncidenciaId(),
+                jTxtValorIncidencia.getText(), tmFecha2, obsParte1, obsParte2, this.USUARIO_ID))
+            DialogoAceptar = new JDlgAceptar("¡No existe conexion a la base de datos!", "<html>No se modifico la guardia.<br>Contacte al administrador del sistema.</html>", Color.RED);
+        else{
+            DialogoAceptar = new JDlgAceptar("¡Guardia modificada!", "Guardia modificada correctamente.", Color.BLUE);
+        }
+        limpieza();
+    }  
+
+    private Vector operadorTieneGuardias() { 
+         return sesionVenta.tieneGuardia(jTxtNumeroOperador.getText(),jTxtFechaInicial.getText(),jTxtFechaFinal.getText());
+    }
+
+    private void calculoDuracionGuardia() {
+        if((jTxtFechaInicial.getText().equals("") || jTxtFechaInicial.getText().length()<10) && 
+                (jTxtHoraInicial.getText().equals("") || jTxtHoraInicial.getText().length()<5)) return;
+        if((jTxtFechaFinal.getText().equals("") || jTxtFechaFinal.getText().length()<10) && 
+                (jTxtHoraFinal.getText().equals("") || jTxtHoraFinal.getText().length()<5)) return;
+        
+        try{
+            tmFecha = new Timestamp(formatoFechaHora.parse(jTxtFechaInicial.getText()+" "+jTxtHoraInicial.getText()).getTime());
+        } catch (ParseException ex) {
+            return;
+        }
+        try {
+            tmFecha2 = new Timestamp(formatoFechaHora.parse(jTxtFechaFinal.getText()+" "+jTxtHoraFinal.getText()).getTime());
+        } catch (ParseException ex) {
+            return;
+        }
+        
+        long calcGuardia = tmFecha2.getTime()-tmFecha.getTime();
+        sesionVenta.setTiempoGuardia(calcGuardia);
+        sesionVenta.setCtdGuardia();
+        jTxtDuracionGuardia.setText(String.valueOf(sesionVenta.getCtdGuardia()));
+        double a, b;
+        a = (jTxtValorIncidencia.getText()==null || jTxtValorIncidencia.getText().equals("") ? 0 : Double.valueOf(jTxtValorIncidencia.getText()));
+        b = (jTxtDuracionGuardia.getText()==null || jTxtDuracionGuardia.getText().equals("") ? 0 : Double.valueOf(jTxtDuracionGuardia.getText()));
+        jTxtCalculo.setText(String.valueOf(a*b));
+    }
+    
+    
+    
+    public KeyEvent getEventoTeclado(){ return this.eventoTeclado; }
+        
+    public void setEventoTeclado(KeyEvent evento){ this.eventoTeclado=evento; }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox jCboEstado;
+    private javax.swing.JComboBox jCboServicio;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLblBarraEstado;
+    private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScpDetalle;
+    private javax.swing.JTable jTblDetalle;
+    private javax.swing.JTextField jTxtCalculo;
+    private javax.swing.JTextField jTxtDuracionGuardia;
+    private javax.swing.JTextField jTxtFechaFinal;
+    private javax.swing.JTextField jTxtFechaInicial;
+    private javax.swing.JTextField jTxtHoraFinal;
+    private javax.swing.JTextField jTxtHoraInicial;
+    private javax.swing.JTextField jTxtNombreOperador;
+    private javax.swing.JTextField jTxtNumeroOperador;
+    private javax.swing.JTextField jTxtObservacion;
+    private javax.swing.JTextField jTxtValorIncidencia;
+    // End of variables declaration//GEN-END:variables
+    private long MENU_ID;
+    private long USUARIO_ID;
+    private String USUARIO_NUMERO;
+    private String USUARIO_NOMBRE;
+    private long SESION_ID;
+    private boolean InicioGral;
+    private SesionVenta sesionVenta;
+    private JDlgAceptar DialogoAceptar;
+    private JDlgSiNo DialogoSiNo;
+    private SimpleDateFormat formatoFechaHora = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+    private SimpleDateFormat formatoHora = new SimpleDateFormat("HH:mm");
+    private Timestamp tmFecha, tmFecha2;
+    private final long dia = 86400000;
+    
+    private final int TXBUSQ=0;
+    private final int TXREG=1;
+    private final int TXMOD=2;
+    private int transaccion=TXBUSQ;
+    
+    private Object[] encabezado = {"Operador", "Guardia", "Fecha Inicial", "Fecha Final", "Valor", "Servicio", "Estado"};
+    private DefaultTableModel xTabla = new DefaultTableModel(null,encabezado){
+        public boolean isCellEditable(int row, int col){
+            return false;
+        }
+    };
+    Mensajes mensajes = new Mensajes();
+    private boolean soloAutorizar;
+    private String[] cadenaFechaHora;
+    private KeyEvent eventoTeclado;
+    
+    private boolean ftrace=true;
+    
+    public void trace(String msj)
+    {
+        if(ftrace)
+           System.out.println(msj);
+    }
+}

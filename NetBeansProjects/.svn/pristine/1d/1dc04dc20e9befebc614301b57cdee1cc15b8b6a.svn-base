@@ -1,0 +1,2297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project name="WebServiceTestProject" soapui-version="3.0.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" wsaVersion="NONE" name="ERWSINFRAPortBinding" type="wsdl" bindingName="{http://control/}ERWSINFRAPortBinding" soapVersion="1_1" anonymous="optional" definition="http://devas01.estrellaroja.com.mx:8083/ER_WS_CONTROL/ERWSINFRAService?WSDL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://devas01.estrellaroja.com.mx:8083/ER_WS_CONTROL/ERWSINFRAService?WSDL"><con:part><con:url>http://devas01.estrellaroja.com.mx:8083/ER_WS_CONTROL/ERWSINFRAService?WSDL</con:url><con:content><![CDATA[<definitions targetNamespace="http://control/" name="ERWSINFRAService" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://control/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://control/" schemaLocation="http://devas01.estrellaroja.com.mx:8083/ER_WS_CONTROL/ERWSINFRAService/__container$publishing$subctx/WEB-INF/wsdl/ERWSINFRAService_schema1.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </xsd:schema>
+  </types>
+  <message name="getLogin">
+    <part name="parameters" element="tns:getLogin"/>
+  </message>
+  <message name="getLoginResponse">
+    <part name="parameters" element="tns:getLoginResponse"/>
+  </message>
+  <message name="getUnidades">
+    <part name="parameters" element="tns:getUnidades"/>
+  </message>
+  <message name="getUnidadesResponse">
+    <part name="parameters" element="tns:getUnidadesResponse"/>
+  </message>
+  <message name="getCancelaContrato">
+    <part name="parameters" element="tns:getCancelaContrato"/>
+  </message>
+  <message name="getCancelaContratoResponse">
+    <part name="parameters" element="tns:getCancelaContratoResponse"/>
+  </message>
+  <message name="getOperacionContrato">
+    <part name="parameters" element="tns:getOperacionContrato"/>
+  </message>
+  <message name="getOperacionContratoResponse">
+    <part name="parameters" element="tns:getOperacionContratoResponse"/>
+  </message>
+  <message name="getUsuarios">
+    <part name="parameters" element="tns:getUsuarios"/>
+  </message>
+  <message name="getUsuariosResponse">
+    <part name="parameters" element="tns:getUsuariosResponse"/>
+  </message>
+  <message name="getServicios">
+    <part name="parameters" element="tns:getServicios"/>
+  </message>
+  <message name="getServiciosResponse">
+    <part name="parameters" element="tns:getServiciosResponse"/>
+  </message>
+  <message name="getPagos">
+    <part name="parameters" element="tns:getPagos"/>
+  </message>
+  <message name="getPagosResponse">
+    <part name="parameters" element="tns:getPagosResponse"/>
+  </message>
+  <message name="getClientes">
+    <part name="parameters" element="tns:getClientes"/>
+  </message>
+  <message name="getClientesResponse">
+    <part name="parameters" element="tns:getClientesResponse"/>
+  </message>
+  <message name="getFacturas">
+    <part name="parameters" element="tns:getFacturas"/>
+  </message>
+  <message name="getFacturasResponse">
+    <part name="parameters" element="tns:getFacturasResponse"/>
+  </message>
+  <message name="getRutaServicios">
+    <part name="parameters" element="tns:getRutaServicios"/>
+  </message>
+  <message name="getRutaServiciosResponse">
+    <part name="parameters" element="tns:getRutaServiciosResponse"/>
+  </message>
+  <message name="getOperacionesGuia">
+    <part name="parameters" element="tns:getOperacionesGuia"/>
+  </message>
+  <message name="getOperacionesGuiaResponse">
+    <part name="parameters" element="tns:getOperacionesGuiaResponse"/>
+  </message>
+  <message name="getCancelarGuia">
+    <part name="parameters" element="tns:getCancelarGuia"/>
+  </message>
+  <message name="getCancelarGuiaResponse">
+    <part name="parameters" element="tns:getCancelarGuiaResponse"/>
+  </message>
+  <message name="getOperacionesPromocion">
+    <part name="parameters" element="tns:getOperacionesPromocion"/>
+  </message>
+  <message name="getOperacionesPromocionResponse">
+    <part name="parameters" element="tns:getOperacionesPromocionResponse"/>
+  </message>
+  <message name="getOperacionesUsuario">
+    <part name="parameters" element="tns:getOperacionesUsuario"/>
+  </message>
+  <message name="getOperacionesUsuarioResponse">
+    <part name="parameters" element="tns:getOperacionesUsuarioResponse"/>
+  </message>
+  <message name="getPromociones">
+    <part name="parameters" element="tns:getPromociones"/>
+  </message>
+  <message name="getPromocionesResponse">
+    <part name="parameters" element="tns:getPromocionesResponse"/>
+  </message>
+  <message name="getOperacionesCliente">
+    <part name="parameters" element="tns:getOperacionesCliente"/>
+  </message>
+  <message name="getOperacionesClienteResponse">
+    <part name="parameters" element="tns:getOperacionesClienteResponse"/>
+  </message>
+  <message name="getOperacionesClientesUsuario">
+    <part name="parameters" element="tns:getOperacionesClientesUsuario"/>
+  </message>
+  <message name="getOperacionesClientesUsuarioResponse">
+    <part name="parameters" element="tns:getOperacionesClientesUsuarioResponse"/>
+  </message>
+  <message name="getOperacionesFactura">
+    <part name="parameters" element="tns:getOperacionesFactura"/>
+  </message>
+  <message name="getOperacionesFacturaResponse">
+    <part name="parameters" element="tns:getOperacionesFacturaResponse"/>
+  </message>
+  <message name="getProductosCliente">
+    <part name="parameters" element="tns:getProductosCliente"/>
+  </message>
+  <message name="getProductosClienteResponse">
+    <part name="parameters" element="tns:getProductosClienteResponse"/>
+  </message>
+  <message name="getPerfilesUsuario">
+    <part name="parameters" element="tns:getPerfilesUsuario"/>
+  </message>
+  <message name="getPerfilesUsuarioResponse">
+    <part name="parameters" element="tns:getPerfilesUsuarioResponse"/>
+  </message>
+  <message name="getOperacionesCreditoClientes">
+    <part name="parameters" element="tns:getOperacionesCreditoClientes"/>
+  </message>
+  <message name="getOperacionesCreditoClientesResponse">
+    <part name="parameters" element="tns:getOperacionesCreditoClientesResponse"/>
+  </message>
+  <message name="getOperacionesPagosCliente">
+    <part name="parameters" element="tns:getOperacionesPagosCliente"/>
+  </message>
+  <message name="getOperacionesPagosClienteResponse">
+    <part name="parameters" element="tns:getOperacionesPagosClienteResponse"/>
+  </message>
+  <message name="getPagosFactura">
+    <part name="parameters" element="tns:getPagosFactura"/>
+  </message>
+  <message name="getPagosFacturaResponse">
+    <part name="parameters" element="tns:getPagosFacturaResponse"/>
+  </message>
+  <message name="getOperacionesPagosFacturas">
+    <part name="parameters" element="tns:getOperacionesPagosFacturas"/>
+  </message>
+  <message name="getOperacionesPagosFacturasResponse">
+    <part name="parameters" element="tns:getOperacionesPagosFacturasResponse"/>
+  </message>
+  <message name="getRegistraTransaccionesCliente">
+    <part name="parameters" element="tns:getRegistraTransaccionesCliente"/>
+  </message>
+  <message name="getRegistraTransaccionesClienteResponse">
+    <part name="parameters" element="tns:getRegistraTransaccionesClienteResponse"/>
+  </message>
+  <message name="getEstadoCuentaCliente">
+    <part name="parameters" element="tns:getEstadoCuentaCliente"/>
+  </message>
+  <message name="getEstadoCuentaClienteResponse">
+    <part name="parameters" element="tns:getEstadoCuentaClienteResponse"/>
+  </message>
+  <message name="getLogout">
+    <part name="parameters" element="tns:getLogout"/>
+  </message>
+  <message name="getLogoutResponse">
+    <part name="parameters" element="tns:getLogoutResponse"/>
+  </message>
+  <message name="getCorridas">
+    <part name="parameters" element="tns:getCorridas"/>
+  </message>
+  <message name="getCorridasResponse">
+    <part name="parameters" element="tns:getCorridasResponse"/>
+  </message>
+  <message name="getAsientosDisp">
+    <part name="parameters" element="tns:getAsientosDisp"/>
+  </message>
+  <message name="getAsientosDispResponse">
+    <part name="parameters" element="tns:getAsientosDispResponse"/>
+  </message>
+  <message name="getBloquearAsientos">
+    <part name="parameters" element="tns:getBloquearAsientos"/>
+  </message>
+  <message name="getBloquearAsientosResponse">
+    <part name="parameters" element="tns:getBloquearAsientosResponse"/>
+  </message>
+  <message name="getVenderBoletos">
+    <part name="parameters" element="tns:getVenderBoletos"/>
+  </message>
+  <message name="getVenderBoletosResponse">
+    <part name="parameters" element="tns:getVenderBoletosResponse"/>
+  </message>
+  <message name="getValidarBoleto">
+    <part name="parameters" element="tns:getValidarBoleto"/>
+  </message>
+  <message name="getValidarBoletoResponse">
+    <part name="parameters" element="tns:getValidarBoletoResponse"/>
+  </message>
+  <message name="getCancelarBoletos">
+    <part name="parameters" element="tns:getCancelarBoletos"/>
+  </message>
+  <message name="getCancelarBoletosResponse">
+    <part name="parameters" element="tns:getCancelarBoletosResponse"/>
+  </message>
+  <message name="getCambioHorario">
+    <part name="parameters" element="tns:getCambioHorario"/>
+  </message>
+  <message name="getCambioHorarioResponse">
+    <part name="parameters" element="tns:getCambioHorarioResponse"/>
+  </message>
+  <message name="getCanjeBA">
+    <part name="parameters" element="tns:getCanjeBA"/>
+  </message>
+  <message name="getCanjeBAResponse">
+    <part name="parameters" element="tns:getCanjeBAResponse"/>
+  </message>
+  <message name="getRutasItinerarios">
+    <part name="parameters" element="tns:getRutasItinerarios"/>
+  </message>
+  <message name="getRutasItinerariosResponse">
+    <part name="parameters" element="tns:getRutasItinerariosResponse"/>
+  </message>
+  <portType name="ERWSINFRA">
+    <operation name="getLogin">
+      <input message="tns:getLogin"/>
+      <output message="tns:getLoginResponse"/>
+    </operation>
+    <operation name="getUnidades">
+      <input message="tns:getUnidades"/>
+      <output message="tns:getUnidadesResponse"/>
+    </operation>
+    <operation name="getCancelaContrato">
+      <input message="tns:getCancelaContrato"/>
+      <output message="tns:getCancelaContratoResponse"/>
+    </operation>
+    <operation name="getOperacionContrato">
+      <input message="tns:getOperacionContrato"/>
+      <output message="tns:getOperacionContratoResponse"/>
+    </operation>
+    <operation name="getUsuarios">
+      <input message="tns:getUsuarios"/>
+      <output message="tns:getUsuariosResponse"/>
+    </operation>
+    <operation name="getServicios">
+      <input message="tns:getServicios"/>
+      <output message="tns:getServiciosResponse"/>
+    </operation>
+    <operation name="getPagos">
+      <input message="tns:getPagos"/>
+      <output message="tns:getPagosResponse"/>
+    </operation>
+    <operation name="getClientes">
+      <input message="tns:getClientes"/>
+      <output message="tns:getClientesResponse"/>
+    </operation>
+    <operation name="getFacturas">
+      <input message="tns:getFacturas"/>
+      <output message="tns:getFacturasResponse"/>
+    </operation>
+    <operation name="getRutaServicios">
+      <input message="tns:getRutaServicios"/>
+      <output message="tns:getRutaServiciosResponse"/>
+    </operation>
+    <operation name="getOperacionesGuia">
+      <input message="tns:getOperacionesGuia"/>
+      <output message="tns:getOperacionesGuiaResponse"/>
+    </operation>
+    <operation name="getCancelarGuia">
+      <input message="tns:getCancelarGuia"/>
+      <output message="tns:getCancelarGuiaResponse"/>
+    </operation>
+    <operation name="getOperacionesPromocion">
+      <input message="tns:getOperacionesPromocion"/>
+      <output message="tns:getOperacionesPromocionResponse"/>
+    </operation>
+    <operation name="getOperacionesUsuario">
+      <input message="tns:getOperacionesUsuario"/>
+      <output message="tns:getOperacionesUsuarioResponse"/>
+    </operation>
+    <operation name="getPromociones">
+      <input message="tns:getPromociones"/>
+      <output message="tns:getPromocionesResponse"/>
+    </operation>
+    <operation name="getOperacionesCliente">
+      <input message="tns:getOperacionesCliente"/>
+      <output message="tns:getOperacionesClienteResponse"/>
+    </operation>
+    <operation name="getOperacionesClientesUsuario">
+      <input message="tns:getOperacionesClientesUsuario"/>
+      <output message="tns:getOperacionesClientesUsuarioResponse"/>
+    </operation>
+    <operation name="getOperacionesFactura">
+      <input message="tns:getOperacionesFactura"/>
+      <output message="tns:getOperacionesFacturaResponse"/>
+    </operation>
+    <operation name="getProductosCliente">
+      <input message="tns:getProductosCliente"/>
+      <output message="tns:getProductosClienteResponse"/>
+    </operation>
+    <operation name="getPerfilesUsuario">
+      <input message="tns:getPerfilesUsuario"/>
+      <output message="tns:getPerfilesUsuarioResponse"/>
+    </operation>
+    <operation name="getOperacionesCreditoClientes">
+      <input message="tns:getOperacionesCreditoClientes"/>
+      <output message="tns:getOperacionesCreditoClientesResponse"/>
+    </operation>
+    <operation name="getOperacionesPagosCliente">
+      <input message="tns:getOperacionesPagosCliente"/>
+      <output message="tns:getOperacionesPagosClienteResponse"/>
+    </operation>
+    <operation name="getPagosFactura">
+      <input message="tns:getPagosFactura"/>
+      <output message="tns:getPagosFacturaResponse"/>
+    </operation>
+    <operation name="getOperacionesPagosFacturas">
+      <input message="tns:getOperacionesPagosFacturas"/>
+      <output message="tns:getOperacionesPagosFacturasResponse"/>
+    </operation>
+    <operation name="getRegistraTransaccionesCliente">
+      <input message="tns:getRegistraTransaccionesCliente"/>
+      <output message="tns:getRegistraTransaccionesClienteResponse"/>
+    </operation>
+    <operation name="getEstadoCuentaCliente">
+      <input message="tns:getEstadoCuentaCliente"/>
+      <output message="tns:getEstadoCuentaClienteResponse"/>
+    </operation>
+    <operation name="getLogout">
+      <input message="tns:getLogout"/>
+      <output message="tns:getLogoutResponse"/>
+    </operation>
+    <operation name="getCorridas">
+      <input message="tns:getCorridas"/>
+      <output message="tns:getCorridasResponse"/>
+    </operation>
+    <operation name="getAsientosDisp">
+      <input message="tns:getAsientosDisp"/>
+      <output message="tns:getAsientosDispResponse"/>
+    </operation>
+    <operation name="getBloquearAsientos">
+      <input message="tns:getBloquearAsientos"/>
+      <output message="tns:getBloquearAsientosResponse"/>
+    </operation>
+    <operation name="getVenderBoletos">
+      <input message="tns:getVenderBoletos"/>
+      <output message="tns:getVenderBoletosResponse"/>
+    </operation>
+    <operation name="getValidarBoleto">
+      <input message="tns:getValidarBoleto"/>
+      <output message="tns:getValidarBoletoResponse"/>
+    </operation>
+    <operation name="getCancelarBoletos">
+      <input message="tns:getCancelarBoletos"/>
+      <output message="tns:getCancelarBoletosResponse"/>
+    </operation>
+    <operation name="getCambioHorario">
+      <input message="tns:getCambioHorario"/>
+      <output message="tns:getCambioHorarioResponse"/>
+    </operation>
+    <operation name="getCanjeBA">
+      <input message="tns:getCanjeBA"/>
+      <output message="tns:getCanjeBAResponse"/>
+    </operation>
+    <operation name="getRutasItinerarios">
+      <input message="tns:getRutasItinerarios"/>
+      <output message="tns:getRutasItinerariosResponse"/>
+    </operation>
+  </portType>
+  <binding name="ERWSINFRAPortBinding" type="tns:ERWSINFRA">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="getLogin">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getUnidades">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getCancelaContrato">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getOperacionContrato">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getUsuarios">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getServicios">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getPagos">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getClientes">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getFacturas">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getRutaServicios">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getOperacionesGuia">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getCancelarGuia">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getOperacionesPromocion">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getOperacionesUsuario">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getPromociones">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getOperacionesCliente">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getOperacionesClientesUsuario">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getOperacionesFactura">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getProductosCliente">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getPerfilesUsuario">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getOperacionesCreditoClientes">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getOperacionesPagosCliente">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getPagosFactura">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getOperacionesPagosFacturas">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getRegistraTransaccionesCliente">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getEstadoCuentaCliente">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getLogout">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getCorridas">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getAsientosDisp">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getBloquearAsientos">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getVenderBoletos">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getValidarBoleto">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getCancelarBoletos">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getCambioHorario">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getCanjeBA">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="getRutasItinerarios">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="ERWSINFRAService">
+    <port name="ERWSINFRAPort" binding="tns:ERWSINFRAPortBinding">
+      <soap:address location="http://devas01.estrellaroja.com.mx:8083/ER_WS_CONTROL/ERWSINFRAService" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part><con:part><con:url>http://devas01.estrellaroja.com.mx:8083/ER_WS_CONTROL/ERWSINFRAService/__container$publishing$subctx/WEB-INF/wsdl/ERWSINFRAService_schema1.xsd</con:url><con:content><![CDATA[<xs:schema version="1.0" targetNamespace="http://control/" xmlns:tns="http://control/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="getAsientosDisp" type="tns:getAsientosDisp"/>
+  <xs:element name="getAsientosDispResponse" type="tns:getAsientosDispResponse"/>
+  <xs:element name="getBloquearAsientos" type="tns:getBloquearAsientos"/>
+  <xs:element name="getBloquearAsientosResponse" type="tns:getBloquearAsientosResponse"/>
+  <xs:element name="getCambioHorario" type="tns:getCambioHorario"/>
+  <xs:element name="getCambioHorarioResponse" type="tns:getCambioHorarioResponse"/>
+  <xs:element name="getCancelaContrato" type="tns:getCancelaContrato"/>
+  <xs:element name="getCancelaContratoResponse" type="tns:getCancelaContratoResponse"/>
+  <xs:element name="getCancelarBoletos" type="tns:getCancelarBoletos"/>
+  <xs:element name="getCancelarBoletosResponse" type="tns:getCancelarBoletosResponse"/>
+  <xs:element name="getCancelarGuia" type="tns:getCancelarGuia"/>
+  <xs:element name="getCancelarGuiaResponse" type="tns:getCancelarGuiaResponse"/>
+  <xs:element name="getCanjeBA" type="tns:getCanjeBA"/>
+  <xs:element name="getCanjeBAResponse" type="tns:getCanjeBAResponse"/>
+  <xs:element name="getClientes" type="tns:getClientes"/>
+  <xs:element name="getClientesResponse" type="tns:getClientesResponse"/>
+  <xs:element name="getCorridas" type="tns:getCorridas"/>
+  <xs:element name="getCorridasResponse" type="tns:getCorridasResponse"/>
+  <xs:element name="getEstadoCuentaCliente" type="tns:getEstadoCuentaCliente"/>
+  <xs:element name="getEstadoCuentaClienteResponse" type="tns:getEstadoCuentaClienteResponse"/>
+  <xs:element name="getFacturas" type="tns:getFacturas"/>
+  <xs:element name="getFacturasResponse" type="tns:getFacturasResponse"/>
+  <xs:element name="getLogin" type="tns:getLogin"/>
+  <xs:element name="getLoginResponse" type="tns:getLoginResponse"/>
+  <xs:element name="getLogout" type="tns:getLogout"/>
+  <xs:element name="getLogoutResponse" type="tns:getLogoutResponse"/>
+  <xs:element name="getOperacionContrato" type="tns:getOperacionContrato"/>
+  <xs:element name="getOperacionContratoResponse" type="tns:getOperacionContratoResponse"/>
+  <xs:element name="getOperacionesCliente" type="tns:getOperacionesCliente"/>
+  <xs:element name="getOperacionesClienteResponse" type="tns:getOperacionesClienteResponse"/>
+  <xs:element name="getOperacionesClientesUsuario" type="tns:getOperacionesClientesUsuario"/>
+  <xs:element name="getOperacionesClientesUsuarioResponse" type="tns:getOperacionesClientesUsuarioResponse"/>
+  <xs:element name="getOperacionesCreditoClientes" type="tns:getOperacionesCreditoClientes"/>
+  <xs:element name="getOperacionesCreditoClientesResponse" type="tns:getOperacionesCreditoClientesResponse"/>
+  <xs:element name="getOperacionesFactura" type="tns:getOperacionesFactura"/>
+  <xs:element name="getOperacionesFacturaResponse" type="tns:getOperacionesFacturaResponse"/>
+  <xs:element name="getOperacionesGuia" type="tns:getOperacionesGuia"/>
+  <xs:element name="getOperacionesGuiaResponse" type="tns:getOperacionesGuiaResponse"/>
+  <xs:element name="getOperacionesPagosCliente" type="tns:getOperacionesPagosCliente"/>
+  <xs:element name="getOperacionesPagosClienteResponse" type="tns:getOperacionesPagosClienteResponse"/>
+  <xs:element name="getOperacionesPagosFacturas" type="tns:getOperacionesPagosFacturas"/>
+  <xs:element name="getOperacionesPagosFacturasResponse" type="tns:getOperacionesPagosFacturasResponse"/>
+  <xs:element name="getOperacionesPromocion" type="tns:getOperacionesPromocion"/>
+  <xs:element name="getOperacionesPromocionResponse" type="tns:getOperacionesPromocionResponse"/>
+  <xs:element name="getOperacionesUsuario" type="tns:getOperacionesUsuario"/>
+  <xs:element name="getOperacionesUsuarioResponse" type="tns:getOperacionesUsuarioResponse"/>
+  <xs:element name="getPagos" type="tns:getPagos"/>
+  <xs:element name="getPagosFactura" type="tns:getPagosFactura"/>
+  <xs:element name="getPagosFacturaResponse" type="tns:getPagosFacturaResponse"/>
+  <xs:element name="getPagosResponse" type="tns:getPagosResponse"/>
+  <xs:element name="getPerfilesUsuario" type="tns:getPerfilesUsuario"/>
+  <xs:element name="getPerfilesUsuarioResponse" type="tns:getPerfilesUsuarioResponse"/>
+  <xs:element name="getProductosCliente" type="tns:getProductosCliente"/>
+  <xs:element name="getProductosClienteResponse" type="tns:getProductosClienteResponse"/>
+  <xs:element name="getPromociones" type="tns:getPromociones"/>
+  <xs:element name="getPromocionesResponse" type="tns:getPromocionesResponse"/>
+  <xs:element name="getRegistraTransaccionesCliente" type="tns:getRegistraTransaccionesCliente"/>
+  <xs:element name="getRegistraTransaccionesClienteResponse" type="tns:getRegistraTransaccionesClienteResponse"/>
+  <xs:element name="getRutaServicios" type="tns:getRutaServicios"/>
+  <xs:element name="getRutaServiciosResponse" type="tns:getRutaServiciosResponse"/>
+  <xs:element name="getRutasItinerarios" type="tns:getRutasItinerarios"/>
+  <xs:element name="getRutasItinerariosResponse" type="tns:getRutasItinerariosResponse"/>
+  <xs:element name="getServicios" type="tns:getServicios"/>
+  <xs:element name="getServiciosResponse" type="tns:getServiciosResponse"/>
+  <xs:element name="getUnidades" type="tns:getUnidades"/>
+  <xs:element name="getUnidadesResponse" type="tns:getUnidadesResponse"/>
+  <xs:element name="getUsuarios" type="tns:getUsuarios"/>
+  <xs:element name="getUsuariosResponse" type="tns:getUsuariosResponse"/>
+  <xs:element name="getValidarBoleto" type="tns:getValidarBoleto"/>
+  <xs:element name="getValidarBoletoResponse" type="tns:getValidarBoletoResponse"/>
+  <xs:element name="getVenderBoletos" type="tns:getVenderBoletos"/>
+  <xs:element name="getVenderBoletosResponse" type="tns:getVenderBoletosResponse"/>
+  <xs:complexType name="getPagos">
+    <xs:sequence>
+      <xs:element name="request" type="tns:getPagosReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPagosReq">
+    <xs:sequence>
+      <xs:element name="clienteId" type="xs:string" minOccurs="0"/>
+      <xs:element name="estado" type="xs:string" minOccurs="0"/>
+      <xs:element name="referencia" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPagosResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getPagosResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPagosResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+      <xs:element name="pagos" type="tns:erPagosTbl" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="erPagosTbl">
+    <xs:sequence>
+      <xs:element name="adicional1" type="xs:string" minOccurs="0"/>
+      <xs:element name="adicional2" type="xs:string" minOccurs="0"/>
+      <xs:element name="adicional3" type="xs:string" minOccurs="0"/>
+      <xs:element name="adicional4" type="xs:string" minOccurs="0"/>
+      <xs:element name="adicional5" type="xs:string" minOccurs="0"/>
+      <xs:element name="clienteId" type="xs:integer" minOccurs="0"/>
+      <xs:element name="creadoPor" type="xs:integer" minOccurs="0"/>
+      <xs:element name="estado" type="xs:string" minOccurs="0"/>
+      <xs:element name="fecha" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="fechaContable" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="fechaCreacion" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="formaPagoId" type="xs:integer" minOccurs="0"/>
+      <xs:element name="monto" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="noTarjeta" type="xs:string" minOccurs="0"/>
+      <xs:element name="pagoId" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="referencia" type="xs:string" minOccurs="0"/>
+      <xs:element name="tipoPago" type="xs:string" minOccurs="0"/>
+      <xs:element name="ultimaActualizacionPor" type="xs:integer" minOccurs="0"/>
+      <xs:element name="ultimaFechaActualizacion" type="xs:dateTime" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesPagosFacturas">
+    <xs:sequence>
+      <xs:element name="parametros" type="tns:getOperacionesPagosFacturasReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesPagosFacturasReq">
+    <xs:sequence>
+      <xs:element name="operacion" type="xs:string" minOccurs="0"/>
+      <xs:element name="pagos" type="tns:pagoFactura" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="pagoFactura">
+    <xs:sequence>
+      <xs:element name="facturaId" type="xs:integer" minOccurs="0"/>
+      <xs:element name="montoAplicado" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="montoPago" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="pagoId" type="xs:integer" minOccurs="0"/>
+      <xs:element name="pagosFacturaId" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="referenciaPago" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesPagosFacturasResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getOperacionesPagosFacturasResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesPagosFacturasResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getClientes">
+    <xs:sequence>
+      <xs:element name="request" type="tns:getClientesReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getClientesReq">
+    <xs:sequence>
+      <xs:element name="clienteNoCuenta" type="xs:string" minOccurs="0"/>
+      <xs:element name="clienteNombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="clienteRFC" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getClientesResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getClientesResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getClientesResp">
+    <xs:sequence>
+      <xs:element name="clientes" type="tns:erClientesTbl" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="erClientesTbl">
+    <xs:sequence>
+      <xs:element name="activo" type="xs:string" minOccurs="0"/>
+      <xs:element name="amaterno" type="xs:string" minOccurs="0"/>
+      <xs:element name="apaterno" type="xs:string" minOccurs="0"/>
+      <xs:element name="aplicaRetencion" type="xs:string" minOccurs="0"/>
+      <xs:element name="calle" type="xs:string" minOccurs="0"/>
+      <xs:element name="ciudad" type="xs:string" minOccurs="0"/>
+      <xs:element name="claveUsuario" type="xs:string" minOccurs="0"/>
+      <xs:element name="clienteId" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="codigoPostal" type="xs:string" minOccurs="0"/>
+      <xs:element name="colonia" type="xs:string" minOccurs="0"/>
+      <xs:element name="contacto" type="xs:string" minOccurs="0"/>
+      <xs:element name="contrasenaUsuario" type="xs:string" minOccurs="0"/>
+      <xs:element name="creditoActivo" type="xs:string" minOccurs="0"/>
+      <xs:element name="direccionFiscal" type="xs:string" minOccurs="0"/>
+      <xs:element name="email" type="xs:string" minOccurs="0"/>
+      <xs:element name="estado" type="xs:string" minOccurs="0"/>
+      <xs:element name="fechaBaja" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="fechaRegistro" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="limiteCredito" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="motivoSuspencion" type="xs:string" minOccurs="0"/>
+      <xs:element name="noCuenta" type="xs:string" minOccurs="0"/>
+      <xs:element name="noExt" type="xs:string" minOccurs="0"/>
+      <xs:element name="noInt" type="xs:string" minOccurs="0"/>
+      <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="nombreFiscal" type="xs:string" minOccurs="0"/>
+      <xs:element name="pais" type="xs:string" minOccurs="0"/>
+      <xs:element name="personaMoral" type="xs:string" minOccurs="0"/>
+      <xs:element name="referencia" type="xs:string" minOccurs="0"/>
+      <xs:element name="rfc" type="xs:string" minOccurs="0"/>
+      <xs:element name="saldoActual" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="saldoFavor" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="telefono" type="xs:string" minOccurs="0"/>
+      <xs:element name="telefonoCelular" type="xs:string" minOccurs="0"/>
+      <xs:element name="telefonoFax" type="xs:string" minOccurs="0"/>
+      <xs:element name="telefonoOficina" type="xs:string" minOccurs="0"/>
+      <xs:element name="tipoClienteId" type="xs:integer" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPerfilesUsuario">
+    <xs:sequence>
+      <xs:element name="parametros" type="tns:getPerfilesUsuarioReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPerfilesUsuarioReq">
+    <xs:sequence>
+      <xs:element name="sesionId" type="xs:long"/>
+      <xs:element name="usuarioId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPerfilesUsuarioResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getPerfilesUsuarioResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPerfilesUsuarioResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+      <xs:element name="perfiles" type="tns:perfil" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="perfil">
+    <xs:sequence>
+      <xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+      <xs:element name="funciones" type="tns:funcion" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="perfilId" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="perfilNombre" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="funcion">
+    <xs:sequence>
+      <xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+      <xs:element name="funcionId" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="funcionNombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="funcionNombreUsuario" type="xs:string" minOccurs="0"/>
+      <xs:element name="funcionNumero" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getUnidades">
+    <xs:sequence>
+      <xs:element name="request" type="tns:getUnidadesReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getUnidadesReq">
+    <xs:sequence>
+      <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getUnidadesResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getUnidadesResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getUnidadesResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+      <xs:element name="unidades" type="tns:unidad" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="unidad">
+    <xs:sequence>
+      <xs:element name="activo" type="xs:string" minOccurs="0"/>
+      <xs:element name="aireAcondicionado" type="xs:string" minOccurs="0"/>
+      <xs:element name="banio" type="xs:string" minOccurs="0"/>
+      <xs:element name="linea1" type="xs:string" minOccurs="0"/>
+      <xs:element name="linea10" type="xs:string" minOccurs="0"/>
+      <xs:element name="linea11" type="xs:string" minOccurs="0"/>
+      <xs:element name="linea12" type="xs:string" minOccurs="0"/>
+      <xs:element name="linea13" type="xs:string" minOccurs="0"/>
+      <xs:element name="linea14" type="xs:string" minOccurs="0"/>
+      <xs:element name="linea15" type="xs:string" minOccurs="0"/>
+      <xs:element name="linea2" type="xs:string" minOccurs="0"/>
+      <xs:element name="linea3" type="xs:string" minOccurs="0"/>
+      <xs:element name="linea4" type="xs:string" minOccurs="0"/>
+      <xs:element name="linea5" type="xs:string" minOccurs="0"/>
+      <xs:element name="linea6" type="xs:string" minOccurs="0"/>
+      <xs:element name="linea7" type="xs:string" minOccurs="0"/>
+      <xs:element name="linea8" type="xs:string" minOccurs="0"/>
+      <xs:element name="linea9" type="xs:string" minOccurs="0"/>
+      <xs:element name="no_unidades" type="xs:int"/>
+      <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="otros1" type="xs:string" minOccurs="0"/>
+      <xs:element name="otros2" type="xs:string" minOccurs="0"/>
+      <xs:element name="television" type="xs:string" minOccurs="0"/>
+      <xs:element name="tipoFlotilla" type="xs:string" minOccurs="0"/>
+      <xs:element name="titulo" type="xs:string" minOccurs="0"/>
+      <xs:element name="unidad" type="xs:string" minOccurs="0"/>
+      <xs:element name="unidad_ID" type="xs:long" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getProductosCliente">
+    <xs:sequence>
+      <xs:element name="request" type="tns:getProductosClienteReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getProductosClienteReq">
+    <xs:sequence>
+      <xs:element name="clienteId" type="xs:string" minOccurs="0"/>
+      <xs:element name="nombreProducto" type="xs:string" minOccurs="0"/>
+      <xs:element name="referencia" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getProductosClienteResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getProductosClienteResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getProductosClienteResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+      <xs:element name="productos" type="tns:erProductoCliente" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="erProductoCliente">
+    <xs:sequence>
+      <xs:element name="descuento" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="iva" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="iva_retenido" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="nombre_producto" type="xs:string" minOccurs="0"/>
+      <xs:element name="referencia_producto" type="xs:string" minOccurs="0"/>
+      <xs:element name="ret_5millar" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="subtotal" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="total" type="xs:decimal" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPagosFactura">
+    <xs:sequence>
+      <xs:element name="parametros" type="tns:getPagosFacturaReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPagosFacturaReq">
+    <xs:sequence>
+      <xs:element name="facturaId" type="xs:long"/>
+      <xs:element name="sesionId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPagosFacturaResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getPagosFacturaResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPagosFacturaResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+      <xs:element name="pagosFacturas" type="tns:pagoFactura" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCanjeBA">
+    <xs:sequence>
+      <xs:element name="request" type="tns:canjeBAReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="canjeBAReq">
+    <xs:sequence>
+      <xs:element name="asientos" type="tns:asientos" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="foliosBoletos" type="tns:foliosBoletos" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="asientos">
+    <xs:sequence>
+      <xs:element name="autorizadoPor" type="xs:int"/>
+      <xs:element name="caja" type="xs:string" minOccurs="0"/>
+      <xs:element name="claveCorrida" type="xs:string" minOccurs="0"/>
+      <xs:element name="claveReservacion" type="xs:string" minOccurs="0"/>
+      <xs:element name="clienteId" type="xs:int"/>
+      <xs:element name="destino" type="xs:string" minOccurs="0"/>
+      <xs:element name="empresa" type="xs:string" minOccurs="0"/>
+      <xs:element name="fechaHoraVenta" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="folioPreimpreso" type="xs:string" minOccurs="0"/>
+      <xs:element name="importeBoleto" type="xs:float"/>
+      <xs:element name="noAsiento" type="xs:int"/>
+      <xs:element name="nombrePasajero" type="xs:string" minOccurs="0"/>
+      <xs:element name="origen" type="xs:string" minOccurs="0"/>
+      <xs:element name="origenCorrida" type="xs:string" minOccurs="0"/>
+      <xs:element name="referenciaAdicional1" type="xs:string" minOccurs="0"/>
+      <xs:element name="referenciaAdicional10" type="xs:string" minOccurs="0"/>
+      <xs:element name="referenciaAdicional2" type="xs:string" minOccurs="0"/>
+      <xs:element name="referenciaAdicional3" type="xs:string" minOccurs="0"/>
+      <xs:element name="referenciaAdicional4" type="xs:string" minOccurs="0"/>
+      <xs:element name="referenciaAdicional5" type="xs:string" minOccurs="0"/>
+      <xs:element name="referenciaAdicional6" type="xs:string" minOccurs="0"/>
+      <xs:element name="referenciaAdicional7" type="xs:string" minOccurs="0"/>
+      <xs:element name="referenciaAdicional8" type="xs:string" minOccurs="0"/>
+      <xs:element name="referenciaAdicional9" type="xs:string" minOccurs="0"/>
+      <xs:element name="referenciaPago" type="xs:string" minOccurs="0"/>
+      <xs:element name="serieBoleto" type="xs:string" minOccurs="0"/>
+      <xs:element name="servicio" type="xs:string" minOccurs="0"/>
+      <xs:element name="sucursalClave" type="xs:string" minOccurs="0"/>
+      <xs:element name="tipoBoleto" type="xs:string" minOccurs="0"/>
+      <xs:element name="tipoPago" type="xs:string" minOccurs="0"/>
+      <xs:element name="tipoPasajero" type="xs:string" minOccurs="0"/>
+      <xs:element name="tipoVenta" type="xs:string" minOccurs="0"/>
+      <xs:element name="usuarioNumero" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="foliosBoletos">
+    <xs:sequence>
+      <xs:element name="folioPreimpreso" type="xs:string" minOccurs="0"/>
+      <xs:element name="noAsiento" type="xs:int"/>
+      <xs:element name="nombrePasajero" type="xs:string" minOccurs="0"/>
+      <xs:element name="origen" type="xs:string" minOccurs="0"/>
+      <xs:element name="serieBoleto" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCanjeBAResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:canjeBAResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="canjeBAResp">
+    <xs:complexContent>
+      <xs:extension base="tns:exchangeResp">
+        <xs:sequence>
+          <xs:element name="foliosBoletos" type="tns:foliosBoletos" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="exchangeResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getLogin">
+    <xs:sequence>
+      <xs:element name="parameter" type="tns:getLoginReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getLoginReq">
+    <xs:sequence>
+      <xs:element name="canalVenta" type="xs:string" minOccurs="0"/>
+      <xs:element name="direccionIP" type="xs:string" minOccurs="0"/>
+      <xs:element name="direccionMAC" type="xs:string" minOccurs="0"/>
+      <xs:element name="nombreCaja" type="xs:string" minOccurs="0"/>
+      <xs:element name="nombreEquipo" type="xs:string" minOccurs="0"/>
+      <xs:element name="sucursalClave" type="xs:string" minOccurs="0"/>
+      <xs:element name="usuarioContrasena" type="xs:string" minOccurs="0"/>
+      <xs:element name="usuarioNumero" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getLoginResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getLoginResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getLoginResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+      <xs:element name="sesionId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getEstadoCuentaCliente">
+    <xs:sequence>
+      <xs:element name="parametros" type="tns:getEstadoCuentaClienteReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getEstadoCuentaClienteReq">
+    <xs:sequence>
+      <xs:element name="clienteNoCuenta" type="xs:string" minOccurs="0"/>
+      <xs:element name="clienteNombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="clienteRFC" type="xs:string" minOccurs="0"/>
+      <xs:element name="fechaFinal" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="fechaInicial" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getEstadoCuentaClienteResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getEstadoCuentaClienteResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getEstadoCuentaClienteResp">
+    <xs:sequence>
+      <xs:element name="cliente" type="tns:cliente" minOccurs="0"/>
+      <xs:element name="clienteTransacciones" type="tns:clienteTransaccion" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cliente">
+    <xs:sequence>
+      <xs:element name="activo" type="xs:string" minOccurs="0"/>
+      <xs:element name="amaterno" type="xs:string" minOccurs="0"/>
+      <xs:element name="apaterno" type="xs:string" minOccurs="0"/>
+      <xs:element name="aplicaRetencion" type="xs:string" minOccurs="0"/>
+      <xs:element name="calle" type="xs:string" minOccurs="0"/>
+      <xs:element name="ciudad" type="xs:string" minOccurs="0"/>
+      <xs:element name="claveUsuario" type="xs:string" minOccurs="0"/>
+      <xs:element name="clienteId" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="codigoPostal" type="xs:string" minOccurs="0"/>
+      <xs:element name="colonia" type="xs:string" minOccurs="0"/>
+      <xs:element name="contacto" type="xs:string" minOccurs="0"/>
+      <xs:element name="contrasenaUsuario" type="xs:string" minOccurs="0"/>
+      <xs:element name="creditoActivo" type="xs:string" minOccurs="0"/>
+      <xs:element name="direccionFiscal" type="xs:string" minOccurs="0"/>
+      <xs:element name="email" type="xs:string" minOccurs="0"/>
+      <xs:element name="estado" type="xs:string" minOccurs="0"/>
+      <xs:element name="fechaBaja" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="fechaRegistro" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="limiteCredito" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="motivoSuspencion" type="xs:string" minOccurs="0"/>
+      <xs:element name="noCuenta" type="xs:string" minOccurs="0"/>
+      <xs:element name="noExt" type="xs:string" minOccurs="0"/>
+      <xs:element name="noInt" type="xs:string" minOccurs="0"/>
+      <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="nombreFiscal" type="xs:string" minOccurs="0"/>
+      <xs:element name="pais" type="xs:string" minOccurs="0"/>
+      <xs:element name="personaMoral" type="xs:string" minOccurs="0"/>
+      <xs:element name="referencia" type="xs:string" minOccurs="0"/>
+      <xs:element name="rfc" type="xs:string" minOccurs="0"/>
+      <xs:element name="saldoActual" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="saldoFavor" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="telefono" type="xs:string" minOccurs="0"/>
+      <xs:element name="telefonoCelular" type="xs:string" minOccurs="0"/>
+      <xs:element name="telefonoFax" type="xs:string" minOccurs="0"/>
+      <xs:element name="telefonoOficina" type="xs:string" minOccurs="0"/>
+      <xs:element name="tipoClienteId" type="xs:integer" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="clienteTransaccion">
+    <xs:sequence>
+      <xs:element name="clienteId" type="xs:integer" minOccurs="0"/>
+      <xs:element name="clienteTransaccionId" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="fechaTransaccion" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="IVA" type="xs:float"/>
+      <xs:element name="IVARetenido" type="xs:float"/>
+      <xs:element name="montoComision" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="montoDescuento" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="montoTransaccion" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="nombreProducto" type="xs:string" minOccurs="0"/>
+      <xs:element name="numeroTransaccion" type="xs:string" minOccurs="0"/>
+      <xs:element name="retencion5Millar" type="xs:float"/>
+      <xs:element name="saldoFavor" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="saldoFinal" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="saldoInicial" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="subtotal" type="xs:float"/>
+      <xs:element name="tipoMovimientoId" type="xs:string" minOccurs="0"/>
+      <xs:element name="total" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesPromocion">
+    <xs:sequence>
+      <xs:element name="request" type="tns:getOperacionesPromocionReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesPromocionReq">
+    <xs:sequence>
+      <xs:element name="operacion" type="xs:string" minOccurs="0"/>
+      <xs:element name="promocion" type="tns:erPromocionesTbl" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="erPromocionesTbl">
+    <xs:sequence>
+      <xs:element name="adicional1" type="xs:string" minOccurs="0"/>
+      <xs:element name="adicional2" type="xs:string" minOccurs="0"/>
+      <xs:element name="adicional3" type="xs:string" minOccurs="0"/>
+      <xs:element name="adicional4" type="xs:string" minOccurs="0"/>
+      <xs:element name="adicional5" type="xs:string" minOccurs="0"/>
+      <xs:element name="aplicaRedondo" type="xs:string" minOccurs="0"/>
+      <xs:element name="aplicaSencillo" type="xs:string" minOccurs="0"/>
+      <xs:element name="canalVenta" type="xs:string" minOccurs="0"/>
+      <xs:element name="codigoPromocion" type="xs:string" minOccurs="0"/>
+      <xs:element name="compraMinima" type="xs:float"/>
+      <xs:element name="creadoPor" type="xs:integer" minOccurs="0"/>
+      <xs:element name="descripcionPromocion" type="xs:string" minOccurs="0"/>
+      <xs:element name="empresaId" type="xs:integer" minOccurs="0"/>
+      <xs:element name="fechaCreacion" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="nombreProducto" type="xs:string" minOccurs="0"/>
+      <xs:element name="nombrePromocion" type="xs:string" minOccurs="0"/>
+      <xs:element name="promocionId" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="rutaId" type="xs:integer" minOccurs="0"/>
+      <xs:element name="servicioId" type="xs:integer" minOccurs="0"/>
+      <xs:element name="tramoId" type="xs:integer" minOccurs="0"/>
+      <xs:element name="ultimaActualizacionPor" type="xs:integer" minOccurs="0"/>
+      <xs:element name="ultimaFechaActualizacion" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="vigenciaFechaFinal" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="vigenciaFechaInicial" type="xs:dateTime" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesPromocionResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getOperacionesPromocionResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesPromocionResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+      <xs:element name="promocionId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesCreditoClientes">
+    <xs:sequence>
+      <xs:element name="parametros" type="tns:getOperacionesCreditoClientesReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesCreditoClientesReq">
+    <xs:sequence>
+      <xs:element name="aplicaRetencion" type="xs:string" minOccurs="0"/>
+      <xs:element name="clienteComisiones" type="tns:clienteComisiones" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="clienteId" type="xs:long"/>
+      <xs:element name="creditoActivo" type="xs:string" minOccurs="0"/>
+      <xs:element name="limiteCredito" type="xs:float"/>
+      <xs:element name="noCuenta" type="xs:string" minOccurs="0"/>
+      <xs:element name="referencia" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="clienteComisiones">
+    <xs:sequence>
+      <xs:element name="clienteComisionId" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="clienteId" type="xs:integer" minOccurs="0"/>
+      <xs:element name="empresaId" type="xs:integer" minOccurs="0"/>
+      <xs:element name="fechaFinal" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="fechaInicial" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="nombreProducto" type="xs:string" minOccurs="0"/>
+      <xs:element name="porcentajeComision" type="xs:integer" minOccurs="0"/>
+      <xs:element name="rutaId" type="xs:integer" minOccurs="0"/>
+      <xs:element name="servicioId" type="xs:integer" minOccurs="0"/>
+      <xs:element name="tramoId" type="xs:integer" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesCreditoClientesResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getOperacionesCreditoClientesResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesCreditoClientesResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRegistraTransaccionesCliente">
+    <xs:sequence>
+      <xs:element name="parametros" type="tns:getRegistraTransaccionesClienteReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRegistraTransaccionesClienteReq">
+    <xs:sequence>
+      <xs:element name="clienteId" type="xs:long"/>
+      <xs:element name="fechaTransaccion" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="IVA" type="xs:float"/>
+      <xs:element name="IVARetenido" type="xs:float"/>
+      <xs:element name="montoComision" type="xs:float"/>
+      <xs:element name="montoDescuento" type="xs:float"/>
+      <xs:element name="montoTransaccion" type="xs:float"/>
+      <xs:element name="nombreProducto" type="xs:string" minOccurs="0"/>
+      <xs:element name="numeroTransaccion" type="xs:string" minOccurs="0"/>
+      <xs:element name="retencion5Millar" type="xs:float"/>
+      <xs:element name="sesionId" type="xs:long"/>
+      <xs:element name="subtotal" type="xs:float"/>
+      <xs:element name="tipoMovimiento" type="xs:string" minOccurs="0"/>
+      <xs:element name="total" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRegistraTransaccionesClienteResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getRegistraTransaccionesClienteResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRegistraTransaccionesClienteResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+      <xs:element name="saldoActual" type="xs:float"/>
+      <xs:element name="saldoFavor" type="xs:float"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesPagosCliente">
+    <xs:sequence>
+      <xs:element name="parametros" type="tns:getOperacionesPagosClienteReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesPagosClienteReq">
+    <xs:sequence>
+      <xs:element name="operacion" type="xs:string" minOccurs="0"/>
+      <xs:element name="pago" type="tns:pago" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="pago">
+    <xs:sequence>
+      <xs:element name="clienteId" type="xs:integer" minOccurs="0"/>
+      <xs:element name="estado" type="xs:string" minOccurs="0"/>
+      <xs:element name="fecha" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="fechaContable" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="formaPagoId" type="xs:integer" minOccurs="0"/>
+      <xs:element name="monto" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="noTarjeta" type="xs:string" minOccurs="0"/>
+      <xs:element name="pagoId" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="referencia" type="xs:string" minOccurs="0"/>
+      <xs:element name="tipoPago" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesPagosClienteResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getOperacionesPagosClienteResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesPagosClienteResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+      <xs:element name="pagoId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getValidarBoleto">
+    <xs:sequence>
+      <xs:element name="request" type="tns:validarBoletoReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="validarBoletoReq">
+    <xs:sequence>
+      <xs:element name="foliosBoletos" type="tns:foliosBoletos" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:int"/>
+      <xs:element name="tipoMovimiento" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getValidarBoletoResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:validarBoletoResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="validarBoletoResp">
+    <xs:complexContent>
+      <xs:extension base="tns:exchangeResp">
+        <xs:sequence>
+          <xs:element name="asientos" type="tns:asientos" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+          <xs:element name="foliosBoletos" type="tns:foliosBoletos" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="getCancelarBoletos">
+    <xs:sequence>
+      <xs:element name="request" type="tns:cancelarBoletosReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cancelarBoletosReq">
+    <xs:sequence>
+      <xs:element name="foliosBoletos" type="tns:foliosBoletos" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="motivoCancelacion" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCancelarBoletosResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:cancelarBoletosResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cancelarBoletosResp">
+    <xs:complexContent>
+      <xs:extension base="tns:exchangeResp">
+        <xs:sequence>
+          <xs:element name="asientos" type="tns:asientos" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="getServicios">
+    <xs:sequence>
+      <xs:element name="parametros" type="tns:getServiciosReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getServiciosReq">
+    <xs:sequence>
+      <xs:element name="clasificacion" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getServiciosResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getServiciosResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getServiciosResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+      <xs:element name="servicios" type="tns:servicio" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="servicio">
+    <xs:sequence>
+      <xs:element name="aplicaDescuento" type="xs:string" minOccurs="0"/>
+      <xs:element name="clasificaLpId" type="xs:int" minOccurs="0"/>
+      <xs:element name="clasificaTipoEnvio" type="xs:int" minOccurs="0"/>
+      <xs:element name="codigo" type="xs:string" minOccurs="0"/>
+      <xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+      <xs:element name="descuento" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="importe" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="iva" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="ivaRetenido" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="requiereRetencion" type="xs:string" minOccurs="0"/>
+      <xs:element name="rutaId" type="xs:int" minOccurs="0"/>
+      <xs:element name="servicioId" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="total" type="xs:decimal" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getLogout">
+    <xs:sequence>
+      <xs:element name="parameter" type="tns:getLogoutReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getLogoutReq">
+    <xs:sequence>
+      <xs:element name="sesionId" type="xs:long"/>
+      <xs:element name="usuarioContrasena" type="xs:string" minOccurs="0"/>
+      <xs:element name="usuarioNumero" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getLogoutResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getLogoutResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getLogoutResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPromociones">
+    <xs:sequence>
+      <xs:element name="parametros" type="tns:getPromocionesReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPromocionesReq">
+    <xs:sequence>
+      <xs:element name="codigoPromocion" type="xs:string" minOccurs="0"/>
+      <xs:element name="nombreProducto" type="xs:string" minOccurs="0"/>
+      <xs:element name="nombrePromocion" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPromocionesResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getPromocionesResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getPromocionesResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+      <xs:element name="promociones" type="tns:erPromocionesTbl" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesFactura">
+    <xs:sequence>
+      <xs:element name="request" type="tns:getOperacionesFacturaReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesFacturaReq">
+    <xs:sequence>
+      <xs:element name="factura" type="tns:erFacturasTbl" minOccurs="0"/>
+      <xs:element name="operacion" type="xs:string" minOccurs="0"/>
+      <xs:element name="productos" type="tns:erProductosRefTbl" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="erFacturasTbl">
+    <xs:sequence>
+      <xs:element name="adicional1" type="xs:string" minOccurs="0"/>
+      <xs:element name="adicional2" type="xs:string" minOccurs="0"/>
+      <xs:element name="adicional3" type="xs:string" minOccurs="0"/>
+      <xs:element name="adicional4" type="xs:string" minOccurs="0"/>
+      <xs:element name="adicional5" type="xs:string" minOccurs="0"/>
+      <xs:element name="ciudad" type="xs:string" minOccurs="0"/>
+      <xs:element name="claveFacturaElec" type="xs:string" minOccurs="0"/>
+      <xs:element name="clienteId" type="xs:integer" minOccurs="0"/>
+      <xs:element name="codProveedor" type="xs:string" minOccurs="0"/>
+      <xs:element name="codigopostal" type="xs:string" minOccurs="0"/>
+      <xs:element name="colonia" type="xs:string" minOccurs="0"/>
+      <xs:element name="concepto" type="xs:string" minOccurs="0"/>
+      <xs:element name="correoSolic" type="xs:string" minOccurs="0"/>
+      <xs:element name="descuento" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="domicilio" type="xs:string" minOccurs="0"/>
+      <xs:element name="EMail" type="xs:string" minOccurs="0"/>
+      <xs:element name="estado" type="xs:string" minOccurs="0"/>
+      <xs:element name="estadoFactura" type="xs:string" minOccurs="0"/>
+      <xs:element name="facturaId" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="fecha" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="fechaContable" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="fechaVencimiento" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="iva" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="ivaRetenido" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="metodoPago" type="xs:string" minOccurs="0"/>
+      <xs:element name="no_Ext" type="xs:string" minOccurs="0"/>
+      <xs:element name="no_Int" type="xs:string" minOccurs="0"/>
+      <xs:element name="numCuenta" type="xs:string" minOccurs="0"/>
+      <xs:element name="observaciones" type="xs:string" minOccurs="0"/>
+      <xs:element name="ordenCompra" type="xs:string" minOccurs="0"/>
+      <xs:element name="pais" type="xs:string" minOccurs="0"/>
+      <xs:element name="producto" type="xs:string" minOccurs="0"/>
+      <xs:element name="razonSocial" type="xs:string" minOccurs="0"/>
+      <xs:element name="ret5millar" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="rfc" type="xs:string" minOccurs="0"/>
+      <xs:element name="rutaPdf" type="xs:string" minOccurs="0"/>
+      <xs:element name="rutaXml" type="xs:string" minOccurs="0"/>
+      <xs:element name="solicitante" type="xs:string" minOccurs="0"/>
+      <xs:element name="subtotal" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="telefono" type="xs:string" minOccurs="0"/>
+      <xs:element name="total" type="xs:decimal" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="erProductosRefTbl">
+    <xs:sequence>
+      <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="referencia" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesFacturaResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getOperacionesFacturaResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesFacturaResp">
+    <xs:sequence>
+      <xs:element name="claveFactura" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="facturaId" type="xs:string" minOccurs="0"/>
+      <xs:element name="facturaPDF" type="xs:base64Binary" minOccurs="0"/>
+      <xs:element name="facturaXML" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCorridas">
+    <xs:sequence>
+      <xs:element name="request" type="tns:corridasReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="corridasReq">
+    <xs:sequence>
+      <xs:element name="destino" type="xs:string" minOccurs="0"/>
+      <xs:element name="empresa" type="xs:string" minOccurs="0"/>
+      <xs:element name="fechaHoraSalida" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="origen" type="xs:string" minOccurs="0"/>
+      <xs:element name="servicio" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCorridasResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:corridasResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="corridasResp">
+    <xs:complexContent>
+      <xs:extension base="tns:exchangeResp">
+        <xs:sequence>
+          <xs:element name="corridas" type="tns:corrida" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="corrida">
+    <xs:sequence>
+      <xs:element name="aplicaDescuentoRedondo" type="xs:string" minOccurs="0"/>
+      <xs:element name="autobus" type="xs:string" minOccurs="0"/>
+      <xs:element name="capacidad" type="xs:int"/>
+      <xs:element name="claveCorrida" type="xs:string" minOccurs="0"/>
+      <xs:element name="destinoCorrida" type="xs:string" minOccurs="0"/>
+      <xs:element name="destinoSolicitado" type="xs:string" minOccurs="0"/>
+      <xs:element name="empresa" type="xs:string" minOccurs="0"/>
+      <xs:element name="estadoCorrida" type="xs:string" minOccurs="0"/>
+      <xs:element name="fechaCorrida" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="fechaHoraSalida" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="fechaLlegada" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="horaCorrida" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="horaLLegada" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="operador" type="xs:string" minOccurs="0"/>
+      <xs:element name="origenCorrida" type="xs:string" minOccurs="0"/>
+      <xs:element name="origenSolicitado" type="xs:string" minOccurs="0"/>
+      <xs:element name="plantillaId" type="xs:int"/>
+      <xs:element name="servicio" type="xs:string" minOccurs="0"/>
+      <xs:element name="tarifaRedondo" type="xs:string" minOccurs="0"/>
+      <xs:element name="tarifaSencillo" type="xs:string" minOccurs="0"/>
+      <xs:element name="tipoCorrida" type="xs:string" minOccurs="0"/>
+      <xs:element name="tipoPaxPermitido" type="xs:string" minOccurs="0"/>
+      <xs:element name="tipoVenta" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCancelaContrato">
+    <xs:sequence>
+      <xs:element name="request" type="tns:getCancelaContratoReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCancelaContratoReq">
+    <xs:sequence>
+      <xs:element name="contrato_ID" type="xs:string" minOccurs="0"/>
+      <xs:element name="referenciaContrato" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCancelaContratoResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getCancelaContratoResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCancelaContratoResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRutasItinerarios">
+    <xs:sequence>
+      <xs:element name="request" type="tns:getRutasItinerariosReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRutasItinerariosReq">
+    <xs:sequence>
+      <xs:element name="destino" type="xs:string" minOccurs="0"/>
+      <xs:element name="origen" type="xs:string" minOccurs="0"/>
+      <xs:element name="servicio" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRutasItinerariosResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getRutasItinerariosResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRutasItinerariosResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+      <xs:element name="servicios" type="tns:rutaItinerarios" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="rutaItinerarios">
+    <xs:sequence>
+      <xs:element name="empresa" type="xs:string" minOccurs="0"/>
+      <xs:element name="nombreServicio" type="xs:string" minOccurs="0"/>
+      <xs:element name="ruta" type="tns:rutaItinerario" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="servicio" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="rutaItinerario">
+    <xs:sequence>
+      <xs:element name="destino" type="xs:string" minOccurs="0"/>
+      <xs:element name="destinoDescripcion" type="xs:string" minOccurs="0"/>
+      <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="origen" type="xs:string" minOccurs="0"/>
+      <xs:element name="origenDescripcion" type="xs:string" minOccurs="0"/>
+      <xs:element name="ruta_ID" type="xs:long" minOccurs="0"/>
+      <xs:element name="tramo" type="tns:tramo" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="tramo">
+    <xs:sequence>
+      <xs:element name="destino" type="xs:string" minOccurs="0"/>
+      <xs:element name="destinoDescripcion" type="xs:string" minOccurs="0"/>
+      <xs:element name="origen" type="xs:string" minOccurs="0"/>
+      <xs:element name="origenDescripcion" type="xs:string" minOccurs="0"/>
+      <xs:element name="tiempo_Desface" type="xs:long" minOccurs="0"/>
+      <xs:element name="tramo_Numero" type="xs:long" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesGuia">
+    <xs:sequence>
+      <xs:element name="parametros" type="tns:getOperacionesGuiaReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesGuiaReq">
+    <xs:sequence>
+      <xs:element name="clienteId" type="xs:long"/>
+      <xs:element name="formaPago" type="xs:string" minOccurs="0"/>
+      <xs:element name="guia" type="tns:guia" minOccurs="0"/>
+      <xs:element name="numeroGuiaAbierta" type="xs:string" minOccurs="0"/>
+      <xs:element name="numeroGuias" type="xs:long"/>
+      <xs:element name="operacion" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long"/>
+      <xs:element name="tipoVenta" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="guia">
+    <xs:sequence>
+      <xs:element name="adicional1" type="xs:string" minOccurs="0"/>
+      <xs:element name="adicional2" type="xs:string" minOccurs="0"/>
+      <xs:element name="clasificacion" type="xs:int" minOccurs="0"/>
+      <xs:element name="clienteId" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="clientePagoId" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="creado_por" type="xs:long"/>
+      <xs:element name="descuento" type="xs:float"/>
+      <xs:element name="destinatario" type="tns:datosPersona" minOccurs="0"/>
+      <xs:element name="destinatario_Email" type="xs:string" minOccurs="0"/>
+      <xs:element name="fecha" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="fecha_creacion" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="fecha_pago" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="importe" type="xs:float"/>
+      <xs:element name="iva" type="xs:float"/>
+      <xs:element name="observaciones" type="xs:string" minOccurs="0"/>
+      <xs:element name="paquetes" type="tns:paquete" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="remitente" type="tns:datosPersona" minOccurs="0"/>
+      <xs:element name="responsable_identificacion" type="xs:string" minOccurs="0"/>
+      <xs:element name="responsable_nombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="responsable_tipodoc" type="xs:string" minOccurs="0"/>
+      <xs:element name="retencion" type="xs:float"/>
+      <xs:element name="ruta" type="tns:ruta" minOccurs="0"/>
+      <xs:element name="rutaId" type="xs:long"/>
+      <xs:element name="servicios" type="tns:servicio" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="sucursalId" type="xs:long"/>
+      <xs:element name="total" type="xs:float"/>
+      <xs:element name="ultima_actualizacion_por" type="xs:long"/>
+      <xs:element name="ultima_fecha_actualizacion" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="valorDeclarado" type="xs:decimal" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="datosPersona">
+    <xs:sequence>
+      <xs:element name="direccion" type="tns:direccion" minOccurs="0"/>
+      <xs:element name="email" type="xs:string" minOccurs="0"/>
+      <xs:element name="nombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="rfc" type="xs:string" minOccurs="0"/>
+      <xs:element name="telefono" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="direccion">
+    <xs:sequence>
+      <xs:element name="ciudad" type="xs:string" minOccurs="0"/>
+      <xs:element name="codigoPostal" type="xs:string" minOccurs="0"/>
+      <xs:element name="colonia" type="xs:string" minOccurs="0"/>
+      <xs:element name="domicilio" type="xs:string" minOccurs="0"/>
+      <xs:element name="estado" type="xs:string" minOccurs="0"/>
+      <xs:element name="numExt" type="xs:string" minOccurs="0"/>
+      <xs:element name="numInt" type="xs:string" minOccurs="0"/>
+      <xs:element name="pais" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="paquete">
+    <xs:sequence>
+      <xs:element name="alto" type="xs:int"/>
+      <xs:element name="ancho" type="xs:int"/>
+      <xs:element name="cantidad" type="xs:int"/>
+      <xs:element name="contenido" type="xs:string" minOccurs="0"/>
+      <xs:element name="largo" type="xs:int"/>
+      <xs:element name="numIni" type="xs:int"/>
+      <xs:element name="peso" type="xs:float"/>
+      <xs:element name="tipoEnvio" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="ruta">
+    <xs:sequence>
+      <xs:element name="alianza" type="xs:int"/>
+      <xs:element name="claveIATA" type="xs:string" minOccurs="0"/>
+      <xs:element name="destino" type="xs:long"/>
+      <xs:element name="distancia" type="xs:float"/>
+      <xs:element name="origen" type="xs:long"/>
+      <xs:element name="rutaDestinoCodigo" type="xs:string" minOccurs="0"/>
+      <xs:element name="rutaId" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="rutaOrigenCodigo" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesGuiaResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getOperacionesGuiaResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesGuiaResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="guiaId" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+      <xs:element name="servicios" type="tns:servicio" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getFacturas">
+    <xs:sequence>
+      <xs:element name="request" type="tns:getFacturasReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getFacturasReq">
+    <xs:sequence>
+      <xs:element name="claveFactElect" type="xs:string" minOccurs="0"/>
+      <xs:element name="clienteId" type="xs:string" minOccurs="0"/>
+      <xs:element name="estado" type="xs:string" minOccurs="0"/>
+      <xs:element name="folioFactura" type="xs:string" minOccurs="0"/>
+      <xs:element name="nombreProducto" type="xs:string" minOccurs="0"/>
+      <xs:element name="razonSocial" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getFacturasResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getFacturasResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getFacturasResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="facturas" type="tns:erFacturasTbl" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesCliente">
+    <xs:sequence>
+      <xs:element name="request" type="tns:getOperacionesClienteReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesClienteReq">
+    <xs:sequence>
+      <xs:element name="cliente" type="tns:erClientesTbl" minOccurs="0"/>
+      <xs:element name="operacion" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesClienteResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getOperacionesClienteResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesClienteResp">
+    <xs:sequence>
+      <xs:element name="clienteId" type="xs:long"/>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesClientesUsuario">
+    <xs:sequence>
+      <xs:element name="request" type="tns:getOperacionesClientesUsuarioReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesClientesUsuarioReq">
+    <xs:sequence>
+      <xs:element name="cliente" type="tns:erClientesTbl" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="operacion" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long" minOccurs="0"/>
+      <xs:element name="usuarioId" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesClientesUsuarioResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getOperacionesClientesUsuarioResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesClientesUsuarioResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCancelarGuia">
+    <xs:sequence>
+      <xs:element name="parameter" type="tns:getCancelarGuiaReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCancelarGuiaReq">
+    <xs:sequence>
+      <xs:element name="numeroGuia" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCancelarGuiaResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getCancelarGuiaResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCancelarGuiaResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getAsientosDisp">
+    <xs:sequence>
+      <xs:element name="request" type="tns:asientosDispReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="asientosDispReq">
+    <xs:sequence>
+      <xs:element name="claveCorrida" type="xs:string" minOccurs="0"/>
+      <xs:element name="origen" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getAsientosDispResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:asientosDispResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="asientosDispResp">
+    <xs:complexContent>
+      <xs:extension base="tns:exchangeResp">
+        <xs:sequence>
+          <xs:element name="asientosDisponibles" type="xs:string" minOccurs="0"/>
+          <xs:element name="asientosEstudiante" type="xs:int"/>
+          <xs:element name="asientosOtro" type="xs:int"/>
+          <xs:element name="asientosProfesor" type="xs:int"/>
+          <xs:element name="asientosSenectud" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="getOperacionContrato">
+    <xs:sequence>
+      <xs:element name="request" type="tns:getOperacionContratoReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionContratoReq">
+    <xs:sequence>
+      <xs:element name="cliente_ID" type="xs:string" minOccurs="0"/>
+      <xs:element name="contrato" type="tns:contrato" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long" minOccurs="0"/>
+      <xs:element name="tipoOperacion" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="contrato">
+    <xs:sequence>
+      <xs:element name="ciudadContrato" type="xs:string" minOccurs="0"/>
+      <xs:element name="contrato_ID" type="xs:long" minOccurs="0"/>
+      <xs:element name="contrato_Numero" type="xs:string" minOccurs="0"/>
+      <xs:element name="cotizacion_Referencia" type="xs:string" minOccurs="0"/>
+      <xs:element name="direccion_Cliente_Contrato" type="xs:string" minOccurs="0"/>
+      <xs:element name="estado" type="xs:string" minOccurs="0"/>
+      <xs:element name="fecha_Hora_Llegada" type="xs:string" minOccurs="0"/>
+      <xs:element name="fecha_Hora_Salida" type="xs:string" minOccurs="0"/>
+      <xs:element name="formaPago" type="xs:string" minOccurs="0"/>
+      <xs:element name="importe_Servicio" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="lugar_Destino" type="xs:string" minOccurs="0"/>
+      <xs:element name="lugar_Llegada" type="xs:string" minOccurs="0"/>
+      <xs:element name="lugar_Origen" type="xs:string" minOccurs="0"/>
+      <xs:element name="lugar_Salida" type="xs:string" minOccurs="0"/>
+      <xs:element name="NO_PERSONAS_Refrigerio" type="xs:string" minOccurs="0"/>
+      <xs:element name="nomnbre_Cliente_Contrato" type="xs:string" minOccurs="0"/>
+      <xs:element name="observaciones" type="xs:string" minOccurs="0"/>
+      <xs:element name="regreso_Ciudad_Llegada" type="xs:string" minOccurs="0"/>
+      <xs:element name="regreso_Ciudad_Salida" type="xs:string" minOccurs="0"/>
+      <xs:element name="regreso_Fecha_Llegada" type="xs:string" minOccurs="0"/>
+      <xs:element name="regreso_Fecha_Salida" type="xs:string" minOccurs="0"/>
+      <xs:element name="regreso_Lugar_Llegada" type="xs:string" minOccurs="0"/>
+      <xs:element name="regreso_Lugar_Salida" type="xs:string" minOccurs="0"/>
+      <xs:element name="rerigerio_Abordo" type="xs:string" minOccurs="0"/>
+      <xs:element name="telefono_Cliente_Contrato" type="xs:string" minOccurs="0"/>
+      <xs:element name="unidad" type="tns:unidad" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="VIAJE_Redondo" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionContratoResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getOperacionContratoResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionContratoResp">
+    <xs:sequence>
+      <xs:element name="contrato_ID" type="xs:long" minOccurs="0"/>
+      <xs:element name="cotizacion_Referencia" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="importe_Contrato" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getVenderBoletos">
+    <xs:sequence>
+      <xs:element name="request" type="tns:venderBoletosReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="venderBoletosReq">
+    <xs:sequence>
+      <xs:element name="asientos" type="tns:asientos" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getVenderBoletosResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:venderBoletosResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="venderBoletosResp">
+    <xs:complexContent>
+      <xs:extension base="tns:exchangeResp">
+        <xs:sequence>
+          <xs:element name="foliosBoletos" type="tns:foliosBoletos" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="getUsuarios">
+    <xs:sequence>
+      <xs:element name="request" type="tns:getUsuariosReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getUsuariosReq">
+    <xs:sequence>
+      <xs:element name="sesionId" type="xs:long" minOccurs="0"/>
+      <xs:element name="usuarioNombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="usuarioNumero" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getUsuariosResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getUsuariosResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getUsuariosResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+      <xs:element name="usuarios" type="tns:erUsuariosTbl" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="erUsuariosTbl">
+    <xs:sequence>
+      <xs:element name="contadorIntentos" type="xs:integer" minOccurs="0"/>
+      <xs:element name="contrasenaAccesosFaltan" type="xs:integer" minOccurs="0"/>
+      <xs:element name="contrasenaEncriptada" type="xs:string" minOccurs="0"/>
+      <xs:element name="contrasenaFecha" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="contrasenaLimiteAccesos" type="xs:integer" minOccurs="0"/>
+      <xs:element name="contrasenaLimiteDias" type="xs:integer" minOccurs="0"/>
+      <xs:element name="correoElectronico" type="xs:string" minOccurs="0"/>
+      <xs:element name="creadoPor" type="xs:integer" minOccurs="0"/>
+      <xs:element name="descripcion" type="xs:string" minOccurs="0"/>
+      <xs:element name="estado" type="xs:string" minOccurs="0"/>
+      <xs:element name="fechaCreacion" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="fechaFinal" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="fechaInicial" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="tipo_usuario_Id" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="ultimaActualizacionPor" type="xs:integer" minOccurs="0"/>
+      <xs:element name="ultimaFechaActualizacion" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="usuarioId" type="xs:decimal" minOccurs="0"/>
+      <xs:element name="usuarioNombre" type="xs:string" minOccurs="0"/>
+      <xs:element name="usuarioNumero" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRutaServicios">
+    <xs:sequence>
+      <xs:element name="parametros" type="tns:getRutaServiciosReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRutaServiciosReq">
+    <xs:sequence>
+      <xs:element name="CPDestino" type="xs:string" minOccurs="0"/>
+      <xs:element name="CPOrigen" type="xs:string" minOccurs="0"/>
+      <xs:element name="ciudadDestino" type="xs:string" minOccurs="0"/>
+      <xs:element name="ciudadOrigen" type="xs:string" minOccurs="0"/>
+      <xs:element name="clasificacion" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRutaServiciosResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getRutaServiciosResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getRutaServiciosResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+      <xs:element name="rutasServicios" type="tns:rutaServicios" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="rutaServicios">
+    <xs:sequence>
+      <xs:element name="ruta" type="tns:ruta" minOccurs="0"/>
+      <xs:element name="servicios" type="tns:servicio" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesUsuario">
+    <xs:sequence>
+      <xs:element name="request" type="tns:getOperacionesUsuarioReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesUsuarioReq">
+    <xs:sequence>
+      <xs:element name="operacion" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:long"/>
+      <xs:element name="usuario" type="tns:erUsuariosTbl" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesUsuarioResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:getOperacionesUsuarioResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getOperacionesUsuarioResp">
+    <xs:sequence>
+      <xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+      <xs:element name="errorMsg" type="xs:string" minOccurs="0"/>
+      <xs:element name="operacionExitosa" type="xs:boolean"/>
+      <xs:element name="usuarioId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getBloquearAsientos">
+    <xs:sequence>
+      <xs:element name="request" type="tns:bloquearAsientosReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bloquearAsientosReq">
+    <xs:sequence>
+      <xs:element name="claveCorrida" type="xs:string" minOccurs="0"/>
+      <xs:element name="modalidad" type="xs:string" minOccurs="0"/>
+      <xs:element name="noAsientos" type="xs:string" minOccurs="0"/>
+      <xs:element name="origen" type="xs:string" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:int"/>
+      <xs:element name="tipoPasajero" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getBloquearAsientosResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:bloquearAsientosResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="bloquearAsientosResp">
+    <xs:complexContent>
+      <xs:extension base="tns:exchangeResp">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:complexType name="getCambioHorario">
+    <xs:sequence>
+      <xs:element name="request" type="tns:cambioHorarioReq" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cambioHorarioReq">
+    <xs:sequence>
+      <xs:element name="asientos" type="tns:asientos" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="foliosBoletos" type="tns:foliosBoletos" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element name="sesionId" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="getCambioHorarioResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:cambioHorarioResp" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="cambioHorarioResp">
+    <xs:complexContent>
+      <xs:extension base="tns:exchangeResp">
+        <xs:sequence>
+          <xs:element name="foliosBoletos" type="tns:foliosBoletos" nillable="true" maxOccurs="unbounded" minOccurs="0"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+</xs:schema>]]></con:content><con:type>http://www.w3.org/2001/XMLSchema</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://devas01.estrellaroja.com.mx:8083/ER_WS_CONTROL/ERWSINFRAService</con:endpoint></con:endpoints><con:operation isOneWay="false" action="" name="getAsientosDisp" bindingOperationName="getAsientosDisp" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getBloquearAsientos" bindingOperationName="getBloquearAsientos" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getCambioHorario" bindingOperationName="getCambioHorario" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getCancelaContrato" bindingOperationName="getCancelaContrato" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getCancelarBoletos" bindingOperationName="getCancelarBoletos" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getCancelarGuia" bindingOperationName="getCancelarGuia" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getCanjeBA" bindingOperationName="getCanjeBA" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getClientes" bindingOperationName="getClientes" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getCorridas" bindingOperationName="getCorridas" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getEstadoCuentaCliente" bindingOperationName="getEstadoCuentaCliente" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getFacturas" bindingOperationName="getFacturas" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getLogin" bindingOperationName="getLogin" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getLogout" bindingOperationName="getLogout" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getOperacionContrato" bindingOperationName="getOperacionContrato" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getOperacionesCliente" bindingOperationName="getOperacionesCliente" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getOperacionesClientesUsuario" bindingOperationName="getOperacionesClientesUsuario" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getOperacionesCreditoClientes" bindingOperationName="getOperacionesCreditoClientes" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getOperacionesFactura" bindingOperationName="getOperacionesFactura" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getOperacionesGuia" bindingOperationName="getOperacionesGuia" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getOperacionesPagosCliente" bindingOperationName="getOperacionesPagosCliente" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getOperacionesPagosFacturas" bindingOperationName="getOperacionesPagosFacturas" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getOperacionesPromocion" bindingOperationName="getOperacionesPromocion" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getOperacionesUsuario" bindingOperationName="getOperacionesUsuario" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getPagos" bindingOperationName="getPagos" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getPagosFactura" bindingOperationName="getPagosFactura" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getPerfilesUsuario" bindingOperationName="getPerfilesUsuario" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getProductosCliente" bindingOperationName="getProductosCliente" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getPromociones" bindingOperationName="getPromociones" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getRegistraTransaccionesCliente" bindingOperationName="getRegistraTransaccionesCliente" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getRutaServicios" bindingOperationName="getRutaServicios" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getRutasItinerarios" bindingOperationName="getRutasItinerarios" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getServicios" bindingOperationName="getServicios" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getUnidades" bindingOperationName="getUnidades" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getUsuarios" bindingOperationName="getUsuarios" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getValidarBoleto" bindingOperationName="getValidarBoleto" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation><con:operation isOneWay="false" action="" name="getVenderBoletos" bindingOperationName="getVenderBoletos" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false"><con:settings/></con:operation></con:interface><con:properties/><con:wssContainer/></con:soapui-project>

@@ -1,0 +1,122 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.swing.JOptionPane;
+import javax.xml.ws.WebServiceRef;
+import servicio.ExportarExcel_Service;
+
+/**
+ *
+ * @author Javy
+ */
+@WebServlet(urlPatterns = {"/Accion"})
+public class Accion extends HttpServlet {
+    @WebServiceRef(wsdlLocation = "WEB-INF/wsdl/localhost_8080/ExportarExcel/ExportarExcel.wsdl")
+    private ExportarExcel_Service service;
+
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        response.setContentType("application/vnd.ms-excel");
+           // writeExcel();
+             escribeSabana();  
+        
+            /* TODO output your page here. You may use following sample code. */
+           
+            //DescargarArchivo descarga= new DescargarArchivo();
+            try{ 
+                
+        FileInputStream archivo = new FileInputStream("c:/temporal/output.xls"); 
+        int longitud = archivo.available(); 
+        byte[] datos = new byte[longitud]; 
+        archivo.read(datos); 
+        archivo.close(); 
+        response.setHeader("Content-Disposition","attachment;filename=Exportacion.xls"); 
+        ServletOutputStream ouputStream = response.getOutputStream(); 
+        ouputStream.write(datos); 
+        ouputStream.flush(); 
+        ouputStream.close(); 
+       
+      }catch(Exception e){
+          JOptionPane.showMessageDialog(null, e.toString());
+          e.printStackTrace();  
+      }
+        
+        
+    }
+
+    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Handles the HTTP <code>POST</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
+
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
+    @Override
+    public String getServletInfo() {
+        return "Short description";
+    }// </editor-fold>
+
+    public void writeExcel() {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        servicio.ExportarExcel port = service.getExportarExcelPort();
+        port.writeExcel();
+    }
+
+    private void escribeSabana() {
+        // Note that the injected javax.xml.ws.Service reference as well as port objects are not thread safe.
+        // If the calling of port operations may lead to race condition some synchronization is required.
+        servicio.ExportarExcel port = service.getExportarExcelPort();
+        port.escribeSabana();
+    }
+
+}

@@ -1,0 +1,81 @@
+************BODY***********************************
+
+/*
+* funcion ke muestra la lista de pasajeros dados origen y fecha 
+*/
+
+FUNCTION Listapasajeros (Origen VARCHAR2, Fecha VARCHAR2, Nombre VARCHAR2, Hora VARCHAR2) RETURN VARCHAR2 IS
+CURSOR kosa(pOrigen VARCHAR2, pFecha VARCHAR2, pNombre VARCHAR2, pHora VARCHAR2) IS 
+SELECT t.NOMBRE_PASAJERO ||'|'||     
+  t.NO_ASIENTO ||'|'||
+  tpa.NOMBRE ||'|'||
+  tp.NOMBRE_TIPO ||'|'||
+  TO_CHAR(t.FECHA_HORA_VENTA, 'DD/MM/YYYY HH24:MI') ||'|'||
+  t.CLAVE_CORRIDA ||'|'||
+  TO_CHAR(x.FECHA_HORA_CORRIDA , 'DD/MM/YYYY HH24:MI') ||'|'||
+  t.DESTINO ||'|'||
+  t.CAJA ||'|'||
+  t.TIPO_OPERACION campo 
+  FROM TMS_BOLETOS_VENTA_TBL t, 
+  TMS_CORRIDAS_TBL x, 
+  TMS_CAJAS_TBL z ,
+  TMS_TIPOS_PASAJERO_TBL tp,
+  TMS_VTA_TIPOS_PAGO_TBL tpa
+  WHERE t.NOMBRE_PASAJERO LIKE NVL(pNombre,t.NOMBRE_PASAJERO) 
+  AND t.NOMBRE_PASAJERO <> 'VALIDO AL PORTADOR' 
+  AND t.CLAVE_CORRIDA = x.CLAVE_CORRIDA
+  AND t.ORIGEN = pOrigen
+  AND z.NOMBRE_EQUIPO = t.CAJA
+  AND TRUNC(x.FECHA_HORA_CORRIDA) = TO_DATE(pFecha, 'DD/MM/YYYY') 
+  AND TO_CHAR(x.FECHA_HORA_CORRIDA, 'HH24:MI') >= NVL(pHora,TO_CHAR(x.FECHA_HORA_CORRIDA, 'HH24:MI'))
+  AND tp.LETRA_TIPO = t.TIPO_PASAJERO
+  AND tpa.CLAVE = t.TIPO_PAGO; 
+  
+  cosa VARCHAR2(30000);
+  salida VARCHAR2(32766);
+  nombreConP VARCHAR2(300); 
+   BEGIN 
+	   DBMS_OUTPUT.PUT_LINE('Origen:'||Origen);
+	   DBMS_OUTPUT.PUT_LINE('Fecha:'||Fecha);
+	   DBMS_OUTPUT.PUT_LINE('Nombre:'||Nombre);
+	   DBMS_OUTPUT.PUT_LINE('Hora:'||Hora);
+	   nombreConP := '%'||Nombre||'%';
+	   DBMS_OUTPUT.PUT_LINE('Nombre con %:'||nombreConP);
+	   OPEN kosa(Origen,Fecha,nombreConP,Hora);
+	   LOOP 
+	   		FETCH kosa INTO cosa;
+			EXIT WHEN kosa%NOTFOUND;
+			DBMS_OUTPUT.PUT_LINE(cosa);
+			salida:=salida||'-'||cosa;
+	   END LOOP;
+       CLOSE kosa;   
+	   
+	   DBMS_OUTPUT.PUT_LINE('LENGTH(salida):'||LENGTH(salida));
+	   IF (LENGTH(salida) = 0) THEN
+	   	  salida := '0';
+	   END IF;	  
+  
+  	   DBMS_OUTPUT.PUT_LINE('salida:'||salida);
+  	   RETURN (salida);
+ 
+ EXCEPTION
+     WHEN NO_DATA_FOUND THEN
+ 	   salida := 'ERROR';
+       RETURN salida;
+	 WHEN VALUE_ERROR THEN 
+	 	salida := 'No puedo';
+		RETURN salida;
+     WHEN OTHERS THEN
+       -- Consider logging the error and then re-raise
+       RAISE;
+END Listapasajeros;
+
+
+
+**************SPEC ********************************
+
+/*
+* Funcion ke muestra la lista de pasajeros dados origen y fecha 
+*/
+FUNCTION Listapasajeros (Origen VARCHAR2, Fecha VARCHAR2, Nombre VARCHAR2, Hora VARCHAR2) RETURN VARCHAR2;
+  

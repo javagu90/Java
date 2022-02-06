@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application version="5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/application_5.xsd">
+  <display-name>TMS_Global_Login_Recauda</display-name>
+  <module>
+    <java>TMS_Global_Login_Recauda-app-client.jar</java>
+  </module>
+  <module>
+    <ejb>TMS_Global_Login_Recauda-ejb.jar</ejb>
+  </module>
+</application>

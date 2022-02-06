@@ -1,0 +1,33 @@
+app.client=TMSListaPasajeros-app-client
+build.archive.dir=${build.dir}/jar
+build.classes.dir=${build.archive.dir}
+build.classes.excludes=**/*.java,**/*.form,**/.nbattrs
+build.dir=build
+build.generated.dir=${build.dir}/generated
+client.module.uri=TMSListaPasajeros/${app.client}
+client.urlPart=
+debug.classpath=${javac.classpath}:${build.classes.dir}:${jar.content.additional}:${run.classpath}
+display.browser=true
+dist.dir=dist
+dist.jar=${dist.dir}/TMSListaPasajeros.ear
+j2ee.appclient.mainclass.args=-client ${dist.jar} ${j2ee.appclient.tool.args}
+j2ee.platform=1.5
+j2ee.server.type=J2EE
+jar.compress=false
+jar.content.additional=\
+    ${reference.TMSListaPasajeros-ejb.dist-ear};\
+    ${reference.TMSListaPasajeros-app-client.j2ee-module-car}
+jar.name=TMSListaPasajeros.ear
+javac.debug=true
+javac.deprecation=false
+javac.source=${default.javac.source}
+javac.target=${default.javac.target}
+meta.inf=src/conf
+no.dependencies=false
+platform.active=default_platform
+project.TMSListaPasajeros-app-client=TMSListaPasajeros-app-client
+project.TMSListaPasajeros-ejb=TMSListaPasajeros-ejb
+reference.TMSListaPasajeros-app-client.j2ee-module-car=${project.TMSListaPasajeros-app-client}/dist/TMSListaPasajeros-app-client.jar
+reference.TMSListaPasajeros-ejb.dist-ear=${project.TMSListaPasajeros-ejb}/dist/TMSListaPasajeros-ejb.jar
+resource.dir=setup
+source.root=.

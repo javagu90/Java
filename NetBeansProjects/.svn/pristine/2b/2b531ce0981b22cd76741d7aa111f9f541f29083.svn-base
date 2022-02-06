@@ -1,0 +1,26 @@
+deploy.ant.properties.file=C:\\Users\\vgonzalez\\.netbeans\\6.9\\glassfish.properties
+file.reference.http_client.jar=C:\\Users\\vgonzalez\\Codigo\\librerias\\TMSRWWebService\\lib\\http_client.jar
+file.reference.JavaDLLApp.jar=C:\\Users\\vgonzalez\\Codigo\\librerias\\JavaDLLApp.jar
+file.reference.rwwebservice.jar=C:\\Users\\vgonzalez\\Codigo\\librerias\\TMSRWWebService\\lib\\rwwebservice.jar
+file.reference.RXTXcomm.jar=C:\\Users\\vgonzalez\\Codigo\\librerias\\RXTXcomm.jar
+file.reference.soap.jar=C:\\Users\\vgonzalez\\Codigo\\librerias\\TMSRWWebService\\lib\\soap.jar
+file.reference.Tms_Calendario.jar=C:\\Users\\vgonzalez\\Codigo\\librerias\\Tms_Calendario.jar
+file.reference.Tms_Encriptacion.jar=C:\\Users\\vgonzalez\\Codigo\\librerias\\Tms_Encriptacion.jar
+file.reference.Tms_TextFields.jar=C:\\Users\\vgonzalez\\Codigo\\librerias\\Tms_TextFields.jar
+file.reference.Tms_TiposPasaje.jar=C:\\Users\\vgonzalez\\Codigo\\librerias\\Tms_TiposPasaje.jar
+file.reference.TMSRWWebService.jar=C:\\Users\\vgonzalez\\Codigo\\librerias\\TMSRWWebService\\TMSRWWebService.jar
+file.reference.VentaTAE-app-client.jar=C:\\Users\\vgonzalez\\Codigo\\TMSAplicaciones\\VentaTAE\\VentaTAE-app-client.jar
+file.reference.VentaTAE-ejb.jar=C:\\Users\\vgonzalez\\Codigo\\TMSAplicaciones\\VentaTAE\\VentaTAE-ejb.jar
+file.reference.xmlparserv2.jar=C:\\Users\\vgonzalez\\Codigo\\librerias\\TMSRWWebService\\lib\\xmlparserv2.jar
+j2ee.appclient.tool.args=-configxml "C:\\Users\\vgonzalez\\sun\\domains\\domain1\\config\\sun-acc.xml"
+j2ee.appclient.tool.jvmoptions=-Dcom.sun.aas.configRoot="C:\\Users\\vgonzalez\\sun\\config" -Dcom.sun.aas.installRoot="C:\\Users\\vgonzalez\\sun" -Dcom.sun.aas.imqLib="C:\\Users\\vgonzalez\\sun\\imq\\lib" -Djava.security.policy="C:\\Users\\vgonzalez\\sun\\lib\\appclient\\client.policy" -Djava.security.auth.login.config="C:\\Users\\vgonzalez\\sun\\lib\\appclient\\appclientlogin.conf" -Djava.endorsed.dirs="C:\\Users\\vgonzalez\\sun\\lib\\endorsed" -Djavax.xml.parsers.SAXParserFactory=com.sun.org.apache.xerces.internal.jaxp.SAXParserFactoryImpl -Djavax.xml.parsers.DocumentBuilderFactory=com.sun.org.apache.xerces.internal.jaxp.DocumentBuilderFactoryImpl -Djavax.xml.transform.TransformerFactory=com.sun.org.apache.xalan.internal.xsltc.trax.TransformerFactoryImpl -Dorg.xml.sax.parser=org.xml.sax.helpers.XMLReaderAdapter -Dorg.xml.sax.driver=com.sun.org.apache.xerces.internal.parsers.SAXParser -Djava.util.logging.manager=com.sun.enterprise.server.logging.ACCLogManager
+j2ee.appclient.tool.mainclass=com.sun.enterprise.appclient.Main
+j2ee.appclient.tool.runtime=${j2ee.server.home}\\lib\\endorsed\\webservices-api.jar:${j2ee.server.home}\\lib\\dom.jar:${j2ee.server.home}\\lib\\xalan.jar:${j2ee.server.home}\\lib\\xercesImpl.jar:${j2ee.server.home}\\lib\\appserv-rt.jar:${j2ee.server.home}\\lib\\javaee.jar:${j2ee.server.home}\\lib\\j2ee.jar:${j2ee.server.home}\\lib\\jmac-api.jar:${j2ee.server.home}\\lib\\appserv-ext.jar:${j2ee.server.home}\\lib\\mail.jar:${j2ee.server.home}\\lib\\activation.jar:${j2ee.server.home}\\lib\\webservices-rt.jar:${j2ee.server.home}\\lib\\webservices-tools.jar:${j2ee.server.home}\\lib\\appserv-ws.jar:${j2ee.server.home}\\lib\\jaxrpc-impl.jar:${j2ee.server.home}\\lib\\saaj-impl.jar:${j2ee.server.home}\\lib\\jaxr-impl.jar:${j2ee.server.home}\\lib\\relaxngDatatype.jar:${j2ee.server.home}\\lib\\xsdlib.jar:${j2ee.server.home}\\lib\\appserv-cmp.jar:${j2ee.server.home}\\javadb\\lib\\derbyclient.jar:${j2ee.server.home}\\lib\\toplink-essentials.jar:${j2ee.server.home}\\lib\\dbschema.jar:${j2ee.server.home}\\lib\\appserv-admin.jar:${j2ee.server.home}\\lib\\install\\applications\\jmsra\\imqjmsra.jar:${j2ee.server.home}\\lib\\fscontext.jar:${j2ee.server.home}\\lib\\dtds:${j2ee.server.home}\\lib\\schemas
+j2ee.platform.is.jsr109=true
+j2ee.server.home=C:\\Users\\vgonzalez\\sun
+j2ee.server.instance=[C:\\Users\\vgonzalez\\sun]deployer:Sun:AppServer::localhost:4848
+javac.debug=true
+javadoc.preview=true
+project.TMSVentaLogin-ejb=C:\\Users\\vgonzalez\\Codigo\\NetBeansProyects\\TMS\\ConConvenio\\TMSVentaLogin\\TMSVentaLogin-ejb
+user.properties.file=C:\\Users\\vgonzalez\\.netbeans\\6.9\\build.properties
+wa.copy.client.jar.from=C:\\Users\\vgonzalez\\sun\\domains\\domain1\\generated\\xml\\j2ee-modules

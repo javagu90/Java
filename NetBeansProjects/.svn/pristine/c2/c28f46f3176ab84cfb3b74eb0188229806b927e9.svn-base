@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema targetNamespace="http://128.1.249.210/WBI/BuscaCorridaDef"
+	elementFormDefault="qualified" xmlns="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://128.1.249.210/WBI/BuscaCorridaDef" xmlns:Q1="http://128.1.249.210/WBI/BrokerMessageTag">
+
+	<import schemaLocation="../BrokerMessageTag.xsd" namespace="http://128.1.249.210/WBI/BrokerMessageTag"></import>
+	<element name="request">
+		<complexType>
+			<sequence>
+				<element name="consumerId" type="int" maxOccurs="1"
+					minOccurs="1"></element>
+				<element name="caja" type="string" maxOccurs="1" minOccurs="1"></element>
+				<element name="marca" type="string" maxOccurs="unbounded"
+					minOccurs="1"></element>
+				<element name="servicio" type="string" maxOccurs="1"
+					minOccurs="0"></element>
+				<element name="origen" type="string" maxOccurs="1"
+					minOccurs="1"></element>
+				<element name="destino" type="string" maxOccurs="1"
+					minOccurs="1"></element>
+				<element name="fechaCorrida" type="date" maxOccurs="1"
+					minOccurs="1"></element>
+			</sequence>
+		</complexType>
+	</element>
+
+	<element name="response">
+		<complexType>
+			<sequence>
+				<element name="transactionId" type="string" maxOccurs="1"
+					minOccurs="1">
+				</element>
+				<element name="ItemCorrida" maxOccurs="unbounded" minOccurs="0">
+					<complexType>
+						<complexContent>
+							<extension base="tns:ItemCorridaType">
+								<attribute name="claveCorrida" type="string" use="required" />
+							</extension>
+						</complexContent>
+					</complexType>
+				</element>
+
+				<element name="ItemMessageTag" type="Q1:ItemMessageTag"></element>
+
+			</sequence>
+		</complexType>
+	</element>
+
+	<complexType name="ItemCorridaType">
+		<sequence>
+			<element name="marca" type="string" maxOccurs="1" minOccurs="1"></element>
+			<element name="servicio" type="string" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="fechaCorrida" type="date" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="horaCorrida" type="time" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="origenCorrida" type="string" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="destinoCorrida" type="string" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="fechaHoraSalida" type="dateTime" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="origenSolicitado" type="string" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="destinoSolicitado" type="string" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="ItemTipoPasajero" type="tns:ItemTipoPasajeroType"
+				maxOccurs="unbounded" minOccurs="0"></element>
+			<element name="autobus" type="string" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="operador" type="string" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="tipoCorrida" type="string" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="estadoCorrida" type="string" maxOccurs="1"
+				minOccurs="0" default="A"></element>
+			<element name="plantillaId" type="string" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="capacidad" type="int" maxOccurs="1" minOccurs="0"></element>
+			<element name="tipoVentaBoleto" type="string" maxOccurs="1"
+				minOccurs="0" default="32"></element>
+			<element name="fecHorLle" type="dateTime" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="extraProgramado" type="boolean" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="gerencia_id" type="int" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="poblacionDestino_id" type="int" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="cantParadas" type="int" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="poblacionOrigen_id" type="int" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="nombRegion" type="string" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="nodo_id" type="int" maxOccurs="1" minOccurs="0"></element>
+			<element name="nombPobDestino" type="string" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="nombPobOrigen" type="string" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="municipioOrigen_id" type="int" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="estadoDestino_id" type="int" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="descTerminalOrigen" type="string" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="descTerminalDestino" type="string" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="estadoOrigen_id" type="int" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="ultimaHora" type="boolean" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="fecHorSalReal" type="dateTime" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="region_id" type="int" maxOccurs="1" minOccurs="0"></element>
+			<element name="tipoServicio" type="string" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="Convenio_id" type="string" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="soloInternet" type="string" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="masCercana" type="boolean" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="municipioDestino_id" type="int" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="tarjetaEmitida" type="boolean" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="tiempoRecorrido" type="time" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="cveOrigen" type="string" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="cveDestino" type="string" maxOccurs="1"
+				minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="ItemTipoPasajeroType">
+		<complexContent>
+			<extension base="tns:ItemTipoPasajeroElements">
+				<attribute name="tipoPasajero" type="string" use="required" />
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<complexType name="ItemTipoPasajeroElements">
+		<sequence>
+			<element name="cantidadDisponible" type="int" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="tarifaSencilla" type="float" maxOccurs="1"
+				minOccurs="1"></element>
+			<element name="tarifaRedondo" type="float" maxOccurs="1"
+				minOccurs="0"></element>
+			<element name="aplicaDescuentoRedondo" type="boolean"
+				maxOccurs="0" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+</schema>

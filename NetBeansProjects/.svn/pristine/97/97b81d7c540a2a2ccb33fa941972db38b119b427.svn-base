@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<system systemId="http://localhost:8080/TMSLealtadWS/TMSLealtadWSService?WSDL" uri="src/conf/xml-resources/web-service-references/TMSLealtadWSService/wsdl/localhost_8080/TMSLealtadWS/TMSLealtadWSService.wsdl"/>
+
+
+
+<system systemId="http://capusis61:8080/TMSLealtadWS/TMSLealtadWSService?WSDL" uri="src/conf/xml-resources/web-service-references/TMSLealtadWSService/wsdl/capusis61_8080/TMSLealtadWS/TMSLealtadWSService.wsdl"/>
+
+
+
+<system systemId="http://capusis53:8080/TMSLealtadWS/TMSLealtadWSService?WSDL" uri="src/conf/xml-resources/web-service-references/TMSLealtadWSService/wsdl/capusis53_8080/TMSLealtadWS/TMSLealtadWSService.wsdl"/>
+<system systemId="http://CAPUSIS53.estrellaroja.com.mx:8080/TMSLealtadWS/TMSLealtadWSService/__container$publishing$subctx/WEB-INF/wsdl/TMSLealtadWSService_schema1.xsd" uri="src/conf/xml-resources/web-service-references/TMSLealtadWSService/wsdl/CAPUSIS53.estrellaroja.com.mx_8080/TMSLealtadWS/TMSLealtadWSService/__container_publishing_subctx/WEB-INF/wsdl/TMSLealtadWSService_schema1.xsd"/>
+<system systemId="http://servidorweb:8080/TMSLealtadWS/TMSLealtadWSService?WSDL" uri="src/conf/xml-resources/web-service-references/TMSLealtadWSService/wsdl/servidorweb_8080/TMSLealtadWS/TMSLealtadWSService.wsdl"/>
+
+
+<system systemId="http://capusis16.estrellaroja.com.mx:8080/TMSLealtadWS/TMSLealtadWSService/__container$publishing$subctx/WEB-INF/wsdl/TMSLealtadWSService_schema1.xsd" uri="src/conf/xml-resources/web-service-references/TMSLealtadWSService/wsdl/capusis16.estrellaroja.com.mx_8080/TMSLealtadWS/TMSLealtadWSService/__container_publishing_subctx/WEB-INF/wsdl/TMSLealtadWSService_schema1.xsd"/>
+
+
+<system systemId="http://capusis16:8080/TMSLealtadWS/TMSLealtadWSService?WSDL" uri="src/conf/xml-resources/web-service-references/TMSLealtadWSService/wsdl/capusis16_8080/TMSLealtadWS/TMSLealtadWSService.wsdl"/>
+<system systemId="http://capusis61.estrellaroja.com.mx:8080/TMSLealtadWS/TMSLealtadWSService/__container$publishing$subctx/WEB-INF/wsdl/TMSLealtadWSService_schema1.xsd" uri="src/conf/xml-resources/web-service-references/TMSLealtadWSService/wsdl/capusis61.estrellaroja.com.mx_8080/TMSLealtadWS/TMSLealtadWSService/__container_publishing_subctx/WEB-INF/wsdl/TMSLealtadWSService_schema1.xsd"/>
+<system systemId="http://erdctapo:8085/TMSLealtadWS/TMSLealtadWSService?WSDL" uri="src/conf/xml-resources/web-service-references/TMSLealtadWSService/wsdl/erdctapo_8085/TMSLealtadWS/TMSLealtadWSService.wsdl"/>
+<system systemId="http://ERDCTAPO.estrellaroja.com.mx:8085/TMSLealtadWS/TMSLealtadWSService/__container$publishing$subctx/WEB-INF/wsdl/TMSLealtadWSService_schema1.xsd" uri="src/conf/xml-resources/web-service-references/TMSLealtadWSService/wsdl/ERDCTAPO.estrellaroja.com.mx_8085/TMSLealtadWS/TMSLealtadWSService/__container_publishing_subctx/WEB-INF/wsdl/TMSLealtadWSService_schema1.xsd"/>
+<system systemId="http://devas01.estrellaroja.com.mx:8080/TMSLealtadWS/TMSLealtadWSService?WSDL" uri="src/conf/xml-resources/web-service-references/TMSLealtadWSService/wsdl/devas01.estrellaroja.com.mx_8080/TMSLealtadWS/TMSLealtadWSService.wsdl"/>
+<system systemId="http://devas01.estrellaroja.com.mx:8080/TMSLealtadWS/TMSLealtadWSService/__container$publishing$subctx/WEB-INF/wsdl/TMSLealtadWSService_schema1.xsd" uri="src/conf/xml-resources/web-service-references/TMSLealtadWSService/wsdl/devas01.estrellaroja.com.mx_8080/TMSLealtadWS/TMSLealtadWSService/__container_publishing_subctx/WEB-INF/wsdl/TMSLealtadWSService_schema1.xsd"/>
+
+
+
+
+
+
+
+
+<system systemId="http://erdctapo.estrellaroja.com.mx:8085/TMSSocioIntimoWS/TMSSocioIntimoWSService?WSDL" uri="src/conf/xml-resources/web-service-references/TMSSocioIntimoWSService/wsdl/erdctapo.estrellaroja.com.mx_8085/TMSSocioIntimoWS/TMSSocioIntimoWSService.wsdl"/>
+<system systemId="http://ERDCTAPO.estrellaroja.com.mx:8085/TMSSocioIntimoWS/TMSSocioIntimoWSService/__container$publishing$subctx/WEB-INF/wsdl/TMSSocioIntimoWSService_schema1.xsd" uri="src/conf/xml-resources/web-service-references/TMSSocioIntimoWSService/wsdl/erdctapo.estrellaroja.com.mx_8085/TMSSocioIntimoWS/TMSSocioIntimoWSService/__container_publishing_subctx/WEB-INF/wsdl/TMSSocioIntimoWSService_schema1.xsd"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<system systemId="http://localhost:8080/TMSSocioIntimoWS/TMSSocioIntimoWSService?WSDL" uri="src/conf/xml-resources/web-service-references/TMSSocioIntimoWSService/wsdl/localhost_8080/TMSSocioIntimoWS/TMSSocioIntimoWSService.wsdl"/>
+<system systemId="http://CAPUSIS53.estrellaroja.com.mx:8080/TMSSocioIntimoWS/TMSSocioIntimoWSService/__container$publishing$subctx/WEB-INF/wsdl/TMSSocioIntimoWSService_schema1.xsd" uri="src/conf/xml-resources/web-service-references/TMSSocioIntimoWSService/wsdl/CAPUSIS53.estrellaroja.com.mx_8080/TMSSocioIntimoWS/TMSSocioIntimoWSService/__container_publishing_subctx/WEB-INF/wsdl/TMSSocioIntimoWSService_schema1.xsd"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<system systemId="http://devas01.estrellaroja.com.mx:8080/TMSSocioIntimoWS/TMSSocioIntimoWSService?WSDL" uri="src/conf/xml-resources/web-service-references/TMSSocioIntimoWSService/wsdl/devas01.estrellaroja.com.mx_8080/TMSSocioIntimoWS/TMSSocioIntimoWSService.wsdl"/>
+<system systemId="http://devas01.estrellaroja.com.mx:8080/TMSSocioIntimoWS/TMSSocioIntimoWSService/__container$publishing$subctx/WEB-INF/wsdl/TMSSocioIntimoWSService_schema1.xsd" uri="src/conf/xml-resources/web-service-references/TMSSocioIntimoWSService/wsdl/devas01.estrellaroja.com.mx_8080/TMSSocioIntimoWS/TMSSocioIntimoWSService/__container_publishing_subctx/WEB-INF/wsdl/TMSSocioIntimoWSService_schema1.xsd"/>
+
+
+<system systemId="http://wsas.estrellaroja.com.mx:8090/TMSSocioIntimoWS/TMSSocioIntimoWSService?WSDL" uri="src/conf/xml-resources/web-service-references/TMSSocioIntimoWSService/wsdl/wsas.estrellaroja.com.mx_8090/TMSSocioIntimoWS/TMSSocioIntimoWSService.wsdl"/>
+<system systemId="http://wsas.estrellaroja.com.mx:8090/TMSSocioIntimoWS/TMSSocioIntimoWSService/__container$publishing$subctx/WEB-INF/wsdl/TMSSocioIntimoWSService_schema1.xsd" uri="src/conf/xml-resources/web-service-references/TMSSocioIntimoWSService/wsdl/wsas.estrellaroja.com.mx_8090/TMSSocioIntimoWS/TMSSocioIntimoWSService/__container_publishing_subctx/WEB-INF/wsdl/TMSSocioIntimoWSService_schema1.xsd"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<system systemId="http://capusis61:8080/InterfazADOService/InterfazADO?WSDL" uri="wsdl/capusis61_8080/InterfazADOService/InterfazADO.wsdl"/>
+<system systemId="http://capusis61.estrellaroja.com.mx:8080/InterfazADOService/InterfazADO/__container$publishing$subctx/META-INF/wsdl/InterfazADOService_schema1.xsd" uri="wsdl/capusis61.estrellaroja.com.mx_8080/InterfazADOService/InterfazADO/__container_publishing_subctx/META-INF/wsdl/InterfazADOService_schema1.xsd"/>
+    <system systemId="http://devas01:8090/InterfazADOService/InterfazADO?WSDL" uri="wsdl/devas01_8090/InterfazADOService/InterfazADO.wsdl"/>
+    <system systemId="http://devas01.estrellaroja.com.mx:8090/InterfazADOService/InterfazADO?WSDL" uri="wsdl/devas01.estrellaroja.com.mx_8090/InterfazADOService/InterfazADO.wsdl"/>
+    <system systemId="http://devas01.estrellaroja.com.mx:8090/InterfazADOService/InterfazADO/__container$publishing$subctx/META-INF/wsdl/InterfazADOService_schema1.xsd" uri="wsdl/devas01.estrellaroja.com.mx_8090/InterfazADOService/InterfazADO/__container_publishing_subctx/META-INF/wsdl/InterfazADOService_schema1.xsd"/>
+</catalog>

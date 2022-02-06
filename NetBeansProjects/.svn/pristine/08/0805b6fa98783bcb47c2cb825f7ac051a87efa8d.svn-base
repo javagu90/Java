@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+<system systemId="http://www.tricomp.com.mx/testing/ws/enterprise.asmx?WSDL" uri="src/conf/xml-resources/web-service-references/enterprise.asmx/wsdl/www.tricomp.com.mx/testing/ws/enterprise.asmx.wsdl"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<system systemId="http://www.tricomp.com.mx/testing/ws/estrellaroja.asmx?WSDL" uri="src/conf/xml-resources/web-service-references/estrellaroja.asmx/wsdl/www.tricomp.com.mx/testing/ws/estrellaroja.asmx.wsdl"/>
+
+<system systemId="http://www.tricomp.com.mx/enterprise/ws/estrellaroja.asmx?WSDL" uri="src/conf/xml-resources/web-service-references/estrellaroja.asmx/wsdl/www.tricomp.com.mx/enterprise/ws/estrellaroja.asmx.wsdl"/>
+</catalog>

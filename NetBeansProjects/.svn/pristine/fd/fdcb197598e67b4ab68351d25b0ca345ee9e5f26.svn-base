@@ -1,0 +1,9 @@
+deploy.ant.properties.file=C:\\Users\\sis.admin\\.netbeans\\6.8\\glassfish.properties
+file.reference.ojdbc14.jar=C:\\librerias\\nacho\\ojdbc14.jar
+j2ee.platform.is.jsr109=true
+j2ee.server.home=C:\\Users\\vgonzalez\\sun
+j2ee.server.instance=[C:\\glassfish]deployer:Sun:AppServer::localhost:4848
+javac.debug=true
+javadoc.preview=true
+jaxbwiz.endorsed.dirs=C:\\Program Files\\NetBeans 6.8\\ide12\\modules\\ext\\jaxb\\api
+netbeans.user=C:\\Users\\sis.admin\\.netbeans\\6.8

@@ -1,0 +1,12 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.6.5
+Created-By: 1.5.0_06-b05 (Sun Microsystems Inc.)
+X-COMMENT: Main-Class will be added automatically by build
+Class-Path: TMSVentaLogin-ejb.jar swing-layout-1.0.jar toplink-essenti
+ als.jar toplink-essentials-agent.jar Tms_Encriptacion.jar Tms_TextFie
+ lds.jar http_client.jar rwwebservice.jar soap.jar xmlparserv2.jar TMS
+ RWWebService.jar comm.jar JarClassLoader.jar JavaDLLApp.jar RXTXcomm.
+ jar Tms_TiposPasaje.jar Tms_Calendario.jar VentaTAE-app-client.jar Ve
+ ntaTAE-ejb.jar 
+Main-Class: tms_venta.Main
+

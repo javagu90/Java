@@ -1,0 +1,10 @@
+deploy.ant.properties.file=C:\\Users\\vgonzalez\\.netbeans\\6.9\\glassfish.properties
+file.reference.ocrs12.jar=C:\\Users\\vgonzalez\\Codigo\\librerias\\JDBC\\ocrs12.jar
+file.reference.ojdbc14.jar=C:\\Users\\vgonzalez\\Codigo\\librerias\\JDBC\\ojdbc14.jar
+file.reference.orai18n.jar=C:\\Users\\vgonzalez\\Codigo\\librerias\\JDBC\\orai18n.jar
+j2ee.platform.is.jsr109=true
+j2ee.server.home=C:\\Users\\vgonzalez\\sun
+j2ee.server.instance=[C:\\Users\\vgonzalez\\sun]deployer:Sun:AppServer::localhost:4848
+javac.debug=true
+javadoc.preview=true
+netbeans.user=C:\\Users\\vgonzalez\\.netbeans\\6.9
