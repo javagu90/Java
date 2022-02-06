@@ -1,0 +1,40 @@
+package com.alidasoftware.pos.helper;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class DetalleCorteParcialHelper {
+
+	@Id
+	private int idFormaPago;
+	
+	@Column
+	private float cantidad;
+	
+	public DetalleCorteParcialHelper{}
+	
+	 public DetalleCorteParcialHelper(int idFormaPago, float cantidad) {
+		  this.idFormaPago = idFormaPago;
+		  this.cantidad = cantidad;
+		 }
+		
+		public int getIdFormaPago() {
+			return idFormaPago;
+		}
+		
+		public void setIdFormaPago(int idFormaPago) {
+			this.idFormaPago = idFormaPago;
+		}
+		
+		public float getCantidad() {
+			return cantidad;
+		}
+		
+		public void setCantidad(float cantidad) {
+			this.cantidad = cantidad;
+		}
+
+	
+}

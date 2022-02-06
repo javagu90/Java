@@ -1,0 +1,32 @@
+package com.alidasoftware.pos.dao;
+
+import java.io.Serializable;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import com.alidasoftware.pos.exception.AlidaPosException;
+import com.alidasoftware.pos.model.Usuario;
+
+	public class PermisoCorteDao extends GenericDao<Usuario> implements Serializable {
+
+		public PermisoCorteDao() {
+			super(Usuario.class);
+		}
+				
+		public Usuario findByNamePwd(String userName, String userPwd) throws AlidaPosException {
+			Map<String, Object> parameters = new HashMap<String, Object>();
+			parameters.put("clave", userName);
+			parameters.put("claveacceso", userPwd);
+			return super.findOneResult(Usuario.FIND_BY_NAME_PWD, parameters);
+		}
+		
+		public boolean IsActive()
+		{
+			
+			return false;
+		}
+	}
+		
+	  
+		

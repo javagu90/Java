@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"      
+      xmlns:pos="http://pos.com/functions">
+	
+	<ui:composition>
+	
+        <p:dialog id="CierreCajaViewDlg" widgetVar="CierreCajaViewDialog" modal="true"
+		resizable="false" appendTo="@(body)">
+            <h:form id="cierreCajaViewForm" 
+            	onkeyup="if (event.keyCode == 13) { return false; }"
+				onkeypress="if (event.keyCode == 13) { return false; }">
+                <h:panelGroup id="display">
+
+				<p:panelGrid >
+    				<f:facet name="header">
+        			<p:row>
+            			<p:column colspan="8" style="width:50%; font-weight: bold">
+            				<p:outputLabel id="labelCierreCaja" value="Cierre de Caja" style="font-weight: bold;"/>
+            			</p:column>
+            
+        			</p:row>
+    			  </f:facet>
+     			<p:row>
+            	<p:column  colspan="8">
+             	<p:outputLabel id="del" value="Del:" style="font-weight: bold;"/>
+             	<p:outputLabel id="labelDel"  value="#{corteCajaBean.selected.fecha}"/>
+            	</p:column>
+    			</p:row>
+    			<p:row>
+            	<p:column colspan="8" >
+            	<p:outputLabel id="caja" value="Caja:" style="font-weight: bold;"/>
+            	<p:outputLabel id="labelCaja"  value="#{corteCajaBean.selected.caja.clave}"/>
+            	</p:column>
+   				 </p:row>
+    
+    				<p:row>
+           			 <p:column colspan="8" >
+            			<p:outputLabel id="cantidadCaja" value="Cantidad en Caja: $" style="font-weight: bold;"/>
+            		<p:outputLabel id="cantidadKja"  value="#{corteCajaBean.selected.cantidadfisica}"/>
+            		
+            </p:column>
+    </p:row>
+           	
+    <p:row>
+            <p:column  colspan="4" styleClass="ui-widget-header">
+             <p:outputLabel id="ventasTotales" value="Ventas Totales" />
+            </p:column>
+            <p:column  colspan="4" styleClass="ui-widget-header">
+             <p:outputLabel id="efectivoEnCaja" value="Efectivo en Caja" />
+            </p:column>
+       	</p:row>
+       	 
+  <p:row>
+        
+        <p:column rowspan="2" colspan="2" >
+        	<p:outputLabel id="labelEfectivo" value="Efectivo" />
+        </p:column>
+        <p:column rowspan="2" colspan="2" >
+        <p:outputLabel id="labelDineroEfectivo" value="#{corteCajaBean.dineroEfectivo}" />
+        </p:column>
+        
+        <p:column colspan="2" >
+        	<p:outputLabel id="labelInicial" value="Inicial" />
+        </p:column>
+        <p:column colspan="2" >
+        <p:outputLabel id="labelDineroInicial" value="#{corteCajaBean.efectivoInicial}" />
+        </p:column>
+    </p:row>
+ 
+    <p:row>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelVentas" value="Ventas" />
+        </p:column>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelDineroVentas" value="#{corteCajaBean.selected.ventas}" />
+        </p:column>
+    </p:row>
+ 
+    <p:row>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelTarjeta" value="Tarjeta" />
+        </p:column>
+        <p:column colspan="2">
+        <p:outputLabel id="labelDineroTarjeta" value="#{corteCajaBean.dineroTarjeta}" />
+        </p:column>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelPagos" value="Pagos" />
+        </p:column>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelDineroPagos" value="#{corteCajaBean.dineroPagos}" />
+        </p:column>
+ 
+    </p:row>
+ 
+    <p:row>
+    	<p:column colspan="2">
+    		<p:outputLabel id="labelCredito" value="Crédito" />
+    	</p:column>
+        <p:column colspan="2">
+        <p:outputLabel id="labelDineroCredito" value="#{corteCajaBean.dineroCredito}" />
+        </p:column>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelRetiro" value="Retiro" />
+        </p:column>
+        <p:column colspan="2">
+        <p:outputLabel id="labelDineroRetiro" value="#{corteCajaBean.dineroRetiro}" />
+        </p:column>
+ 
+     </p:row>
+ 
+    <p:row>
+    	<p:column colspan="2">
+    		<p:outputLabel id="labelVales" value="Vales" />
+    	</p:column>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelDineroVales" value="#{corteCajaBean.dineroVales}" />
+        </p:column>
+        <p:column colspan="4"/>
+    </p:row>
+ 
+    <f:facet name="footer">
+        <p:row>
+            <p:column  colspan="2" style="text-align: right">
+                <p:outputLabel id="labelTotal1" value="Total:" /> 
+            </p:column>
+            <p:column  colspan="2" style="text-align: left">
+        		<p:outputLabel id="labelDineroTotal1" value="#{corteCajaBean.total1}" />
+            </p:column>
+            <p:column  colspan="2" style="text-align: right">
+                <p:outputLabel id="labelTotal2" value="Total:" />
+            </p:column>
+            <p:column  colspan="2" style="text-align: left">
+        		<p:outputLabel id="labelDineroTotal2" value="#{corteCajaBean.selected.totalcaja}" /> 
+            </p:column>
+        </p:row>
+        <p:row>
+    								<p:column colspan="2">
+        							<p:outputLabel value="Comentarios"/>
+        							</p:column>
+        							<p:column colspan="6">
+        							 <p:outputLabel value="#{corteCajaBean.selected.comentarios}"/>
+        							</p:column>
+    							</p:row>	
+    </f:facet>
+	</p:panelGrid>
+	<br/>
+	 <p:outputLabel id="faltante" value="Faltante:" style="font-weight: bold;"/>
+	 <p:outputLabel id="objetoFaltante" value="Objeto" style="font-weight: bold;"/> 
+	 <center>
+                    	<p:commandButton 
+                    		value="#{msg['catalogo.Button.Cerrar']}" 
+							onclick="corteParcialViewDialog.hide()" />
+					</center>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

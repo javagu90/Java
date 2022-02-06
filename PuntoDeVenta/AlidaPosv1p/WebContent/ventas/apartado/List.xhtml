@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"      
+      xmlns:pos="http://pos.com/functions">
+	
+	<ui:composition template="/template/template.xhtml">
+
+		<ui:define name="body">
+        	<h:form id="ApartadoListForm">
+	            <p:layout
+	            	id="apartadoLayout"
+	            	style="height:auto;" >
+		            <p:layoutUnit 
+		            	id="apartadoWestLayout" 
+		            	position="west" 
+		            	size="150" 
+		            	header="Menu" 
+		            	collapsible="true"
+		            	style="height:auto;" >
+		            	<p:remoteCommand 
+		            		name="updateButtons" 
+		            		update="ListButton createButton viewButton editButton" />	
+		            	<p:commandButton 			            	    
+		                	id="ListButton" 
+		                	icon="ui-icon-note"   
+		                	value="Listado"
+		                	actionListener="#{apartadoBean.showListDialogListener}"
+		                	update="ApartadoListForm:apartadoCreatePanel apartadoListPanel"
+		                	onclick="PF('blockPage').show().show();"
+							oncomplete="PF('blockPage').show().hide();"
+		                	style="width:98%;height:50px" />            	
+		            	<p:commandButton
+		                	id="createButton"
+		                	icon="ui-icon-plus" 
+		                	value="Nuevo"
+		                	actionListener="#{apartadoBean.showCreateDialogListener}"
+		                	update="ApartadoListForm:apartadoCreatePanel apartadoListPanel"
+		                	onclick="PF('blockPage').show().show();"
+							oncomplete="PF('blockPage').show().hide();"
+		                	style="width:98%;height:50px" />
+		                <p:commandButton 
+		                	rendered="false"
+		                	id="viewButton"
+		                	icon="ui-icon-search"
+		                	value="Ver"
+		                	actionListener="#{apartadoBean.showViewDialogListener}"
+		                	disabled="#{apartadoBean.apartadoSelected == null}"
+		                	update="ApartadoListForm:apartadoCreatePanel apartadoListPanel"
+		                	onclick="PF('blockPage').show().show();"
+							oncomplete="PF('blockPage').show().hide();"
+		                	style="width:98%;height:50px" />
+		                <p:commandButton 
+		                    rendered="false"
+		                	id="editButton"
+		                	icon="ui-icon-pencil"
+		                	value="Editar"
+		                	actionListener="#{apartadoBean.showEditDialogListener}"
+		                	disabled="#{pos:disabledEditApartadoButton(apartadoBean.apartadoSelected)}"
+		                	update="ApartadoListForm:apartadoCreatePanel apartadoListPanel"
+		                	onclick="PF('blockPage').show().show();"
+							oncomplete="PF('blockPage').show().hide();"
+		                	style="width:98%;height:50px" >
+		                </p:commandButton>
+		            </p:layoutUnit>
+		            <p:layoutUnit 
+		            	id="apartadoCenterLayout"
+		            	position="center"
+		            	style="height:100%;">		            	
+		            	<p:panel 
+		            		id="apartadoListPanel"
+		            		header="Listado Apartado"
+		            		rendered="#{apartadoBean.showListDialog}" >
+		            		<p:panelGrid
+		            			id="apartadoFilters">
+		            			<p:row>		            					            		
+			            			<p:column>
+			            				<h:outputText
+				            				styleClass="boldLabel" 
+				            				value="Status" />
+				            				<div/> 
+					            		<p:selectOneMenu
+					            			value="#{apartadoBean.apartadoStatus}"
+				            				style="width:120px;" >
+				            				<f:selectItem
+				            					itemLabel="" 
+				            					itemValue="0"/>
+					            			<f:selectItems
+				            					value="#{apartadoBean.listaStatus}"
+				            					var="apartadoStatus" 
+				            					itemValue="#{apartadoStatus}" />
+		            						<p:ajax 
+			            						listener="#{apartadoBean.valueChangeStatusFilter}"
+			            						update="apartadoListPanel"
+			            						oncomplete="updateButtons()" />	            			
+					            		</p:selectOneMenu>
+			            			</p:column>
+			            			<p:column>
+			            				<h:outputText
+				            				styleClass="boldLabel" 
+				            				value="Folio" />
+				            				<div/>
+			            				<p:inputText 
+				           					styleClass="centerLabel" 
+				           					style="width: 180px;"
+				           					value="#{apartadoBean.searchFolio}" >
+				           					<p:ajax 
+			            						listener="#{apartadoBean.valueChangeFolioFilter}"
+			            						update="apartadoListPanel"
+			            						oncomplete="updateButtons()" />
+				           				</p:inputText>
+			            			</p:column>
+			            			<p:column>
+			            				<h:outputText
+				            				styleClass="boldLabel" 
+				            				value="Fecha" />
+			            				<div/>
+			            				<p:calendar 
+			            					id="apartadoCalendarFilter"
+			            					styleClass="dateTimeField"
+                        					value="#{apartadoBean.searchDate}" 
+                        					pattern="dd/MM/yyyy"
+                        					locale="#{sessionBean.locale}"
+                        					showOn="button" >
+                        					<f:convertDateTime pattern="dd/MM/yyyy" />
+                        					<p:ajax 
+                        						event="dateSelect" 
+                        						listener="#{apartadoBean.dateSelectedAction}" />
+                        				</p:calendar> 
+			            			</p:column>
+			            			<p:column>
+			            				<h:outputText
+				            				styleClass="boldLabel" 
+				            				value="Cliente" />
+			            				<div/>
+				            			<p:autoComplete                			
+						           			var="searchClient"
+						           			itemLabel="#{pos:clientName(searchClient)}"
+						           			itemValue="#{searchClient}"
+						           			value="#{apartadoBean.searchClient}"                			
+						           			completeMethod="#{apartadoBean.completeCliente}" 
+						           			minQueryLength="3"
+						           			forceSelection="true"
+						           			queryDelay="100"
+						           			size="40"
+						           			converter="clienteConverter">
+						           			<p:ajax 
+			            						listener="#{apartadoBean.valueChangeClienteFilter}"
+			            						update="apartadoListPanel"
+			            						oncomplete="updateButtons()" />
+						           		</p:autoComplete>
+			            			</p:column>
+			            			<p:column>
+			            				<div/>
+			            				<p:commandButton
+			            					icon="ui-icon-search"
+			            					value="Buscar"
+			            					action="#{apartadoBean.doSearch}"/>
+			            			</p:column>
+			            		</p:row>
+		            		</p:panelGrid>		            		
+		            		<div/>
+		            		<p:dataTable		            			
+		                    	id="datalist" 
+		                    	value="#{apartadoBean.listaApartado}"
+		                    	var="item"
+		                    	selectionMode="single" 
+		                    	selection="#{apartadoBean.apartadoSelected}"
+		                    	paginator="true"
+		                        rowKey="#{item.idapartado}"
+		                        rows="10"
+		                        paginatorPosition="bottom"
+		                        emptyMessage="No existen registros" >
+		
+		                        <p:ajax 
+		                        	event="rowSelect"   
+		                        	oncomplete="updateButtons()" />
+		                        <p:ajax 
+		                        	event="rowUnselect" 
+		                        	oncomplete="updateButtons()" />
+		                        
+		                        <p:column
+		                        	styleClass="centerLabel"
+		                        	width="70" >
+		                            <f:facet name="header">
+		                                <h:outputText value="Fecha"/>
+		                            </f:facet>
+		                            <h:outputText		                            	 
+		                            	value="#{item.fechaapartado}">
+		                            	<f:convertDateTime pattern="dd-MM-yyyy" />
+		                            </h:outputText>
+		                        </p:column>
+		                        <p:column
+		                        	styleClass="leftLabel">
+		                            <f:facet name="header">
+		                                <h:outputText value="Cliente"/>
+		                            </f:facet>
+		                            <h:outputText		                            	 
+		                            	value="#{pos:clientName(item.cliente)}"/>
+		                        </p:column>
+		                        <p:column
+		                        	styleClass="leftLabel"
+		                        	width="120">
+		                            <f:facet name="header">
+		                                <h:outputText value="Folio"/>
+		                            </f:facet>
+		                            <h:outputText		                            	 
+		                            	value="#{item.folio}"/>
+		                        </p:column>		                        			                        
+		                        <p:column
+		                        	styleClass="centerLabel"
+		                        	width="60">
+		                            <f:facet name="header">
+		                                <h:outputText value="Status"/>
+		                            </f:facet>
+		                            <h:outputText		                            	 
+		                            	value="#{pos:apartadoStatus(item.status)}"/>
+		                        </p:column>
+		                        <p:column
+		                        	styleClass="leftLabel">
+		                            <f:facet name="header">
+		                                <h:outputText value="Comentarios"/>
+		                            </f:facet>
+		                            <h:outputText		                            	 
+		                            	value="#{item.comentarios}"/>
+		                        </p:column>	
+		                        <p:column
+		                        	width="24" >
+		                        	<p:commandButton
+	                					icon="ui-icon-pencil"
+	                					title="Editar Apartado"
+	                					update="datalist"
+	                					rendered="#{pos:showEditApartado(item.status)}"	                					
+	                					action="#{apartadoBean.showEditDialogListener}"	     
+	                					onclick="PF('blockPage').show().show();"
+										oncomplete="PF('blockPage').show().hide();"           					           
+	                					style="width:24px;height:24px;">
+	                					<f:setPropertyActionListener
+             								target="#{apartadoBean.apartadoSelected}"
+             								value="#{item}" />
+	                				</p:commandButton>
+		                        </p:column>			                                               
+		                        <p:column
+		                        	width="24" >
+                					<p:commandButton
+	                					icon="ui-icon-trash"
+	                					title="Cancelar Apartado"
+	                					update="datalist"
+	                					rendered="#{pos:showDeleteApartado(item.status)}"	                					
+	                					action="#{apartadoBean.deleteApartadoRecord}"
+	                					onclick="if (confirm('Se eliminara el apartado y los productos asociados.\n\nEsta operación no se puede deshacer.\n\n¿Seguro de continuar ?\n') == false) return false;"           	
+	                					style="width:24px;height:24px;">
+	                					<f:setPropertyActionListener
+             								target="#{apartadoBean.apartadoSelected}"
+             								value="#{item}" />
+	                				</p:commandButton>
+		                        </p:column>
+		                        <p:column
+		                        	width="24">
+		                        	<p:commandButton
+		                        		icon="ui-icon-search"
+		                        		title="Información Apartado"
+		                        		action="#{apartadoBean.showViewDialogListener}"
+		                        		onclick="PF('blockPage').show().show();"
+										oncomplete="PF('blockPage').show().hide();"
+										style="width:24px;height:24px;">
+		                        		<f:setPropertyActionListener
+             								target="#{apartadoBean.apartadoSelected}"
+             								value="#{item}" />
+		                        	</p:commandButton>
+		                        </p:column>
+		            		</p:dataTable>		            				            	
+						</p:panel>		            	
+		            	<ui:include src="/ventas/apartado/Create.xhtml" />
+		            	<ui:include src="/ventas/apartado/View.xhtml" />
+		            </p:layoutUnit>		            		
+				</p:layout>
+			</h:form>                      
+            <ui:include src="/vales/Create.xhtml" />	
+			<ui:include src="/catalogos/cliente/ClientSearch.xhtml" />
+           	<ui:include src="/pago/Pago.xhtml" />           	
+        </ui:define>
+    </ui:composition>
+</html>	            

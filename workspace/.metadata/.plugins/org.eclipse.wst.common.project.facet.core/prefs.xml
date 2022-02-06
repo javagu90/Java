@@ -1,0 +1,36 @@
+<root>
+  <facet id="jpt.jpa">
+    <node name="libprov">
+      <node name="last-provider-used">
+        <attribute name="2.1" value="jpa-user-library-provider"/>
+      </node>
+    </node>
+    <node name="user.library.provider">
+      <node name="last.used.libraries">
+        <node name="2.1">
+          <node name="EclipseLink"/>
+          <node name="Mysql"/>
+        </node>
+      </node>
+    </node>
+  </facet>
+  <facet id="jst.jsf">
+    <node name="libprov">
+      <node name="last-provider-used">
+        <attribute name="2.0" value="jsf-user-library-provider"/>
+        <attribute name="2.2" value="jsf-user-library-provider"/>
+      </node>
+    </node>
+    <node name="user.library.provider">
+      <node name="last.used.libraries">
+        <node name="2.0">
+          <node name="JSF"/>
+        </node>
+        <node name="2.2">
+          <node name="JSF"/>
+          <node name="PrimeFaces"/>
+        </node>
+      </node>
+    </node>
+  </facet>
+</root>

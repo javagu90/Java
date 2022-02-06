@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"      
+      xmlns:pos="http://pos.com/functions">
+	<f:view
+ 		locale="#{sessionBean.locale}">      
+		<p:panel
+			id="adeudoVentaEditPanel"
+			header="#{adeudoVentaBean.titlePanel}"
+			rendered="#{adeudoVentaBean.showEditDialog}">
+			<!-- Muestra la lista de pagos realizados (deuda pagada completamente) -->
+			<p:panelGrid
+				rendered="#{adeudoVentaBean.showListPago}"
+				id="adeudoEditPanelGridPago">
+				<p:row
+					id="adeudoEditRow00">
+					<p:column
+						id="adeudoEditCol010">
+       					<p:outputLabel
+       						id="adeudoFechaLabel0"
+           					styleClass="boldLabel" 
+           					value="Fecha"/>	
+       				</p:column>
+       				<p:column
+						id="adeudoEditCol020">
+						<h:outputText   
+     						id="adeudoFechaOutput0"    					 	
+							styleClass="centerLabel"
+							style="width:110px;"
+							value="#{adeudoVentaBean.infoFecha}">
+							<f:convertDateTime 
+								pattern="dd-MM-yyyy" />
+		        		</h:outputText>
+					</p:column>
+					<p:column
+						id="adeudoEditCol030">
+       					<p:outputLabel
+       						id="adeudoTotalLabel0"
+           					styleClass="boldLabel" 
+           					value="Total"/>	
+       				</p:column>
+       				<p:column
+       					id="adeudoEditCol040">
+       					<h:outputText	
+       						id="adeudoTotalOuput0"	                            	 
+                          	value="#{adeudoVentaBean.infoTotalOperacion}">
+                          	<f:convertNumber                          		
+		     					currencySymbol="$"
+		     					type="currency"/>
+                          </h:outputText>
+      				</p:column>
+      				<p:column
+       					id="adeudoEditCol050">
+       					<p:outputLabel
+       						id="adeudoTipoOperacionLabel0"
+           					styleClass="boldLabel" 
+           					value="Tipo Operación"/>	
+       				</p:column>
+       				<p:column
+       					id="adeudoEditCol060">
+       					<h:outputText	
+       						id="adeudoTipoOperacionOutput0"	                            	 
+                          	value="#{adeudoVentaBean.infoTipoOperacion}" />
+      				</p:column>
+      				<p:column
+       					id="adeudoEditCol070">
+       					<p:outputLabel
+       						id="adeudoFolioOperacionLabel0"
+           					styleClass="boldLabel" 
+           					value="Folio Operación"/>	
+       				</p:column>
+       				<p:column
+       					id="adeudoEditCol080">
+       					<h:outputText
+       						id="adeudoFolioOperacionOutput0"		                            	 
+                          	value="#{adeudoVentaBean.infoFolioOperacion}" />                          	
+       				</p:column>
+      			</p:row>
+      			<p:row>
+       				<p:column
+       					id="adeudoEditCol110"
+       					colspan="3">
+       					<p:commandButton	       					
+	       					id="adeudoInfoBtn00"
+			       			icon="ui-icon-search"   
+					        value="Ver Detalle"		                	
+					        action="#{adeudoVentaBean.showDetailRecordAction}"
+					        style="width:150px;height:30px" />
+       				</p:column>
+				</p:row>
+			</p:panelGrid>
+	
+			<!-- Muestra la lista de pagos realizados (aun existe adeudo) -->
+			<p:panelGrid
+				rendered="#{adeudoVentaBean.showListAdeudo}"
+				id="adeudoEditPanelGridAdeudo">
+				<p:row
+					id="adeudoEditRow01">
+					<p:column
+						id="adeudoEditCol01">
+       					<p:outputLabel
+       						id="adeudoFechaLabel"
+           					styleClass="boldLabel" 
+           					value="Fecha"/>	
+       				</p:column>
+					<p:column
+						id="adeudoEditCol02">
+     					<h:outputText   
+     						id="adeudoFechaOutput"    					 	
+							styleClass="centerLabel"
+							style="width:110px;"
+							value="#{adeudoVentaBean.adeudoSelected.fecha}">
+							<f:convertDateTime 
+								pattern="dd-MM-yyyy" />
+		        		</h:outputText>
+       				</p:column>
+					<p:column
+						id="adeudoEditCol03">
+       					<p:outputLabel
+       						id="adeudoTotalLabel"
+           					styleClass="boldLabel" 
+           					value="Total"/>	
+       				</p:column>
+       				<p:column
+       					id="adeudoEditCol04">
+       					<h:outputText	
+       						id="adeudoTotalOuput"	                            	 
+                          	value="#{adeudoVentaBean.totalOperacion}">
+                          	<f:convertNumber                          		
+		     					currencySymbol="$"
+		     					type="currency"/>
+                          </h:outputText>
+       				</p:column>
+       				<p:column
+       					id="adeudoEditCol05">
+       					<p:outputLabel
+       						id="adeudoTipoOperacionLabel"
+           					styleClass="boldLabel" 
+           					value="Tipo Operación"/>	
+       				</p:column>
+       				<p:column
+       					id="adeudoEditCol06">
+       					<h:outputText	
+       						id="adeudoTipoOperacionOutput"	                            	 
+                          	value="#{adeudoVentaBean.adeudoSelected.module}" />                          	
+       				</p:column>
+       				<p:column
+       					id="adeudoEditCol07">
+       					<p:outputLabel
+       						id="adeudoFolioOperacionLabel"
+           					styleClass="boldLabel" 
+           					value="Folio Operación"/>	
+       				</p:column>
+       				<p:column
+       					id="adeudoEditCol08">
+       					<h:outputText
+       						id="adeudoFolioOperacionOutput"		                            	 
+                          	value="#{adeudoVentaBean.adeudoSelected.foliooperacion}" />                          	
+       				</p:column>       				
+				</p:row>
+				<p:row
+					id="adeudoEditRow02">
+					<p:column
+						id="adeudoEditCol09">
+       					<p:outputLabel
+       						id="adeudoMontoLabel"
+           					styleClass="boldLabel" 
+           					value="Monto Adeudo"/>	
+       				</p:column>
+       				<p:column
+       					id="adeudoEditCol10">
+       					<h:outputText
+       						id="adeudoMontoOutput"                            	 
+                          	value="#{adeudoVentaBean.adeudoSelected.adeudo}">
+                          	<f:convertNumber 
+		     					currencySymbol="$"
+		     					type="currency"/>
+                          </h:outputText>
+       				</p:column>
+       				<p:column
+       					id="adeudoEditCol11"
+       					colspan="3">
+	       				<p:commandButton	       					
+	       					id="adeudoPaymentBtn"
+			       			icon="ui-icon-check"   
+					        value="Agregar Pago(s)"		                	
+					        actionListener="#{adeudoVentaBean.addPayment}"
+					        onclick="PF('pagoDialog').show();"
+					        style="width:150px;height:30px" />
+			        <p:column
+       					id="adeudoEditCol111"
+       					colspan="3">
+       					<p:commandButton	       					
+	       					id="adeudoInfoBtn001"
+			       			icon="ui-icon-search"   
+					        value="Ver Detalle"		                	
+					        action="#{adeudoVentaBean.showDetailRecordAction}"
+					        style="width:150px;height:30px" />
+       				</p:column>
+       				</p:column>
+				</p:row>				
+			</p:panelGrid>
+			<br/>			
+			<p:dataTable		            			
+            	id="paymentDatalist" 
+            	value="#{adeudoVentaBean.listaAdeudoHelper}"
+            	var="item"
+            	selectionMode="single" 
+            	selection="#{adeudoVentaBean.adeudoHelper}"
+            	paginator="true"   
+            	rowKey="#{item.idadeudo}"             
+                rows="10"
+                paginatorPosition="bottom"
+                emptyMessage="No existen registros" >
+                
+                <p:column
+                	styleClass="centerLabel"
+                	width="70" >
+                    <f:facet name="header">
+                        <h:outputText
+                        	id="tblAdeudoFechaLabel" 
+                        	value="Fecha"/>
+                    </f:facet>
+                    <h:outputText
+                    	id="tblAdeudoFechaOuput"		                            	 
+                    	value="#{item.fecha}">
+                    	<f:convertDateTime pattern="dd-MM-yyyy" />
+                    </h:outputText>
+                </p:column>                              
+                <p:column
+               		styleClass="rightLabel"
+               		width="90">
+                   <f:facet name="header">
+                       <h:outputText 
+                       	id="tblAdeudoCantidadLabel"
+                       	value="Cantidad"/>
+                   </f:facet>
+                   <h:outputText 
+                   		id="tblAdeudoCantidadOutput"
+                   		value="#{item.cantidad}">
+                   		<f:convertNumber 
+    						currencySymbol="$"
+    						type="currency"/>
+                   </h:outputText>
+                </p:column>
+                <p:column
+                	styleClass="leftLabel">
+                	<f:facet name="header">
+                        <h:outputText
+							id="tblAdeudoPagoLabel" 
+                       		value="Forma de Pago"/>
+                   	</f:facet>
+					<h:outputText
+                		id="tblAdeudoPagoOutput"                            	 
+                     	value="#{item.formapago.nombre}"/>
+                </p:column>
+                <p:column
+                	styleClass="rightLabel"
+               		width="90">
+                	<f:facet name="header">
+                        <h:outputText
+							id="tblAdeudoCambioLabel" 
+                       		value="Cambio"/>
+                   </f:facet>
+                   <h:outputText
+                		id="tblAdeudoCambioOutput"                            	 
+                     	value="#{item.cambio}">
+                     	<f:convertNumber 
+    						currencySymbol="$"
+    						type="currency"/>
+                   </h:outputText>
+                </p:column>
+                <p:column
+                	styleClass="leftLabel">
+                	<f:facet name="header">
+                        <h:outputText 
+                       		id="tblAdeudoReferenciaLabel"
+                       		value="Referencia"/>
+                   </f:facet>
+                	<h:outputText
+                		id="tblAdeudoReferenciaOutput"		                            	 
+                     	value="#{item.referenciapago}"/>
+                </p:column>
+                <p:column
+                 	styleClass="leftLabel">
+                     <f:facet name="header">
+                         <h:outputText 
+                         	id="tblAdeudoComentariosLabel"
+                         	value="Comentarios"/>
+                     </f:facet>
+                     <h:outputText	
+                     	id="tblAdeudoComentariosOutput"	                            	 
+                     	value="#{item.comentarios}"/>
+                 </p:column>
+            </p:dataTable>
+			
+		</p:panel>
+	</f:view>
+</html>			

@@ -1,0 +1,67 @@
+package com.alidasoftware.pos.bean;
+
+import java.io.Serializable;
+import java.util.List;
+
+import com.alidasoftware.pos.facade.FacturaFacade;
+import com.alidasoftware.pos.model.Factura;
+
+public class FacturacionBean  extends AbstractBean implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private Factura selected;
+	private List<Factura> facturas;
+	private FacturaFacade facturaFacade;
+	
+	public FacturacionBean(){
+		loadFacturas();
+	}
+	
+	public void loadFacturas(){
+		try{
+			facturas = getFacturaFacade().listAll();
+		} catch (Exception ex){
+			System.out.println("Error al cargar las facturas " + ex.getMessage());
+		}
+	}
+	
+	public void prepareCreate(){
+		System.out.println("entro a preparecreate");
+	}
+	
+	public void create(){
+		System.out.println("creando la factura");
+	}
+	
+	public void cancel(){
+		System.out.println("entro a cancelar la factura");
+	}
+	
+	public FacturaFacade getFacturaFacade(){
+		if(facturaFacade == null){
+			facturaFacade = new FacturaFacade();
+		}
+		return facturaFacade;
+	}
+
+	public Factura getSelected() {
+		return selected;
+	}
+
+	public void setSelected(Factura selected) {
+		this.selected = selected;
+	}
+
+	public List<Factura> getFacturas() {
+		return facturas;
+	}
+
+	public void setFacturas(List<Factura> facturas) {
+		this.facturas = facturas;
+	}
+
+}

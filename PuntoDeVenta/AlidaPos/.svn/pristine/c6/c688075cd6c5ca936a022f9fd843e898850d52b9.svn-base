@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"      
+      xmlns:pos="http://pos.com/functions">
+	
+	<ui:composition template="/template/template.xhtml">
+
+	<ui:define name="body">
+        	<h:form id="CierreCajaListForm">
+	            <p:layout
+	            	id="cierreCajaLayout"
+	            	style="height:auto;" >
+		            <p:layoutUnit 
+		            	id="cierreCajaWestLayout" 
+		            	position="west" 
+		            	size="150" 
+		            	header="Menu" 
+		            	collapsible="true"
+		            	style="height:auto;" >
+		            	<p:remoteCommand 
+		            		name="updateButtons" 
+		            		update="guardarCierreCajaButton" />	
+		            	<p:commandButton 			            	    
+		                	id="guardarCierreCajaButton" 
+		                	icon="ui-icon-plus"   
+		                	style="width:98%;height:50px" 
+		                	value="#{msg['catalogo.LeftMenu.Button.Nuevo']}"
+		                	onclick="PF('VentanaCCCreado').show();"/>            	
+					</p:layoutUnit>
+		            <p:layoutUnit 
+		            	id="cierreCajaCenterLayout"
+		            	position="center"
+		            	style="height:auto;">
+		            	           
+		            	           
+		            	<p:panel id="CierreCajaListPanel"
+        						header="Cierre de Caja">
+	        					<p:panelGrid
+	       							columnClasses="columnPanelGrid"
+		            				id="perfilFilters">
+		            				<p:row>		
+			            				<p:column>
+			            					<h:outputText
+					            				styleClass="boldLabel" 
+					            				value="Nombre" />
+				            				<div/>
+				            				<p:inputText styleClass="centerLabel" 
+					           					style="width: 150px;"
+					           					value="n" >
+					           					<f:validateLength maximum="100"/>
+					           				</p:inputText>
+				            			</p:column>
+				            			<p:column>
+				            				<div/>
+				            				<p:commandButton
+				            					icon="ui-icon-search"
+				            					value="Buscar"
+				            					update="CierreCajaListPanel"
+				            					/>
+				            			</p:column>
+				            		</p:row>
+		            			</p:panelGrid>	
+							<p:dataTable 
+		                    	id="cierreCajalist" 
+		                    	value="#{corteCajaBean.listaCorteCaja}"
+		                    	var="lista"
+		                    	paginator="true"
+		                    	paginatorPosition="bottom"
+		                        >
+		                        
+							<p:column headerText="Id">
+        						<h:outputText value="#{lista.idcortecaja}" />
+    						</p:column>
+ 
+    						<p:column headerText="Id Caja">
+        						<h:outputText value="#{lista.caja}" />
+    						</p:column>
+ 
+    						<p:column headerText="Id Usuario">
+        						<h:outputText value="#{lista.usuario1}" />
+    						</p:column>
+ 
+    						<p:column headerText="Fecha">
+        						<h:outputText value="#{lista.fecha}" />
+    						</p:column>
+							
+							
+							
+    						<p:column headerText="Hora Inicio">
+        						<h:outputText value="#{lista.horainicio}" />
+    						</p:column>
+    						
+    						
+    						<p:column headerText="Hora Fin">
+        						<h:outputText value="#{lista.horafin}" />
+    						</p:column>
+    						
+    						
+    						<p:column headerText="Cantidad Fisica">
+        						<h:outputText  />
+    						</p:column>
+    						
+    						
+    						<p:column headerText="Cantidad Sistema">
+        						<h:outputText  />
+    						</p:column>
+    						
+    						
+    						<p:column headerText="Comentarios">
+        						<h:outputText value="#{lista.comentarios}" />
+    						</p:column>
+							
+							
+							</p:dataTable>
+			                </p:panel>
+	 	
+		            </p:layoutUnit>		            		
+				</p:layout>
+			</h:form>
+        </ui:define>
+	</ui:composition>
+	
+	
+	<p:dialog widgetVar="VentanaCCCreado" modal="true"  header="Nuevo Cierre de Caja">
+		            	<center>
+		            	<!--<p:outputLabel value="Corte de Caja" style="font-weight:bold; "/>
+  						-->
+<p:panelGrid >
+    <f:facet name="header">
+        <p:row>
+            <p:column colspan="8" style="width:50%; font-weight: bold">
+            	<p:outputLabel id="labelCierreCaja" value="Cierre de Caja" style="font-weight: bold;"/>
+            </p:column>
+            
+        </p:row>
+    </f:facet>
+     <p:row>
+            <p:column  colspan="8">
+             <p:outputLabel id="del" value="Del:" style="font-weight: bold;"/>
+             <p:outputLabel id="labelDel" />
+            </p:column>
+    </p:row>
+    <p:row>
+            <p:column colspan="8" >
+            <p:outputLabel id="caja" value="Caja:" style="font-weight: bold;"/>
+            <p:outputLabel id="labelCaja"  value="#{corteCajaBean.caja.clave}"/>
+            </p:column>
+    </p:row>
+    
+    <p:row>
+            <p:column colspan="8" >
+            <p:outputLabel id="cantidadCaja" value="Cantidad en Caja: $" style="font-weight: bold;"/>
+            <p:inputText id="cantidadKja"  label="cantidadCaja" required="true"><!-- value="#{validationView.integer}" -->
+                <f:validateDoubleRange minimum="5" maximum="8" />
+            </p:inputText>
+            </p:column>
+    </p:row>
+           	
+    <p:row>
+            <p:column  colspan="4" styleClass="ui-widget-header">
+             <p:outputLabel id="ventasTotales" value="Ventas Totales" />
+            </p:column>
+            <p:column  colspan="4" styleClass="ui-widget-header">
+             <p:outputLabel id="efectivoEnCaja" value="Efectivo en Caja" />
+            </p:column>
+       	</p:row>
+       	 
+  <p:row>
+        
+        <p:column rowspan="2" colspan="2" >
+        	<p:outputLabel id="labelEfectivo" value="Efectivo" />
+        </p:column>
+        <p:column rowspan="2" colspan="2" >
+        <p:outputLabel id="labelSimbolo1" value="$ " />
+        <p:outputLabel id="labelDineroEfectivo" value="0.0" />
+        </p:column>
+        
+        <p:column colspan="2" >
+        	<p:outputLabel id="labelInicial" value="Inicial" />
+        </p:column>
+        <p:column colspan="2" >
+        <p:outputLabel id="labelSimbolo2" value="$ " />
+        <p:outputLabel id="labelDineroInicial" value="#{corteCajaBean.efectivoInicial}" />
+        </p:column>
+    </p:row>
+ 
+    <p:row>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelVentas" value="Ventas" />
+        </p:column>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelSimbolo3" value="$ " />
+        	<p:outputLabel id="labelDineroVentas"  />
+        </p:column>
+    </p:row>
+ 
+    <p:row>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelTarjeta" value="Tarjeta" />
+        </p:column>
+        <p:column colspan="2">
+        <p:outputLabel id="labelSimbolo4" value="$ " />
+        <p:outputLabel id="labelDineroTarjeta" value="0.0" />
+        </p:column>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelPagos" value="Pagos" />
+        </p:column>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelSimbolo5" value="$ " />
+        	<p:outputLabel id="labelDineroPagos" value="0.0" />
+        </p:column>
+ 
+    </p:row>
+ 
+    <p:row>
+    	<p:column colspan="2">
+    		<p:outputLabel id="labelCredito" value="Crédito" />
+    	</p:column>
+        <p:column colspan="2">
+        <p:outputLabel id="labelSimbolo6" value="$ " />
+        <p:outputLabel id="labelDineroCredito" value="0.0" />
+        </p:column>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelRetiro" value="Retiro" />
+        </p:column>
+        <p:column colspan="2">
+        <p:outputLabel id="labelSimbolo7" value="$ " />
+        <p:outputLabel id="labelDineroRetiro" value="0.0" />
+        </p:column>
+ 
+     </p:row>
+ 
+    <p:row>
+    	<p:column colspan="2">
+    		<p:outputLabel id="labelVales" value="Vales" />
+    	</p:column>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelSimbolo8" value="$ " />
+        	<p:outputLabel id="labelDineroVales" value="0.0" />
+        </p:column>
+        <p:column colspan="4"/>
+    </p:row>
+ 
+    <f:facet name="footer">
+        <p:row>
+            <p:column  colspan="2" style="text-align: right">
+                <p:outputLabel id="labelTotal1" value="Total:" /> 
+            </p:column>
+            <p:column  colspan="2" style="text-align: left">
+        		<p:outputLabel id="labelSimboloTotal1" value="$ " />
+        		<p:outputLabel id="labelDineroTotal1" value="0.0" />
+            </p:column>
+            <p:column  colspan="2" style="text-align: right">
+                <p:outputLabel id="labelTotal2" value="Total:" />
+            </p:column>
+            <p:column  colspan="2" style="text-align: left">
+                <p:outputLabel id="labelSimboloTotal2" value="$ " />
+        		<p:outputLabel id="labelDineroTotal2" value="0.0" /> 
+            </p:column>
+        </p:row>
+    </f:facet>
+	</p:panelGrid>
+	<br/>
+	 <p:outputLabel id="faltante" value="Faltante:" style="font-weight: bold;"/>
+	 <p:outputLabel id="objetoFaltante" value="Objeto" style="font-weight: bold;"/> 
+	</center>
+		</p:dialog>
+</html>

@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?><definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://interfazado.estrellaroja.com.mx/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" targetNamespace="http://interfazado.estrellaroja.com.mx/" name="InterfazADOService">
+  <types>
+    <xsd:schema>
+      <xsd:import namespace="http://interfazado.estrellaroja.com.mx/" schemaLocation="http://devas01.estrellaroja.com.mx:8090/InterfazADOService/InterfazADO/__container$publishing$subctx/META-INF/wsdl/InterfazADOService_schema1.xsd" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </xsd:schema>
+  </types>
+  <message name="buscaCorrida">
+    <part name="parameters" element="tns:buscaCorrida"/>
+  </message>
+  <message name="buscaCorridaResponse">
+    <part name="parameters" element="tns:buscaCorridaResponse"/>
+  </message>
+  <message name="buscaAsiento">
+    <part name="parameters" element="tns:buscaAsiento"/>
+  </message>
+  <message name="buscaAsientoResponse">
+    <part name="parameters" element="tns:buscaAsientoResponse"/>
+  </message>
+  <message name="bloquearAsiento">
+    <part name="parameters" element="tns:bloquearAsiento"/>
+  </message>
+  <message name="bloquearAsientoResponse">
+    <part name="parameters" element="tns:bloquearAsientoResponse"/>
+  </message>
+  <message name="desbloquearAsiento">
+    <part name="parameters" element="tns:desbloquearAsiento"/>
+  </message>
+  <message name="desbloquearAsientoResponse">
+    <part name="parameters" element="tns:desbloquearAsientoResponse"/>
+  </message>
+  <message name="confirmaVentaBoleto">
+    <part name="parameters" element="tns:confirmaVentaBoleto"/>
+  </message>
+  <message name="confirmaVentaBoletoResponse">
+    <part name="parameters" element="tns:confirmaVentaBoletoResponse"/>
+  </message>
+  <message name="validaCancelacion">
+    <part name="parameters" element="tns:validaCancelacion"/>
+  </message>
+  <message name="validaCancelacionResponse">
+    <part name="parameters" element="tns:validaCancelacionResponse"/>
+  </message>
+  <message name="validaTransferencia">
+    <part name="parameters" element="tns:validaTransferencia"/>
+  </message>
+  <message name="validaTransferenciaResponse">
+    <part name="parameters" element="tns:validaTransferenciaResponse"/>
+  </message>
+  <message name="validaBoletoAbierto">
+    <part name="parameters" element="tns:validaBoletoAbierto"/>
+  </message>
+  <message name="validaBoletoAbiertoResponse">
+    <part name="parameters" element="tns:validaBoletoAbiertoResponse"/>
+  </message>
+  <message name="cancelaBoleto">
+    <part name="parameters" element="tns:cancelaBoleto"/>
+  </message>
+  <message name="cancelaBoletoResponse">
+    <part name="parameters" element="tns:cancelaBoletoResponse"/>
+  </message>
+  <message name="TransferenciaBoletoADO_ADO">
+    <part name="parameters" element="tns:TransferenciaBoletoADO_ADO"/>
+  </message>
+  <message name="TransferenciaBoletoADO_ADOResponse">
+    <part name="parameters" element="tns:TransferenciaBoletoADO_ADOResponse"/>
+  </message>
+  <message name="TransferenciaBoletoADO_ER">
+    <part name="parameters" element="tns:TransferenciaBoletoADO_ER"/>
+  </message>
+  <message name="TransferenciaBoletoADO_ERResponse">
+    <part name="parameters" element="tns:TransferenciaBoletoADO_ERResponse"/>
+  </message>
+  <message name="CanjeBoletoAbiertoADO_ER">
+    <part name="parameters" element="tns:CanjeBoletoAbiertoADO_ER"/>
+  </message>
+  <message name="CanjeBoletoAbiertoADO_ERResponse">
+    <part name="parameters" element="tns:CanjeBoletoAbiertoADO_ERResponse"/>
+  </message>
+  <message name="CanjeBoletoAbiertoADO_ADO">
+    <part name="parameters" element="tns:CanjeBoletoAbiertoADO_ADO"/>
+  </message>
+  <message name="CanjeBoletoAbiertoADO_ADOResponse">
+    <part name="parameters" element="tns:CanjeBoletoAbiertoADO_ADOResponse"/>
+  </message>
+  <portType name="InterfazADO">
+    <operation name="buscaCorrida">
+      <input message="tns:buscaCorrida"/>
+      <output message="tns:buscaCorridaResponse"/>
+    </operation>
+    <operation name="buscaAsiento">
+      <input message="tns:buscaAsiento"/>
+      <output message="tns:buscaAsientoResponse"/>
+    </operation>
+    <operation name="bloquearAsiento">
+      <input message="tns:bloquearAsiento"/>
+      <output message="tns:bloquearAsientoResponse"/>
+    </operation>
+    <operation name="desbloquearAsiento">
+      <input message="tns:desbloquearAsiento"/>
+      <output message="tns:desbloquearAsientoResponse"/>
+    </operation>
+    <operation name="confirmaVentaBoleto">
+      <input message="tns:confirmaVentaBoleto"/>
+      <output message="tns:confirmaVentaBoletoResponse"/>
+    </operation>
+    <operation name="validaCancelacion">
+      <input message="tns:validaCancelacion"/>
+      <output message="tns:validaCancelacionResponse"/>
+    </operation>
+    <operation name="validaTransferencia">
+      <input message="tns:validaTransferencia"/>
+      <output message="tns:validaTransferenciaResponse"/>
+    </operation>
+    <operation name="validaBoletoAbierto">
+      <input message="tns:validaBoletoAbierto"/>
+      <output message="tns:validaBoletoAbiertoResponse"/>
+    </operation>
+    <operation name="cancelaBoleto">
+      <input message="tns:cancelaBoleto"/>
+      <output message="tns:cancelaBoletoResponse"/>
+    </operation>
+    <operation name="TransferenciaBoletoADO_ADO">
+      <input message="tns:TransferenciaBoletoADO_ADO"/>
+      <output message="tns:TransferenciaBoletoADO_ADOResponse"/>
+    </operation>
+    <operation name="TransferenciaBoletoADO_ER">
+      <input message="tns:TransferenciaBoletoADO_ER"/>
+      <output message="tns:TransferenciaBoletoADO_ERResponse"/>
+    </operation>
+    <operation name="CanjeBoletoAbiertoADO_ER">
+      <input message="tns:CanjeBoletoAbiertoADO_ER"/>
+      <output message="tns:CanjeBoletoAbiertoADO_ERResponse"/>
+    </operation>
+    <operation name="CanjeBoletoAbiertoADO_ADO">
+      <input message="tns:CanjeBoletoAbiertoADO_ADO"/>
+      <output message="tns:CanjeBoletoAbiertoADO_ADOResponse"/>
+    </operation>
+  </portType>
+  <binding name="InterfazADOPortBinding" type="tns:InterfazADO">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
+    <operation name="buscaCorrida">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="buscaAsiento">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="bloquearAsiento">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="desbloquearAsiento">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="confirmaVentaBoleto">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="validaCancelacion">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="validaTransferencia">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="validaBoletoAbierto">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="cancelaBoleto">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="TransferenciaBoletoADO_ADO">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="TransferenciaBoletoADO_ER">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="CanjeBoletoAbiertoADO_ER">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="CanjeBoletoAbiertoADO_ADO">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="InterfazADOService">
+    <port name="InterfazADOPort" binding="tns:InterfazADOPortBinding">
+      <soap:address location="http://devas01.estrellaroja.com.mx:8090/InterfazADOService/InterfazADO" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/"/>
+    </port>
+  </service>
+</definitions>

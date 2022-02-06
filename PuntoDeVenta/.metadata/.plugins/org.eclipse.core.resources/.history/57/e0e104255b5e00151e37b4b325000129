@@ -1,0 +1,482 @@
+package com.alidasoftware.pos.bean;
+
+import java.io.Serializable;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.SelectItem;
+
+import org.primefaces.context.RequestContext;
+
+import com.alidasoftware.pos.exception.AlidaPosException;
+import com.alidasoftware.pos.facade.CajaEfectivoFacade;
+import com.alidasoftware.pos.facade.CajaFacade;
+import com.alidasoftware.pos.facade.CorteCajaFacade;
+import com.alidasoftware.pos.facade.UsuarioFacade;
+import com.alidasoftware.pos.model.Caja;
+import com.alidasoftware.pos.model.Cajaefectivo;
+import com.alidasoftware.pos.model.Cortecaja;
+import com.alidasoftware.pos.model.Corteparcial;
+import com.alidasoftware.pos.model.Detallecortecaja;
+import com.alidasoftware.pos.model.Usuario;
+import com.alidasoftware.pos.model.Modulo;
+
+
+public class CorteCajaBean extends AbstractBean implements Serializable {
+
+	private static final long serialVersionUID = -7511752856456833241L;
+	
+	private CajaFacade cajaFacade;
+	private CajaEfectivoFacade cajaEfectivoFacade;
+	private Caja caja;
+	private String selectedCaja;
+	private List<SelectItem> listaCaja;
+	private float efectivoInicial;
+	private String message;
+	private List<Cortecaja> listaCorteCaja;
+	
+	private UsuarioFacade usuarioFacade;
+	private Usuario user;
+	private String username;
+	private String password;
+	private boolean logeado;
+	
+	private int idcortecaja;
+	private int cantidadfisica;
+	private int cantidadsistema;
+	private String comentarios;
+	private Date fecha;
+	private Time horafin;
+	private Time horainicio;
+	private Usuario usuario1;
+	private Usuario usuario2;
+	private List<Corteparcial>corteparcials;
+	private List<Detallecortecaja>detallecortecajas;
+	private CorteCajaFacade corteCajaFacade= new CorteCajaFacade();
+	private Cortecaja corteCaja;
+	
+	public CorteCajaBean() {
+		System.out.println("Constructor");
+		efectivoInicial = 0.0f;
+		caja = null;
+		selectedCaja = null;
+		listaCaja =  new ArrayList<SelectItem>();
+		listar();
+		//loadCajaSelectItems();
+	}
+	
+	public void listar()
+	{
+
+		System.out.println("Mensaje listar");
+		try {
+			listaCorteCaja=corteCajaFacade.listAll();
+		} catch (AlidaPosException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public List<Cortecaja> getListaCorteCaja() {
+		System.out.println("obteniendo lista"+ listaCorteCaja);
+		return listaCorteCaja;
+	}
+
+	public void setListaCorteCaja(List<Cortecaja> listaCorteCaja) {
+		this.listaCorteCaja = listaCorteCaja;
+	}
+	
+	
+	public CorteCajaFacade getCorteCajaFacade() {
+		return corteCajaFacade;
+	}
+
+	public void setCorteCajaFacade(CorteCajaFacade corteCajaFacade) {
+		this.corteCajaFacade = corteCajaFacade;
+	}
+	
+	public int getIdcortecaja() {
+		return idcortecaja;
+	}
+
+	public void setIdcortecaja(int idcortecaja) {
+		this.idcortecaja = idcortecaja;
+	}
+
+	
+	public String getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(String comentarios) {
+		this.comentarios = comentarios;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public Time getHorafin() {
+		return horafin;
+	}
+
+	public void setHorafin(Time horafin) {
+		this.horafin = horafin;
+	}
+
+	public Time getHorainicio() {
+		return horainicio;
+	}
+
+	public void setHorainicio(Time horainicio) {
+		this.horainicio = horainicio;
+	}
+
+	public Usuario getUsuario1() {
+		return usuario1;
+	}
+
+	public void setUsuario1(Usuario usuario1) {
+		this.usuario1 = usuario1;
+	}
+
+	public Usuario getUsuario2() {
+		return usuario2;
+	}
+
+	public void setUsuario2(Usuario usuario2) {
+		this.usuario2 = usuario2;
+	}
+
+	public List<Corteparcial> getCorteparcials() {
+		return corteparcials;
+	}
+
+	public void setCorteparcials(List<Corteparcial> corteparcials) {
+		this.corteparcials = corteparcials;
+	}
+
+	public List<Detallecortecaja> getDetallecortecajas() {
+		return detallecortecajas;
+	}
+
+	public void setDetallecortecajas(List<Detallecortecaja> detallecortecajas) {
+		this.detallecortecajas = detallecortecajas;
+	}
+
+	public Usuario getUser() {
+		return user;
+	}
+
+	public void setUser(Usuario user) {
+		this.user = user;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setCajaFacade(CajaFacade cajaFacade) {
+		this.cajaFacade = cajaFacade;
+	}
+
+	public void setCajaEfectivoFacade(CajaEfectivoFacade cajaEfectivoFacade) {
+		this.cajaEfectivoFacade = cajaEfectivoFacade;
+	}
+
+	public UsuarioFacade getUsuarioFacade() {
+		if (usuarioFacade == null) {
+			usuarioFacade = new UsuarioFacade();
+		}
+		return usuarioFacade;
+	}
+	
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public float getEfectivoInicial() {
+		return efectivoInicial;
+	}
+
+	public void setEfectivoInicial(float efectivoInicial) {
+		this.efectivoInicial = efectivoInicial;
+	}
+
+	public String getSelectedCaja() {
+		return selectedCaja;
+	}
+
+	public void setSelectedCaja(String selectedCaja) {
+		this.selectedCaja = selectedCaja;
+	}	
+
+	public List<SelectItem> getListaCaja() {
+		return listaCaja;
+	}
+
+	public void setListaCaja(List<SelectItem> listaCaja) {
+		this.listaCaja = listaCaja;
+	}
+
+	public Caja getCaja() {
+		return caja;
+	}
+
+	public void setCaja(Caja caja) {
+		this.caja = caja;
+	}
+	
+	private CajaFacade getCajaFacade() {
+		if (cajaFacade == null) {
+			cajaFacade = new CajaFacade();
+		}
+		return cajaFacade;
+	}
+	
+	private CajaEfectivoFacade getCajaEfectivoFacade() {
+		if (cajaEfectivoFacade == null) {
+			cajaEfectivoFacade = new CajaEfectivoFacade();
+		}
+		return cajaEfectivoFacade;
+	}
+	
+	
+	public void showListDialogListener() {
+		
+	}
+	
+	public String showListDialogAction() {
+		RequestContext.getCurrentInstance().execute("PF('blockPage').show().show();");
+		showListDialogListener();
+		RequestContext.getCurrentInstance().execute("PF('blockPage').show().hide();");
+		return "/caja/List.xhtml?faces-redirect=true";
+	}
+
+	//********************************************************************
+	// Metodos para controlar que caja es la que utilizara en la sesion.
+	//********************************************************************
+	
+	public void cajaListener(ActionEvent event) {
+		initializeVars();
+	}
+	
+	public void cleanUp() {
+		initializeVars();
+	}
+	
+	private void initializeVars() {
+		message = "";
+		efectivoInicial = 0.0f;
+		caja = null;
+		selectedCaja = "";
+	}
+	
+	public void cajaChangeListener(ValueChangeEvent event) {
+		if (event != null) {
+			try {			
+				//System.out.println("caja valueChange : " + event.getNewValue().getClass().toString());
+				selectedCaja = event.getNewValue().toString();
+				message = "";
+			} catch (Exception ex) {
+				System.out.println("ErrorValueChangeCaja : " + ex.getMessage());
+				keepDialogOpen();
+	            displayErrorMessageToUser("Error: " + ex.getMessage());
+			}
+		}
+	}
+	
+	private void loadCajaSelectItems() {
+		try {
+			List<Cajaefectivo> listaCajaEfectivo = getCajaEfectivoFacade().listAll();			
+			listaCaja = new ArrayList<SelectItem>();
+			List<Caja> list = getCajaFacade().listAll();
+			if (list != null && list.size() > 0) {
+				String label = "";
+				for (int i = 0; i < list.size(); i++) {
+					label = list.get(i).getNombre();
+					//System.out.println("CajaName : " + label);
+					if (listaCajaEfectivo != null && listaCajaEfectivo.size() > 0) {
+						for (int j = 0; j < listaCajaEfectivo.size(); j++) {
+							if (!listaCajaEfectivo.get(j).getCaja().getClave().equals(label)) {
+								listaCaja.add(new SelectItem( label ));
+							}
+						}
+					} else {
+						listaCaja.add(new SelectItem( label ));
+					}
+				}
+				selectedCaja = list.get(0).getClave();
+				//System.out.println("Init Caja seleccionada : " + selectedCaja);				
+			}
+			
+		} catch (Exception ex) {
+			System.out.println("ErrorCaja : " + ex.getMessage());
+			keepDialogOpen();
+            displayErrorMessageToUser("Error: No exiten cajas.. verifique catálogo");
+		}
+	}	
+	
+	private boolean checkCajainUse(Caja auxCaja) throws AlidaPosException {
+		Cajaefectivo auxCajaEfectivo = getCajaEfectivoFacade().findByCaja(auxCaja);
+		if (auxCajaEfectivo != null) {
+			return true;
+		}
+		return false;
+	}
+	
+	public void checkCashier() {
+		try {
+			if (Float.compare(efectivoInicial, (float) 0.0) > 0) {
+				Caja auxCaja = getCajaFacade().findByClave(selectedCaja);
+				if (auxCaja != null && !checkCajainUse(auxCaja)) {
+					caja = auxCaja;
+					Cajaefectivo cajaEfectivo = new Cajaefectivo();
+					cajaEfectivo.setEfectivo(efectivoInicial);
+					cajaEfectivo.setFecha(new Date());
+					cajaEfectivo.setCaja(caja);
+					getCajaEfectivoFacade().createCajaEfectivo(cajaEfectivo);
+					RequestContext.getCurrentInstance().update("menuForm:mainMenuBar");
+					message = "";
+					RequestContext.getCurrentInstance().execute("PF('cashierDialog').hide();");	
+				} else {
+					message = "La caja ya esta utilizada, seleccione otra.";
+					RequestContext.getCurrentInstance().update("abreCajaForm:panelOpenCaja");				
+				}	
+			} else {
+				message = "La cantidad ingresada debe ser mayor a cero.";
+				RequestContext.getCurrentInstance().update("abreCajaForm:panelOpenCaja");
+			}
+		} catch (Exception ex) {
+			System.out.println("ErrorCerrarCaja : " + ex.getMessage());
+			keepDialogOpen();
+            displayErrorMessageToUser("Error: " + ex.getMessage());
+		}
+	}
+	
+	public String openCajaDialogAction() {
+		loadCajaSelectItems();
+		RequestContext.getCurrentInstance().update("abreCajaForm:panelOpenCaja");
+		RequestContext.getCurrentInstance().execute("PF('cashierDialog').show();");
+		return null;
+	}
+	
+	public void doSearch() {
+		System.out.println("Realizando busqueda por ... " + idcortecaja);
+    	//selected = null;	
+		try {
+			 corteCaja= getCorteCajaFacade().findCortecaja(idcortecaja); //.findByNombre(searchNombre);
+			//= getCorteParcialFacade().findCorteparcial(idcorteparcial);
+			System.out.println("Encontrado");
+		} catch (Exception ex) {
+			System.out.println("Filter Exception : " + ex.getMessage());
+			keepDialogOpen();
+            displayErrorMessageToUser("Error: " + ex.getMessage());
+		}
+		idcortecaja = 0;
+		RequestContext.getCurrentInstance().update("CierreCajaListForm:CierreCajaListPanel");
+	}
+	
+	
+	public String login() {
+		RequestContext context = RequestContext.getCurrentInstance();
+		FacesMessage mnsg = null;
+		try {
+			user = getUsuarioFacade().findUserByNamePwd(username, password);
+			if (user != null) 
+			{
+				if (user.isActivo())
+				{
+					setLogeado(true);
+					for(Modulo modulo: user.getPerfil().getModulos())
+						{
+							System.out.println(modulo.getNombre());
+							if(modulo.getNombre().equals("Corte de Caja"))// || (modulo.getNombre().equals("Corte Parcial")))
+							{
+								mnsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Bienvenid@", username);
+								return "/corteCaja/CierreCaja.xhtml?faces-redirect=true";
+							}
+						}
+					mnsg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error", "No tiene permisos para acceder a este rubro");
+				} 
+				else 
+				{
+					setLogeado(false);
+					mnsg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error", "Usuario inhabilitado...");
+				}				
+			} 
+			else 
+			{
+				setLogeado(false);
+				mnsg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error", "Usuario o Contraseña no válidas");
+			}
+		} 
+		catch (Exception ex) 
+		{
+			setLogeado(false);
+			mnsg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error", "Usuario o Contraseña no válidas");
+		}
+		username = "";
+		password = "";
+		FacesContext.getCurrentInstance().addMessage(null, mnsg);
+		RequestContext.getCurrentInstance().update(":growl");
+		return null;
+	}
+
+	
+	public void setUsuarioFacade(UsuarioFacade usuarioFacade) {
+		this.usuarioFacade = usuarioFacade;
+	}
+
+	public boolean isLogeado() {
+		return logeado;
+	}
+
+	public void setLogeado(boolean logeado) {
+		this.logeado = logeado;
+	}
+
+	public int getCantidadfisica() {
+		return cantidadfisica;
+	}
+
+	public void setCantidadfisica(int cantidadfisica) {
+		this.cantidadfisica = cantidadfisica;
+	}
+
+	public int getCantidadsistema() {
+		return cantidadsistema;
+	}
+
+	public void setCantidadsistema(int cantidadsistema) {
+		this.cantidadsistema = cantidadsistema;
+	}
+	
+}
+

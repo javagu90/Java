@@ -1,0 +1,22 @@
+package com.alidasoftware.pos.validator;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.validator.Validator;
+import javax.faces.validator.ValidatorException;
+
+
+public class GreaterThanZeroValidator {
+
+	public void validate(FacesContext arg0, UIComponent arg1, Object arg2)
+            throws ValidatorException {
+        if (!(arg2 instanceof Float)) {
+            throw new ValidatorException(new FacesMessage("Es necesario un número en este campo"));
+        }
+        int valor = (Integer) arg2;
+        if (valor <= 0) {
+            throw new ValidatorException(new FacesMessage("El número debe de ser mayor a 0"));
+        }
+    }
+}

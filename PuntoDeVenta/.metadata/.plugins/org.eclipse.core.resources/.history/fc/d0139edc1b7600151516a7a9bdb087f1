@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"      
+      xmlns:pos="http://pos.com/functions">
+	
+	<ui:composition template="/template/template.xhtml">
+	<ui:define name="body">
+        	<h:form id="CierreCajaListForm">
+	            <p:layout
+	            	id="cierreCajaLayout"
+	            	style="height:auto;" >
+		            <p:layoutUnit 
+		            	id="cierreCajaWestLayout" 
+		            	position="west" 
+		            	size="150" 
+		            	header="Menu" 
+		            	collapsible="true"
+		            	style="height:auto;" >
+		             	<p:remoteCommand 
+		            		name="updateButtons" 
+		            		update="guardarCierreCajaButton" />	
+		            	<p:commandButton 			            	    
+		                	id="guardarCierreCajaButton" 
+		                	icon="ui-icon-plus"   
+		                	value="#{msg['catalogo.LeftMenu.Button.Nuevo']}"
+		                	style="width:98%;height:50px" 
+		                	onclick="PF('VentanaCCCreado').show();"
+		                	actionListener="#{corteCajaBean.prepareCreateNew}"
+		                	    update=":CorteCajaCreateForm"
+		                	    immediate="true"/>            	
+					</p:layoutUnit>
+		            <p:layoutUnit 
+		            	id="cierreCajaCenterLayout"
+		            	position="center"
+		            	style="height:auto;">
+		            	           
+		            	           
+		            	<p:panel id="CierreCajaListPanel"
+        						header="Cierre de Caja">
+	        					<p:panelGrid
+	       							columnClasses="columnPanelGrid"
+		            				>
+		            				<p:row>		
+			            				<p:column>
+			            					<h:outputText
+					            				styleClass="boldLabel" 
+					            				value="Fecha" />
+				            				<div/>
+				            				<!--<p:inputText styleClass="centerLabel" 
+					           					style="width: 150px;"
+					           					value="#{corteCajaBean.searchFecha}" >
+					           					<f:validateLength maximum="100"/>
+					           				</p:inputText>-->
+					           				<p:calendar id="mask" value="#{corteCajaBean.searchFecha}" pattern="dd-MM-yyyy" mask="true" />
+				            			</p:column>
+				            			<p:column>
+				            				<div/>
+				            				<p:commandButton
+				            					icon="ui-icon-search"
+				            					value="Buscar"
+				            					action="#{corteCajaBean.doSearch}"
+			            						update="CierreCajaListPanel"
+				            					/>
+				            			</p:column>
+				            		</p:row>
+		            			</p:panelGrid>	
+							<p:dataTable 
+		                    	id="datalist" 
+		                    	value="#{corteCajaBean.listaCorteCaja}"
+		                    	var="lista"
+		                    	selectionMode="single" 
+			                    selection="#{corteCajaBean.selected}"
+		                    	paginator="true"
+		                    	paginatorPosition="bottom"
+		                    	rowKey="#{lista.idcortecaja}"
+			                    rows="10"
+			                    emptyMessage="#{msg['tbl.emptyMsg']}"
+			                    >
+		                        <p:ajax 
+		                        	event="rowDblselect" 
+		                        	update=":cierreCajaViewForm"
+		                        	oncomplete="PF('CierreCajaViewDialog').show()"
+		                        	listener="#{corteCajaBean.onRowDblClckSelect}" />
+		                        	
+		                        	<p:column rendered="false">
+			                            <f:facet name="header">
+			                                <h:outputText value="#{msg['catalogo.Label.Id']}"/>
+			                            </f:facet>
+			                            <h:outputText value="#{lista.idcortecaja}"/>
+			                        </p:column>
+    						<p:column headerText="Caja">
+        						<h:outputText value="#{lista.caja.nombre}" />
+    						</p:column>
+ 
+    						<p:column headerText="Usuario">
+        						<h:outputText value="#{lista.usuario1.clave}" />
+    						</p:column>
+
+    						<p:column headerText="Supervisor">
+        						<h:outputText value="#{lista.usuario2.clave}" />
+    						</p:column>
+ 
+    						<p:column headerText="Fecha">
+        						<h:outputText value="#{lista.convertirFecha()}" />
+    						</p:column>
+							
+    						<p:column headerText="Hora Inicio">
+        						<h:outputText value="#{lista.horainicio}" />
+    						</p:column>
+    						
+    						<p:column headerText="Hora Fin">
+        						<h:outputText value="#{lista.horafin}" />
+    						</p:column>
+    						
+    						<p:column headerText="Cantidad Fisica">
+        						<h:outputText  value="#{lista.cantidadfisica}" />
+    						</p:column>
+    						
+    						<p:column headerText="Cantidad Sistema">
+        						<h:outputText  value="#{lista.cantidadsistema}"/>
+    						</p:column>
+    						
+    						<p:column headerText="Comentarios">
+        						<h:outputText value="#{lista.comentarios}" />
+    						</p:column>
+		
+							</p:dataTable>
+			                </p:panel>
+	 	            </p:layoutUnit>		            		
+				</p:layout>
+			</h:form>
+				<ui:include src="View.xhtml"/>
+        </ui:define>
+	</ui:composition>
+	
+	
+	<p:dialog widgetVar="VentanaCCCreado" modal="true"  header="Nuevo Cierre de Caja">
+		            	<center>
+		            	<h:form id="CorteCajaCreateForm" >
+		       <!-- 
+            	onkeyup="if (event.keyCode == 13) { return false; }"
+				onkeypress="if (event.keyCode == 13) { return false; }" -->
+		                <h:panelGroup id="display">
+		           
+<p:panelGrid >
+    <f:facet name="header">
+        <p:row>
+            <p:column colspan="8" style="width:50%; font-weight: bold">
+            	<p:outputLabel id="labelCierreCaja" value="Cierre de Caja" style="font-weight: bold;"/>
+            </p:column>
+            
+        </p:row>
+    </f:facet>
+     <p:row>
+            <p:column  colspan="8">
+             <p:outputLabel id="del" value="Del:" style="font-weight: bold;"/>
+             <p:outputLabel id="labelDel"  value="#{corteCajaBean.stringFecha}"/>
+            </p:column>
+    </p:row>
+    <p:row>
+            <p:column colspan="8" >
+            <p:outputLabel id="caja" value="Caja:" style="font-weight: bold;"/>
+            <p:outputLabel id="labelCaja"  value="#{corteCajaBean.caja.clave}"/>
+            </p:column>
+    </p:row>
+    
+    <p:row>
+            <p:column colspan="8" >
+            <p:outputLabel id="cantidadCaja" value="Cantidad en Caja: $" style="font-weight: bold;"/>
+            <p:inputText id="cantidadKja"  label="cantidadCaja" required="true" value="#{corteCajaBean.cantidadfisica}">
+            <!--<f:validateDoubleRange minimum="1" />-->
+                  <f:validateDoubleRange minimum="0" maximum="8" />
+            </p:inputText>
+            </p:column>
+    </p:row>
+           	
+    <p:row>
+            <p:column  colspan="4" styleClass="ui-widget-header">
+             <p:outputLabel id="ventasTotales" value="Ventas Totales" />
+            </p:column>
+            <p:column  colspan="4" styleClass="ui-widget-header">
+             <p:outputLabel id="efectivoEnCaja" value="Efectivo en Caja" />
+            </p:column>
+       	</p:row>
+       	 
+  <p:row>
+        
+        <p:column rowspan="2" colspan="2" >
+        	<p:outputLabel id="labelEfectivo" value="Efectivo" />
+        </p:column>
+        <p:column rowspan="2" colspan="2" >
+        <p:outputLabel id="labelDineroEfectivo" value="#{corteCajaBean.dineroEfectivo}" />
+        </p:column>
+        
+        <p:column colspan="2" >
+        	<p:outputLabel id="labelInicial" value="Inicial" />
+        </p:column>
+        <p:column colspan="2" >
+        <p:outputLabel id="labelSimbolo2" value="$ " />
+        <p:outputLabel id="labelDineroInicial" value="#{corteCajaBean.dineroInicial}" />
+        </p:column>
+    </p:row>
+ 
+    <p:row>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelVentas" value="Ventas" />
+        </p:column>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelDineroVentas"  value="#{corteCajaBean.dineroVentas}"/>
+        </p:column>
+    </p:row>
+ 
+    <p:row>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelTarjeta" value="Tarjeta" />
+        </p:column>
+        <p:column colspan="2">
+        <p:outputLabel id="labelDineroTarjeta" value="#{corteCajaBean.dineroTarjeta}" />
+        </p:column>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelPagos" value="Pagos" />
+        </p:column>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelDineroPagos" value="#{corteCajaBean.dineroPagos}" />
+        </p:column>
+ 
+    </p:row>
+ 
+    <p:row>
+    	<p:column colspan="2">
+    		<p:outputLabel id="labelCredito" value="Crédito" />
+    	</p:column>
+        <p:column colspan="2">
+        <p:outputLabel id="labelDineroCredito" value="#{corteCajaBean.dineroCredito}" />
+        </p:column>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelRetiro" value="Retiro" />
+        </p:column>
+        <p:column colspan="2">
+        <p:outputLabel id="labelDineroRetiro" value="#{corteCajaBean.dineroRetiro}" />
+        </p:column>
+ 
+     </p:row>
+ 
+    <p:row>
+    	<p:column colspan="2">
+    		<p:outputLabel id="labelVales" value="Vales" />
+    	</p:column>
+        <p:column colspan="2">
+        	<p:outputLabel id="labelDineroVales" value="#{corteCajaBean.dineroVales}" />
+        </p:column>
+        <p:column colspan="4"/>
+    </p:row>
+ 
+    <f:facet name="footer">
+        <p:row>
+            <p:column  colspan="2" style="text-align: right">
+                <p:outputLabel id="labelTotal1" value="Total:" /> 
+            </p:column>
+            <p:column  colspan="2" style="text-align: left">
+        		<p:outputLabel id="labelDineroTotal1" value="#{corteCajaBean.total1}" />
+            </p:column>
+            <p:column  colspan="2" style="text-align: right">
+                <p:outputLabel id="labelTotal2" value="Total:" />
+            </p:column>
+            <p:column  colspan="2" style="text-align: left">
+        		<p:outputLabel id="labelDineroTotal2" value="#{corteCajaBean.total2}" /> 
+            </p:column>
+        </p:row>
+        <p:row>
+    								<p:column colspan="2">
+        							<p:outputLabel value="Comentarios"/>
+        							</p:column>
+        							<p:column colspan="6">
+        							 <p:inputTextarea rows="6" cols="33"  value="#{corteCajaBean.comentarios}"/>
+        							</p:column>
+    							</p:row>	
+    </f:facet>
+	</p:panelGrid>
+	<p:commandButton 
+                    	action="#{corteCajaBean.actualizarCorteCaja}" 
+                    	value="#{msg['catalogo.Button.Guardar']}"
+                    	update="display,:CierreCajaListForm:datalist,:growl"
+                    	 
+                    	/>
+                    	
+	</h:panelGroup>
+                    </h:form>
+	<!--  <br/>
+	 <p:outputLabel id="faltante" value="Faltante:" style="font-weight: bold;"/>
+	 <p:outputLabel id="objetoFaltante" value="Objeto" style="font-weight: bold;"/>--> 
+	</center>
+		</p:dialog>
+</html>

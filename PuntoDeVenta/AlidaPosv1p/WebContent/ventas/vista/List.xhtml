@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pos="http://pos.com/functions">
+
+    <ui:composition template="/template/template.xhtml">
+
+        <ui:define name="body">
+        	<h:form id="VistaListForm">
+	            <p:layout>
+		            <p:layoutUnit 
+		            	id="westLayout" 
+		            	position="west" 
+		            	size="150" 
+		            	header="Menu" 
+		            	collapsible="true"
+		            	style="height:auto;" >
+		            	<p:remoteCommand 
+		            		name="updateButtons" 
+		            		update="ListButton createButton viewButton editButton" />	
+		            	<p:commandButton 			            	    
+		                	id="ListButton" 
+		                	icon="ui-icon-note"   
+		                	value="Listado"
+		                	actionListener="#{vistaBean.showListDialogListener}"
+		                	update="VistaListForm:vistaCreatePanel vistaListPanel"
+		                	onclick="PF('blockPage').show().show();"
+							oncomplete="PF('blockPage').show().hide();"
+		                	style="width:98%;height:50px" />            	
+		            	<p:commandButton
+		                	id="createButton"
+		                	icon="ui-icon-plus" 
+		                	value="Nuevo"
+		                	actionListener="#{vistaBean.showCreateDialogListener}"
+		                	update="VistaListForm:vistaCreatePanel vistaListPanel"
+		                	onclick="PF('blockPage').show().show();"
+							oncomplete="PF('blockPage').show().hide();"
+		                	style="width:98%;height:50px" />
+		                <p:commandButton 
+		                	id="viewButton"
+		                	icon="ui-icon-search"
+		                	value="Ver"
+		                	actionListener="#{vistaBean.showViewDialogListener}"
+		                	disabled="#{vistaBean.vistaSelected == null}"
+		                	update="VistaListForm:vistaCreatePanel vistaListPanel"
+		                	onclick="PF('blockPage').show().show();"
+							oncomplete="PF('blockPage').show().hide();"
+		                	style="width:98%;height:50px" />
+		                <p:commandButton 
+		                	id="editButton"
+		                	icon="ui-icon-pencil"
+		                	value="Editar"
+		                	actionListener="#{vistaBean.showEditDialogListener}"
+		                	disabled="#{pos:disabledEditViewButton(vistaBean.vistaSelected)}"
+		                	update="VistaListForm:vistaCreatePanel vistaListPanel"
+		                	onclick="PF('blockPage').show().show();"
+							oncomplete="PF('blockPage').show().hide();"
+		                	style="width:98%;height:50px" >
+		                </p:commandButton>
+		            </p:layoutUnit>
+		            <p:layoutUnit 
+		            	position="center" >		            	
+		            	<p:panel 
+		            		id="vistaListPanel"
+		            		header="Listado Vista"
+		            		rendered="#{vistaBean.showListDialog}" >
+		            		<p:panelGrid 
+		            			columns="2" >
+		            			<h:outputText
+		            				styleClass="boldLabel" 
+		            				value="Status Vista" />
+			            		<p:selectOneMenu
+			            			value="#{vistaBean.vistaStatus}"
+		            				style="width:180px;" >
+			            			<f:selectItems
+		            					value="#{vistaBean.listaStatus}"
+		            					var="vistaStatus" 
+		            					itemValue="#{vistaStatus}" />
+            						<p:ajax 
+	            						listener="#{vistaBean.valueChangeVistaList}"
+	            						update="vistaListPanel"
+	            						oncomplete="updateButtons()" />	            			
+			            		</p:selectOneMenu>
+		            		</p:panelGrid>		            		
+		            		<br/>
+		            		<p:dataTable		            			
+		                    	id="datalist" 
+		                    	value="#{vistaBean.listaVista}"
+		                    	var="item"
+		                    	selectionMode="single" 
+		                    	selection="#{vistaBean.vistaSelected}"
+		                    	paginator="true"
+		                        rowKey="#{item.idvista}"
+		                        rows="10"
+		                        paginatorPosition="bottom"
+		                        emptyMessage="No existen registros" >
+		
+		                        <p:ajax 
+		                        	event="rowSelect"   
+		                        	oncomplete="updateButtons()" />
+		                        <p:ajax 
+		                        	event="rowUnselect" 
+		                        	oncomplete="updateButtons()" />
+		                        
+		                        <p:column
+		                        	styleClass="centerLabel"
+		                        	width="70" >
+		                            <f:facet name="header">
+		                                <h:outputText value="Fecha"/>
+		                            </f:facet>
+		                            <h:outputText		                            	 
+		                            	value="#{item.fecha}">
+		                            	<f:convertDateTime pattern="dd-MM-yyyy" />
+		                            </h:outputText>
+		                        </p:column>
+		                        <p:column
+		                        	styleClass="leftLabel">
+		                            <f:facet name="header">
+		                                <h:outputText value="Cliente"/>
+		                            </f:facet>
+		                            <h:outputText		                            	 
+		                            	value="#{pos:clientName(item.cliente)}"/>
+		                        </p:column>
+		                        <p:column
+		                        	styleClass="leftLabel"
+		                        	width="120">
+		                            <f:facet name="header">
+		                                <h:outputText value="Folio"/>
+		                            </f:facet>
+		                            <h:outputText		                            	 
+		                            	value="#{item.folio}"/>
+		                        </p:column>
+		                        <p:column
+		                        	styleClass="centerLabel"
+		                        	width="90">
+		                            <f:facet name="header">
+		                                <h:outputText value="Fecha Vencimiento"/>
+		                            </f:facet>
+		                            <h:outputText		                            	 
+		                            	value="#{pos:getExpirationDate(item.fecha, item.tipovencimiento.dias, item.tipovencimiento.tipodias)}" >
+		                            	<f:convertDateTime pattern="dd-MM-yyyy" />
+		                            </h:outputText>
+		                        </p:column>			                        
+		                        <p:column
+		                        	styleClass="centerLabel"
+		                        	width="60">
+		                            <f:facet name="header">
+		                                <h:outputText value="Status"/>
+		                            </f:facet>
+		                            <h:outputText		                            	 
+		                            	value="#{pos:vistaStatus(item.status)}"/>
+		                        </p:column>
+		                        <p:column
+		                        	styleClass="leftLabel">
+		                            <f:facet name="header">
+		                                <h:outputText value="Comentarios"/>
+		                            </f:facet>
+		                            <h:outputText		                            	 
+		                            	value="#{item.comentarios}"/>
+		                        </p:column>		                        
+		                        <p:column
+		                        	width="24" >
+                					<p:commandButton
+	                					icon="ui-icon-trash"
+	                					title="Eliminar Vista"
+	                					update="datalist"
+	                					rendered="#{pos:showDeleteVista(item.status)}"	                					
+	                					action="#{vistaBean.deleteVistaRecord}"
+	                					onclick="if (confirm('Se eliminara la vista y los productos asociados.\n\nEsta operación no se puede deshacer.\n\n¿Seguro de continuar ?\n') == false) return false;"           	
+	                					style="width:24px;height:24px;">
+	                					<f:setPropertyActionListener
+             								target="#{vistaBean.vistaSelected}"
+             								value="#{item}" />
+	                					</p:commandButton>
+		                        </p:column>
+		            		</p:dataTable>		            	
+		            	</p:panel>
+		            	<ui:include src="/ventas/vista/Create.xhtml"/>
+		            	<ui:include src="/ventas/vista/View.xhtml"/>
+		            </p:layoutUnit>               
+	            </p:layout>
+			</h:form>
+			<ui:include src="/catalogos/cliente/ClientSearch.xhtml"/>
+           	<ui:include src="/pago/Pago.xhtml"/>           	
+        </ui:define>
+    </ui:composition>
+
+</html>

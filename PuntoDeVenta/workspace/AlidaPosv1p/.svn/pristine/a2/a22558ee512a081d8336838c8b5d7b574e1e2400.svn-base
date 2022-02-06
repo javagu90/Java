@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/template.xhtml">
+
+        <ui:define name="body">
+        	<h:form id="CajaListForm">
+	            <p:layout>
+		            <p:layoutUnit id="westLayout" position="west" size="150" header="Menu" collapsible="true">	
+		            	<p:remoteCommand name="updateButtons" update="createButton" />	            	
+		            	<p:commandButton 			            	    
+		                	id="createButton" 
+		                	icon="ui-icon-plus"   
+		                	value="#{msg['catalogo.LeftMenu.Button.Nuevo']}" 		                	
+		                	actionListener="#{cajaBean.prepareCreateNew}"
+		                	update=":CajaCreateForm"
+		                	oncomplete="PF('CajaCreateDialog').show()"	
+		                	style="width:98%;height:50px"
+		                	immediate="true"
+		                />
+		                <p:commandButton 
+		                	rendered="false"
+		                	id="viewButton"   
+		                	icon="ui-icon-search" 
+		                	value="#{msg['catalogo.LeftMenu.Button.Ver']}" 		                	
+		                	update=":CajaViewForm" 
+		                	oncomplete="PF('CajaViewDialog').show()"
+		                	disabled="#{cajaBean.disabled}"
+		                	style="width:98%;height:50px"
+		                />
+		                <p:commandButton 
+		                	rendered="false"
+		                	id="editButton"  
+		                	icon="ui-icon-pencil" 
+		                	value="#{msg['catalogo.LeftMenu.Button.Editar']}" 		                	
+		                	update=":CajaEditForm" 
+		                	oncomplete="PF('CajaEditDialog').show()" 
+		                	disabled="#{cajaBean.disabled}"
+		                	style="width:98%;height:50px"
+		                />
+		                <p:commandButton 
+		                	rendered="false"
+		                	id="deleteButton" 
+		                	icon="ui-icon-trash"  
+		                	value="#{msg['catalogo.LeftMenu.Button.Eliminar']}" 		                	
+		                	action="#{cajaBean.destroy}" 
+                            update=":growl,datalist" 
+                            disabled="#{cajaBean.disabled}"
+		                	style="width:98%;height:50px"
+		                />		                
+		                
+		            </p:layoutUnit>
+		            <p:layoutUnit 
+		            	position="center">
+		            	
+		            	<p:panel 
+		            		id="cajaListPanel"
+       						header="#{msg['catalogo.Caja.List.MsgHeader']}">
+       						<p:panelGrid
+       							columnClasses="columnPanelGrid"
+	            				id="cajaFilters">
+	            				<p:row>		
+	            					<p:column>
+	            						<h:outputText
+				            				styleClass="boldLabel" 
+				            				value="Tienda" />
+			            				<div/>
+			            				<p:selectOneMenu
+											value="#{cajaBean.searchIdTienda}"
+											style="width:160px;" valueChangeListener="#{cajaBean.listenerSOM}">
+											<f:selectItem itemLabel="Seleccionar" itemValue="" />
+											<f:selectItems value="#{cajaBean.tiendaList}"/>
+										</p:selectOneMenu>
+	            					</p:column>            					            		
+		            				<p:column>
+		            					<h:outputText
+				            				styleClass="boldLabel" 
+				            				value="Nombre" />
+			            				<div/>
+			            				<p:inputText 
+				           					styleClass="centerLabel" 
+				           					style="width: 150px;"
+				           					value="#{cajaBean.searchNombre}" >
+				           					
+				           				</p:inputText>
+			            			</p:column>
+			            			<p:column>
+		            					<h:outputText
+				            				styleClass="boldLabel" 
+				            				value="Clave" />
+			            				<div/>
+			            				<p:inputText 
+				           					styleClass="centerLabel" 
+				           					style="width: 150px;"
+				           					value="#{cajaBean.searchClave}" >
+				           					
+				           				</p:inputText>
+			            			</p:column>
+			            			<p:column>
+			            				<div/>
+			            				<p:commandButton
+			            					icon="ui-icon-search"
+			            					value="Buscar"
+			            					action="#{cajaBean.doSearch}"
+			            					update="cajaListPanel"
+			            					/>
+			            			</p:column>
+			            		</p:row>
+	            			</p:panelGrid>		            		
+	            			<div/>
+		                    <p:dataTable 
+		                    	id="datalist" 
+		                    	value="#{cajaBean.cajas}"
+		                    	var="item"
+		                    	selectionMode="single" 
+		                    	selection="#{cajaBean.selected}"
+		                    	paginator="true"
+		                    	paginatorPosition="bottom"
+		                        rowKey="#{item.idcaja}"
+		                        rows="10"
+		                        emptyMessage="#{msg['tbl.emptyMsg']}">
+
+		                        <p:ajax event="rowSelect"   oncomplete="updateButtons()" />
+		                        <p:ajax event="rowUnselect" oncomplete="updateButtons()" />
+		                        <p:ajax 
+		                        	event="rowDblselect" 
+		                        	update=":CajaEditForm"
+		                        	oncomplete="PF('CajaEditDialog').show()"
+		                        	listener="#{cajaBean.onRowDblClckSelect}" />
+		
+		                        <p:column
+		                        	rendered="false"
+		                        	styleClass="leftLabel">
+		                            <f:facet name="header">
+		                                <h:outputText value="#{msg['catalogo.Label.Id']}"/>
+		                            </f:facet>
+		                            <h:outputText value="#{item.idcaja}"/>
+		                        </p:column>
+		                        <p:column
+		                        	styleClass="leftLabel">
+		                            <f:facet name="header">
+		                                <h:outputText value="#{msg['catalogo.Label.Nombre']}"/>
+		                            </f:facet>
+		                            <h:outputText value="#{item.nombre}"/>
+		                        </p:column>			                        
+		                        <p:column
+		                        	styleClass="leftLabel">
+		                            <f:facet name="header">
+		                                <h:outputText value="#{msg['catalogo.Label.Clave']}"/>
+		                            </f:facet>
+		                            <h:outputText value="#{item.clave}"/>
+		                        </p:column>
+		                        <p:column
+		                        	styleClass="leftLabel">
+		                            <f:facet name="header">
+		                                <h:outputText value="#{msg['catalogo.Label.Comentarios']}"/>
+		                            </f:facet>
+		                            <h:outputText value="#{item.comentarios}"/>
+		                        </p:column>
+		                        <p:column
+		                        	styleClass="leftLabel">
+		                            <f:facet name="header">
+		                                <h:outputText value="#{msg['catalogo.Label.Tienda']}"/>
+		                            </f:facet>
+		                            <h:outputText value="#{item.tienda.nombre}"/>
+		                        </p:column>
+		                        <p:column
+		                        	styleClass="leftLabel">
+		                            <f:facet name="header">
+		                                <h:outputText value="#{msg['catalogo.Label.Estatus']}"/>
+		                            </f:facet>
+		                            <h:outputText value="#{item.activo eq true ? 'Activo':'Inactivo'}"/>
+		                        </p:column>
+		                        <p:column			                        	
+	                        		width="24" >
+	                        		<p:commandButton 
+	                        			id="editButton"
+	                					icon="ui-icon-pencil"
+	                					title="Editar Caja"  
+	                					action="#{cajaBean.editRecord}"               	
+	                					update=":CajaEditForm" 
+	                					oncomplete="PF('CajaEditDialog').show()" 						                	
+					                	style="width:24px;height:24px;">
+					                	<f:setPropertyActionListener
+             								target="#{cajaBean.selected}"
+             								value="#{item}" />
+	                        		</p:commandButton>
+	                        	</p:column>		                        	
+		                        <p:column			                        	
+	                        		width="24" >
+		                        	<p:commandButton 
+					                	id="deleteButton" 
+					                	title="Eliminar Caja"
+					                	icon="ui-icon-trash"  		                	
+					                	action="#{cajaBean.destroy}" 
+			                            update=":growl,datalist" 
+			                            onclick="if (confirm('Se desactivara el registro de caja.\n\n¿Seguro de continuar ?\n') == false) return false;"
+					                	style="width:24px;height:24px;">
+					                	<f:setPropertyActionListener
+             								target="#{cajaBean.selected}"
+             								value="#{item}" />
+	                        		</p:commandButton>						                
+		                        </p:column>
+		                        <p:column	
+		                        	rendered="false"		                        	
+	                        		width="24" >
+	                        		<p:commandButton 
+					                	id="viewButton"  
+					                	title="Información Caja" 
+					                	icon="ui-icon-search" 
+					                	action="#{cajaBean.viewRecord}" 	                	
+					                	update=":CajaEditForm" 
+					                	oncomplete="PF('CajaEditDialog').show()"
+					                	style="width:24px;height:24px;">
+					                	<f:setPropertyActionListener
+             								target="#{cajaBean.selected}"
+             								value="#{item}" />
+					                </p:commandButton>
+                        		</p:column>
+		                    </p:dataTable>
+		                </p:panel>
+		         
+		            </p:layoutUnit>               
+	            </p:layout>
+			</h:form> 
+
+           	<ui:include src="/catalogos/caja/Edit.xhtml"/>
+            <ui:include src="/catalogos/caja/Create.xhtml"/>
+            
+        </ui:define>
+    </ui:composition>
+
+</html>

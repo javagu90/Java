@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProductoEditDlg"
+        	widgetVar="ProductoEditDialog"
+        	modal="true"
+        	resizable="false" 
+        	appendTo="@(body)" 
+        	header="#{msg['catalogo.Producto.Edit.MsgHeader']}">
+            <h:form id="UploadProductoImageOnEdit" method="post" enctype="multipart/form-data" style="height:40px">         
+                <p:fileUpload
+                	label="#{msg['catalogo.Button.Producto.Buscar']}"
+                	uploadLabel="#{msg['catalogo.Button.Producto.Upload']}"
+                	cancelLabel="#{msg['catalogo.Button.Producto.Cancelar']}"  	                	       	
+                	fileLimitMessage="#{msg['catalogo.Producto.FileLimitMessage']}"
+                	invalidFileMessage="#{msg['catalogo.Producto.InvalidFileMessage']}"
+                	invalidSizeMessage="#{msg['catalogo.Producto.InvalidSizeMessage']}"
+                	
+                	value="#{productoBean.file}" 
+                	previewWidth="80"
+                	mode="advanced"
+                	auto="true"
+                	allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                	fileLimit="99"
+                	sizeLimit="2000000"
+                	update=":ProductoEditForm:filename :ProductoEditForm:imagenproducto"
+                	fileUploadListener="#{productoBean.fileUploadListener}">
+                </p:fileUpload>                    
+           </h:form>
+            <h:form id="ProductoEditForm">
+				<p:layout id="display" style="width:860px;height:470px">
+				    <p:layoutUnit position="west" size="270">
+                    <p:panelGrid 
+                    	layout="grid"
+                    	columns="1" >                	
+				    
+						<p:graphicImage id="imagenproducto" library="images" name="#{productoBean.filenameImage}" width="100%"/>                	
+                        <p:outputLabel
+                        	styleClass="boldLabel"
+                        	value="#{msg['catalogo.Label.ImagenSeleccionada']}"
+                        	for="filename" />
+	                    <p:outputLabel
+	                    	id="filename"
+	                    	value="#{productoBean.currentFilenameImage}"/>	                    
+                    </p:panelGrid>
+				    </p:layoutUnit>
+				 
+				    <p:layoutUnit position="center">
+                <p:tabView>
+                	<p:tab id="general" title="#{msg['catalogo.Tab.Title.ProductosGeneral']}">
+                     <p:panelGrid 
+                    	columns="2" 
+                    	rendered="#{productoBean.selected != null}">
+                    	                       	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Nombre']}"
+                        	for="nombre" />
+                        <p:inputText 
+                        	id="nombre" 
+                        	value="#{productoBean.selected.nombre}" 
+                        	title="#{msg['catalogo.Label.Nombre']}" 
+                        	required="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredNombre']}">
+                        	<p:ajax event="keyup" />	
+                        </p:inputText>
+                        	
+                         <p:outputLabel
+                        	value="#{msg['catalogo.Label.Clave']}"
+                        	for="clave" />
+                        <p:inputText 
+                        	id="clave" 
+                        	value="#{productoBean.selected.clave}" 
+                        	title="#{msg['catalogo.Label.Clave']}"
+                        	required="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredClave']}">
+                        	<p:ajax event="keyup" />	
+                        </p:inputText>
+                        
+                         <p:outputLabel
+                        	value="#{msg['catalogo.Label.Codigo']}"
+                        	for="codigo" />
+                        <p:inputText 
+                        	id="codigo" 
+                        	value="#{productoBean.selected.codigo}" 
+                        	title="#{msg['catalogo.Label.Codigo']}"
+                        	required="false">
+                        	<p:ajax event="keyup" />	
+                        </p:inputText>
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Descripcion']}" 
+                        	for="descripcion" />
+                        <p:inputTextarea 
+                        	rows="6" 
+                        	cols="40"
+                        	id="descripcion" 
+                        	value="#{productoBean.selected.descripcion}" 
+                        	title="#{msg['catalogo.Label.Descripcion']}" 
+                        	required="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredDescripcion']}">
+                        	<p:ajax event="keyup" />	
+                        </p:inputTextarea>
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Comentarios']}" 
+                        	for="comentarios" />
+                        <p:inputTextarea 
+                        	rows="6" 
+                        	cols="40"
+                        	id="comentarios" 
+                        	value="#{productoBean.selected.comentarios}" 
+                        	title="#{msg['catalogo.Label.Comentarios']}" 
+                        	required="false" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredComentarios']}">
+                        	<p:ajax event="keyup" />	
+                        </p:inputTextarea>            	
+                    </p:panelGrid>
+                    </p:tab>
+                    
+		        	                    	
+                	<p:tab id="contacto" title="#{msg['catalogo.Tab.Title.ProductosVenta']}">
+                    <p:panelGrid 
+                    	columns="2" 
+                    	rendered="#{productoBean.selected != null}">
+                    	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Proveedor']}"
+                        	for="proveedor" />
+ 			            <p:selectOneMenu 
+			            	id="proveedor" 
+			            	title="#{msg['catalogo.Label.Proveedor']}"
+			            	required="true"
+			            	requiredMessage="#{msg['catalogo.MsgRequiredProveedor']}"
+		           			value="#{productoBean.proveedorSeleccionado}">
+			                	<p:ajax listener="#{productoBean.handleProveedorSelect}"/>
+			                	<f:selectItem itemLabel="Selecciona el proveedor" itemValue="" noSelectionOption="true" />
+			                	<f:selectItems
+			                		value="#{productoBean.proveedores}" 
+					           		var="item"
+				           			itemLabel="#{item.claveproveedor}"
+				           			itemValue="#{item.claveproveedor}"
+			                	/>
+			            </p:selectOneMenu>
+                  	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.PrecioProveedor']}"
+                        	for="precioproveedor" />
+                        <p:inputText 
+                        	id="precioproveedor"
+                        	value="#{productoBean.selected.precio}" 
+                        	title="#{msg['catalogo.Label.PrecioProveedor']}"
+                        	required="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredprecioProveedorSeleccionado']}">
+                        	<p:ajax event="keyup" />	
+                        </p:inputText>
+ 
+                         <p:outputLabel
+                        	value="#{msg['catalogo.Label.Unidad']}"
+                        	for="unidad" />
+ 			            <p:selectOneMenu 
+			            	id="unidad" 
+			            	title="#{msg['catalogo.Label.Unidad']}"
+			            	required="true"
+			            	requiredMessage="#{msg['catalogo.MsgRequiredUnidad']}"
+		           			value="#{productoBean.unidadSeleccionada}">
+			                	<p:ajax listener="#{productoBean.handleUnidadSelect}"/>
+			                	<f:selectItem itemLabel="Selecciona una unidad" itemValue="" noSelectionOption="true" />
+			                	<f:selectItems
+			                		value="#{productoBean.unidades}" 
+					           		var="item"
+				           			itemLabel="#{item.nombre}"
+				           			itemValue="#{item.nombre}"
+			                	/>
+			            </p:selectOneMenu>
+                  	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Iva']}"
+                        	for="iva" />
+                        <p:inputText 
+                        	id="iva" 
+                        	value="#{productoBean.selected.iva}" 
+                        	title="#{msg['catalogo.Label.Iva']}"
+                        	required="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredIva']}">
+                        	<p:ajax event="keyup" />	
+                        </p:inputText>
+                        	
+                    </p:panelGrid>
+		        	</p:tab>    
+		        	                    	
+                	<p:tab id="productos" title="#{msg['catalogo.Tab.Title.ProductosCategorias']}">
+                    <p:panelGrid 
+                    	layout="grid"
+                    	columns="1" 
+                    	rendered="#{productoBean.selected != null}">                	
+					    <p:pickList 
+					    	id="categoriaPickList" 
+					    	value="#{productoBean.categorias}" 
+					    	var="categoria" 
+					    	effect="bounce"		
+					    	effectSpeed="fast"			               
+					        itemValue="#{categoria}" 
+					        itemLabel="#{categoria.nombre}" 
+					        converter="categoriaProductoConverter"
+					        showSourceControls="false"
+					        showTargetControls="false"
+					        showCheckbox="true"
+					        showSourceFilter="true" 
+					        showTargetFilter="false" 
+					        filterMatchMode="contains"
+					        addLabel="Añadir categoría(s)"
+					        addAllLabel="Añadir todo"
+					        removeLabel="Quitar categoría"
+					        removeAllLabel="Quitar todo"
+					 		update="categoriasseleccionadas"
+                        	>
+					 		
+					        <f:facet name="sourceCaption">Categorías disponibles</f:facet>
+					        <f:facet name="targetCaption">Categorías seleccionadas</f:facet>
+        					<p:ajax event="transfer" listener="#{productoBean.onTransfer}" update="categoriasseleccionadas"/>
+        					
+					        <p:column style="width:87%;">
+					            <h:outputText value="#{categoria.nombre}" />
+					        </p:column>
+                										 				 				 
+					    </p:pickList>
+					    
+                        <p:outputLabel
+                        	styleClass="boldLabel" 
+                        	value="Categorías seleccionadas:"
+                        	for="categoriasseleccionadas" />
+                        	
+	                    <p:outputLabel
+	                    	id="categoriasseleccionadas"
+	                    	value="#{productoBean.currentCategoriasSeleccionadas}"/>	                    
+					    
+                	</p:panelGrid>
+		        	</p:tab>    
+
+    			</p:tabView>
+
+
+				    </p:layoutUnit>
+				</p:layout>
+
+                    <p:commandButton 
+                    	action="#{productoBean.update}" 
+                    	value="#{msg['catalogo.Button.Guardar']}" 
+                    	immediate="true"
+                    	update="display,:ProductoListForm:datalist,:growl"/>                    
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<web-fragment>
+    
+    <servlet>
+        <servlet-name>S1</servlet-name>
+        <servlet-class>S1</servlet-class>
+    </servlet>
+    
+    <servlet-mapping>
+         <servlet-name>S1</servlet-name>
+        <url-pattern>/S1</url-pattern>
+    </servlet-mapping>    
+</web-fragment>

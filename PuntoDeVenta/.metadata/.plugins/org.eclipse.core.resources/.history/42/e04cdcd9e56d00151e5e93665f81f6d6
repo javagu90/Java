@@ -1,0 +1,903 @@
+package com.alidasoftware.pos.bean;
+
+import java.io.Serializable;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
+
+import org.apache.catalina.authenticator.FormAuthenticator;
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
+
+import com.alidasoftware.pos.exception.AlidaPosException;
+import com.alidasoftware.pos.facade.CorteCajaFacade;
+import com.alidasoftware.pos.facade.CorteParcialFacade;
+import com.alidasoftware.pos.facade.DetalleCorteParcialFacade;
+import com.alidasoftware.pos.facade.FormaPagoFacade;
+import com.alidasoftware.pos.facade.PagoApartadoFacade;
+import com.alidasoftware.pos.facade.PagoVentaFacade;
+import com.alidasoftware.pos.helper.PagoApartadoHelper;
+import com.alidasoftware.pos.helper.PagoVentaHelper;
+import com.alidasoftware.pos.model.Cortecaja;
+import com.alidasoftware.pos.model.Corteparcial;
+import com.alidasoftware.pos.model.Detallecorteparcial;
+import com.alidasoftware.pos.model.Formapago;
+import com.alidasoftware.pos.model.Usuario;
+import com.alidasoftware.pos.util.Utils;
+
+
+public class CorteParcialBean extends AbstractBean implements Serializable {
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6011391281740178938L;
+	
+	private int idcorteparcial;
+	private String comentarios;
+	private Date fecha;
+	private Time hora;
+	private String ultimaventa;
+	private String ultimopagoapartado;
+	private Cortecaja cortecaja;
+	private Detallecorteparcial detalleCorteparcial;
+	
+	private Usuario usuario1;
+	private Usuario usuario2;
+	
+	private CorteParcialFacade corteParcialFacade=new CorteParcialFacade();
+	private PagoVentaFacade pagoVentaFacade= new PagoVentaFacade();
+	private PagoApartadoFacade pagoApartadoFacade= new PagoApartadoFacade();
+	private CorteCajaFacade corteCajaFacade= new CorteCajaFacade();
+	private DetalleCorteParcialFacade detalleCorteParcialFacade = new DetalleCorteParcialFacade();
+	private FormaPagoFacade formaPagoFacade= new FormaPagoFacade();
+	private List<Corteparcial> listaCorteParcial;
+	private List<PagoVentaHelper> listaSumatoriaPagos;
+	private List <PagoApartadoHelper> listaPagos;
+	
+	private float dineroEfectivo;
+	private float dineroTarjeta;
+	private float dineroCredito;
+	private float dineroVales;
+		
+	private float dineroInicial;
+	private float dineroVentas;
+	private float dineroPagos;
+	private float cantidadretirada;
+	
+	private float total1;
+	private float total2;
+
+	private Corteparcial selected;
+	private Date searchFecha;
+	private String stringFecha;
+	private String stringHora;
+	private String nombreCaja;
+
+	public CorteParcialBean()
+	{
+		System.out.println("Constructor");
+		prepareCreate();
+		listar();
+	}
+
+	
+	public PagoApartadoFacade getPagoApartadoFacade() {
+		return pagoApartadoFacade;
+	}
+
+
+
+	public void setPagoApartadoFacade(PagoApartadoFacade pagoApartadoFacade) {
+		this.pagoApartadoFacade = pagoApartadoFacade;
+	}
+
+
+
+	public float getCantidadretirada() {
+		return cantidadretirada;
+	}
+
+
+
+	public void setCantidadretirada(float cantidadretirada) {
+		this.cantidadretirada = cantidadretirada;
+	}
+
+
+
+	public void setDineroVentas(float dineroVentas) {
+		this.dineroVentas = dineroVentas;
+	}
+
+
+
+	public void setStringFecha(String stringFecha) {
+		this.stringFecha = stringFecha;
+	}
+
+
+
+	public void setStringHora(String stringHora) {
+		this.stringHora = stringHora;
+	}
+
+
+	public void onRowDblClckSelect(SelectEvent event) {  
+		System.out.println("entro a esto");
+		if (event != null && event.getObject() != null) {
+			selected = (Corteparcial) event.getObject();
+			sumarPagos(this.selected.getFecha());
+	        viewRecord();	        
+		}
+    }
+	
+	
+	public void viewRecord() {
+		RequestContext.getCurrentInstance().update("CorteParcialViewDlg");
+	}
+	
+	@SuppressWarnings("deprecation")
+	public String getStringHora()
+	{
+		Date fecha= new Date();
+		int h=fecha.getHours();
+		int m=fecha.getMinutes();
+		int s=fecha.getSeconds();
+		Time hora= new Time(h,m,s);
+		this.hora=hora;
+		if(m<10 && s<10)
+		{
+			stringHora=h+":0"+m+":0"+s;
+		}
+		else
+		{
+			if(m<10 && s>10)
+			{
+				stringHora=h+":0"+m+":"+s;
+			}
+			else
+			{
+				if(m>10 && s<10)
+				{
+					stringHora=h+":"+m+":0"+s;
+				}
+				else
+				{
+					stringHora=h+":"+m+":"+s;
+				}
+			}
+		}
+		return stringHora;
+	}
+	
+	public String getStringFecha()
+	{
+		Date fecha= new Date();
+		stringFecha=null;
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		stringFecha= format.format(fecha);
+		this.fecha=fecha;
+		return stringFecha;
+	}
+	
+	public Corteparcial prepareCreate() {
+		selected = new Corteparcial();
+        return selected;
+    }
+	
+	public void prepareCreateNew() throws AlidaPosException
+	{
+		System.out.println("prepareCreateNew CorteParcial");
+		if(getCorteCajaBean().getCaja()!=null)
+		{
+			this.nombreCaja=getCorteCajaBean().getCaja().getNombre();
+			System.out.println("Caja: "+ this.nombreCaja);
+			if(corteParcialFacade.findByFecha(fecha).size()==0)// && corteParcialFacade.listAll().)
+			{
+				System.out.println("es el primer corte del dia");
+			/*	int max=(int)pagoVentaFacade.getMaxId().get(0);
+				int idcaja=getCorteCajaBean().getCaja().getIdcaja();
+				pagoVentaFacade.listByFirstCP(max, fecha, idcaja);
+				max=(int)pagoApartadoFacade.getMaxId().get(0);
+				pagoApartadoFacade.listByFirstCP(max, fecha, idcaja);*/
+			}
+			//setUltimopagoapartado(pagoApartadoFacade.getMaxId().get(0).toString());
+			else
+			{
+				this.selected.getUltimopagoapartado();
+				this.selected.getUltimopagoventa();
+			}
+			sumarPagos();
+			prepareCreate();
+		}
+		else{
+			System.out.println("CAJA NULA");
+		}
+	}
+	
+	public void crearCorteCaja() throws AlidaPosException
+	{
+			getCortecaja();
+			System.out.println("No se ha creado un Corte de caja con esta fecha");
+			cortecaja.setCaja(getCorteCajaBean().getCaja());
+			cortecaja.setCantidadfisica(0);
+			cortecaja.setCantidadsistema(0);
+			cortecaja.setComentarios("");
+			cortecaja.setFecha(fecha);
+			cortecaja.setHorafin(hora);
+			cortecaja.setHorainicio(hora);
+			cortecaja.setUsuario1(getLoginBean().getUser());
+			cortecaja.setUsuario2(getPermisoBean().getUser());
+			corteCajaFacade.createCortecaja(cortecaja);
+			System.out.println("creado ");
+	}
+		
+	public void crearCorteParcial() throws AlidaPosException
+	{
+		getCortecaja();
+			System.out.println("MAX ID PAGO APARTADO: "+ pagoApartadoFacade.getMaxId());
+			this.selected.setUltimopagoapartado(pagoApartadoFacade.getMaxId().get(0).toString());
+			System.out.println("MAX ID PAGO VENTA: "+ pagoVentaFacade.getMaxId());
+			this.selected.setUltimopagoventa(pagoVentaFacade.getMaxId().get(0).toString());
+		this.selected.setUsuario1(getLoginBean().getUser());
+		this.selected.setUsuario2(getPermisoBean().getUser());
+		this.selected.setCortecaja(cortecaja);
+		this.selected.setFecha(fecha);
+		this.selected.setHora(hora);
+		this.selected.setCantidadretirada(cantidadretirada);
+		this.selected.setComentarios(comentarios);
+		this.selected.setUltimaventa("12-12-12"); //dummy
+		dineroInicial=getCorteCajaBean().getEfectivoInicial();
+		this.selected.setTotalcaja(dineroPagos+dineroVentas+dineroInicial-this.selected.getCantidadretirada());
+    	getCorteParcialFacade().createCorteparcial(selected);
+    	getCorteCajaBean().setEfectivoInicial(this.selected.getTotalcaja());
+    	creaDetalleCorteParcial();
+    	closeDialog("VentanaCPCreado");
+    	displayInfoMessageToUser("El registro se ha creado");
+    	listar();
+    	prepareCreate();
+	}
+	
+	public void creaDetalleCorteParcial()
+	{
+		try
+		{
+			this.detalleCorteparcial= new Detallecorteparcial();
+			//getDetalleCorteparcial();
+			this.detalleCorteparcial.setCorteparcial(selected);
+			int i=0;
+			//for(Formapago forma : formaPagoFacade.listAll())
+			for(i=0; i<formaPagoFacade.listAll().size(); i++)
+			{
+				Formapago forma= formaPagoFacade.listAll().get(i);
+				this.detalleCorteparcial.setFormapago(forma);
+				this.detalleCorteparcial.setCantidad(listaPagos.get(i).getCantidad()+listaSumatoriaPagos.get(i).getCantidad());
+				this.detalleCorteParcialFacade.createDetallecorteparcial(this.detalleCorteparcial);
+			}
+			System.out.println("DETALLE CORTE PARCIAL CREADO");
+		}
+		catch(Exception e)
+		{
+			System.out.println("Exception:");
+		}
+	}
+	
+	
+	
+	public void create() {
+		try {	
+				//getCortecaja();
+			if(getCorteCajaBean().getCaja()==null)
+			{
+				throw new NullPointerException();
+			}
+			else
+			{
+				List <Cortecaja> listaCorteCaja=corteCajaFacade.findByFecha(fecha);
+				if(listaCorteCaja.size()==0)
+				{
+					crearCorteCaja();
+					crearCorteParcial();
+				}
+				else
+				{
+					int diferentes=0;
+					//System.out.println("Ya hay creado un Corte de caja con esta fecha");
+				  for(int i=0; i<listaCorteCaja.size(); i++)
+				  {
+					if(listaCorteCaja.get(i).getCaja().getIdcaja()==getCorteCajaBean().getCaja().getIdcaja())
+					{
+						diferentes=0;
+						break;
+					}
+					else
+						diferentes++;
+				  }
+				  if(diferentes>0)
+				  {
+					  crearCorteCaja();
+					  crearCorteParcial();
+				  }
+				  else
+					  crearCorteParcial();
+					//  System.out.println("Ya hay creado un Corte de caja con esta fecha o id de caja"); 
+				}
+				
+			}
+		}catch (AlidaPosException ex) {
+        	/*if(getCorteCajaBean().getCaja()==null)
+        	//{
+        		closeDialog("VentanaCPCreado");
+        		keepDialogOpen();
+        		displayErrorMessageToUser("Error de Apertura Caja: No ha abierto una caja, abra primero una caja para continuar \n");
+        	//}
+        	else
+        	{*/
+        		keepDialogOpen();
+        		displayErrorMessageToUser("Error: 2" + ex.getMessage());
+        	//}
+        }
+		catch(NullPointerException npe)
+		{
+			System.out.println("Entre al catch de nullpointer");
+			closeDialog("VentanaCPCreado");
+    		keepDialogOpen();
+    		displayErrorMessageToUser("Error de Apertura Caja: No ha abierto una caja, abra primero una caja para continuar \n");
+		}
+        
+     }
+
+	
+	private FormaPagoBean getFormaPagoBean() {
+		  return (FormaPagoBean) Utils.getManagedBean("formaPagoBean");
+		 }
+
+	
+	private LoginBean getLoginBean() {
+		  return (LoginBean) Utils.getManagedBean("loginBean");
+		 }
+	
+	
+	private PermisoBean getPermisoBean() {
+		  return (PermisoBean) Utils.getManagedBean("permisoBean");
+		 }
+	
+	private CorteCajaBean getCorteCajaBean()
+	{
+		return (CorteCajaBean) Utils.getManagedBean("corteCajaBean");
+	}
+		
+	
+	public void sumarPagos()
+	{
+		System.out.println("entre a metodo de sumatoria");
+		try
+		{
+			
+			List <Formapago> formas=getFormaPagoBean().getFormaPagos();
+			int numeroFormas=formas.size();
+			int idcaja=getCorteCajaBean().getCaja().getIdcaja();
+			//listadi de todos los cortes parciales de esa fecha
+			int maxpv=(int)pagoVentaFacade.getMaxId().get(0);
+			int maxpa=(int)pagoApartadoFacade.getMaxId().get(0);
+			
+			//System.out.println("ultimopv: "+ultimopv +"ultimopa "+ultimopa);
+			List<PagoVentaHelper> listaSumas;
+			//System.out.println("id caja: "+ cortecaja.getCaja().getIdcaja());
+			//listaSumatoriaPagos=pagoVentaFacade.listBySumFormaPago(Integer.parseInt(this.selected.getUltimopagoventa()),(int) pagoVentaFacade.getMaxId().get(0), fecha, cortecaja.getCaja().getIdcaja());
+			
+			if(corteParcialFacade.findByFecha(fecha).size()==0 )
+			{
+				listaSumatoriaPagos=pagoVentaFacade.listByFirstCP(maxpv, fecha, idcaja);
+			}
+			else
+			{
+				List<Corteparcial> listadotemporal=corteParcialFacade.findByFecha(fecha);
+				int ultimocp=listadotemporal.size();
+				Corteparcial c= listadotemporal.get(ultimocp-1);
+				int ultimopv=Integer.parseInt(c.getUltimopagoventa()+1);
+				listaSumatoriaPagos=pagoVentaFacade.listBySumFormaPago(ultimopv,maxpv,fecha,idcaja);
+			}
+			System.out.println("Lista sumatoria vacia?: "+listaSumatoriaPagos.isEmpty());
+			System.out.println("Sumas obtenidas : "+listaSumatoriaPagos.size());
+			System.out.println("formas de pago:"+ numeroFormas);
+			if(listaSumatoriaPagos.isEmpty())
+			{
+				for(int i=0; i<numeroFormas; i++)
+				{
+					listaSumatoriaPagos.add(new PagoVentaHelper());
+					
+				}
+			}
+			else
+			{
+				listaSumas=new ArrayList<PagoVentaHelper>();
+				for(int i=0; i<numeroFormas; i++)
+				{
+					listaSumas.add(new PagoVentaHelper());
+				}
+					
+				for(int i=0; i<listaSumatoriaPagos.size(); i++)
+				{
+					listaSumas.set(listaSumatoriaPagos.get(i).getIdFormaPago()-1, listaSumatoriaPagos.get(i));
+				}
+				listaSumatoriaPagos=listaSumas;
+				System.out.println("Sumas obtenidas : "+listaSumatoriaPagos.size());
+				
+			}
+			
+			for(int i=0; i<listaSumatoriaPagos.size(); i++)
+			{
+				System.out.println(listaSumatoriaPagos.get(i).getCantidad());
+			}
+			
+		
+			List<PagoApartadoHelper> listaSumasApartado;
+			
+			if(corteParcialFacade.findByFecha(fecha).size()==0)
+			{
+				listaPagos=pagoApartadoFacade.listByFirstCP(maxpa, fecha, idcaja);
+			}
+			else
+			{
+				List<Corteparcial> listadotemporal=corteParcialFacade.findByFecha(fecha);
+				int ultimocp=listadotemporal.size();
+				Corteparcial c= listadotemporal.get(ultimocp-1);
+				int ultimopa=Integer.parseInt(c.getUltimopagoapartado()+1);
+				listaPagos=pagoApartadoFacade.listBySumFormaPago(ultimopa,maxpa,fecha,idcaja);
+			}
+			System.out.println("Lista pagos vacia?: "+listaPagos.isEmpty());
+			System.out.println("Sumas obtenidas : "+listaPagos.size());
+			
+			if(listaPagos.isEmpty())
+			{
+				for(int i=0; i<numeroFormas; i++)
+				{
+					listaPagos.add(new PagoApartadoHelper());
+					
+				}
+			}
+			else
+			{
+				listaSumasApartado=new ArrayList<PagoApartadoHelper>();
+				for(int i=0; i<numeroFormas; i++)
+				{
+					listaSumasApartado.add(new PagoApartadoHelper());
+				}
+					
+				for(int i=0; i<listaPagos.size(); i++)
+				{
+					listaSumasApartado.set(listaPagos.get(i).getIdFormaPago()-1, listaPagos.get(i));
+				}
+				listaPagos=listaSumasApartado;
+				System.out.println("Sumas obtenidas : "+listaPagos.size());
+				
+			}		
+			
+			for(int i=0; i<listaPagos.size(); i++)
+			{
+				System.out.println(listaPagos.get(i).getCantidad());
+			}
+		}
+		catch(AlidaPosException e)
+		{
+			System.out.println("Error en Lista de sumas contenida en CorteParcialBean "+ e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void sumarPagos(Date fecha)
+	{
+		System.out.println("entre a metodo de sumatoria");
+		try
+		{
+			
+			List <Formapago> formas=getFormaPagoBean().getFormaPagos();
+			int numeroFormas=formas.size();
+			
+			List<PagoVentaHelper> listaSumas;
+			System.out.println("MIN: "+Integer.parseInt(this.selected.getUltimopagoventa())+" MAX: "+(int) pagoVentaFacade.getMaxId().get(0));
+			System.out.println("ID CAJA: "+ this.selected.getCortecaja().getCaja().getIdcaja());
+			listaSumatoriaPagos=pagoVentaFacade.listBySumFormaPago(Integer.parseInt(this.selected.getUltimopagoventa()), (int) pagoVentaFacade.getMaxId().get(0), fecha, this.selected.getCortecaja().getCaja().getIdcaja());
+			System.out.println("Lista sumatoria vacia?: "+listaSumatoriaPagos.isEmpty());
+			System.out.println("Sumas obtenidas : "+listaSumatoriaPagos.size());
+			System.out.println("formas de pago:"+ numeroFormas);
+			if(listaSumatoriaPagos.isEmpty())
+			{
+				for(int i=0; i<numeroFormas; i++)
+				{
+					listaSumatoriaPagos.add(new PagoVentaHelper());
+					
+				}
+			}
+			else
+			{
+				listaSumas=new ArrayList<PagoVentaHelper>();
+				for(int i=0; i<numeroFormas; i++)
+				{
+					listaSumas.add(new PagoVentaHelper());
+				}
+					
+				for(int i=0; i<listaSumatoriaPagos.size(); i++)
+				{
+					listaSumas.set(listaSumatoriaPagos.get(i).getIdFormaPago()-1, listaSumatoriaPagos.get(i));
+				}
+				listaSumatoriaPagos=listaSumas;
+				System.out.println("Sumas obtenidas : "+listaSumatoriaPagos.size());
+				
+			}
+			
+			for(int i=0; i<listaSumatoriaPagos.size(); i++)
+			{
+				System.out.println(listaSumatoriaPagos.get(i).getCantidad());
+			}
+			
+			
+			List<PagoApartadoHelper> listaSumasApartado;
+			listaPagos=pagoApartadoFacade.listBySumFormaPago(Integer.parseInt(this.selected.getUltimopagoapartado()), (int) pagoApartadoFacade.getMaxId().get(0), fecha, this.selected.getCortecaja().getCaja().getIdcaja());
+			System.out.println("Lista pagos vacia?: "+listaPagos.isEmpty());
+			System.out.println("Sumas obtenidas : "+listaPagos.size());
+			
+			if(listaPagos.isEmpty())
+			{
+				for(int i=0; i<numeroFormas; i++)
+				{
+					listaPagos.add(new PagoApartadoHelper());
+					
+				}
+			}
+			else
+			{
+				listaSumasApartado=new ArrayList<PagoApartadoHelper>();
+				for(int i=0; i<numeroFormas; i++)
+				{
+					listaSumasApartado.add(new PagoApartadoHelper());
+				}
+					
+				for(int i=0; i<listaPagos.size(); i++)
+				{
+					listaSumasApartado.set(listaPagos.get(i).getIdFormaPago()-1, listaPagos.get(i));
+				}
+				listaPagos=listaSumasApartado;
+				System.out.println("Sumas obtenidas : "+listaPagos.size());
+				
+			}		
+			
+			for(int i=0; i<listaPagos.size(); i++)
+			{
+				System.out.println(listaPagos.get(i).getCantidad());
+			}
+			
+			
+			this.dineroPagos=listaPagos.get(0).getCantidad();
+			this.dineroVentas=listaSumatoriaPagos.get(0).getCantidad();
+			this.dineroInicial=this.selected.getTotalcaja()+this.selected.getCantidadretirada()-this.dineroPagos-this.dineroVentas;
+			//this.dineroInicial= getCorteCajaBean().getEfectivoInicial();
+			System.out.println("DINERO PAGOS EN EFECTIVO: " +this.dineroPagos);	
+			System.out.println("DINERO INICIAL: " +this.dineroInicial);	
+		
+		}
+		catch(AlidaPosException e)
+		{
+			System.out.println("Error en Lista de sumas contenida en CorteParcialBean "+ e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public void listar()
+	{
+		try {
+			//System.out.println("numero de elementos_: "+ listaCorteParcial.size());
+			listaCorteParcial=corteParcialFacade.listAll();
+			System.out.println("Objetos obtenidos : " + listaCorteParcial.size());
+		} catch (AlidaPosException e) { 
+			System.out.println("Error " + e.getMessage());
+			e.printStackTrace();
+		}
+	}
+	
+	
+	public List<Corteparcial> getListaCorteParcial() {
+		return listaCorteParcial;
+	}
+
+
+	public void setListaCorteParcial(List<Corteparcial> listaCorteParcial) {
+		this.listaCorteParcial = listaCorteParcial;
+	}
+
+
+	public CorteParcialFacade getCorteParcialFacade() {
+		return corteParcialFacade;
+	}
+
+	public void setCorteParcialFacade(CorteParcialFacade corteParcialFacade) {
+		this.corteParcialFacade = corteParcialFacade;
+	}
+
+	public float getDineroInicial() {
+		return dineroInicial;
+	}
+
+	public void setDineroInicial(float dineroInicial) {
+		this.dineroInicial = dineroInicial;
+	}
+
+	public float getDineroTarjeta() {
+		return dineroTarjeta;
+	}
+
+	public void setDineroTarjeta(float dineroTarjeta) {
+		this.dineroTarjeta = dineroTarjeta;
+	}
+
+	public float getDineroPagos() {
+		return dineroPagos;
+	}
+
+	public void setDineroPagos(float dineroPagos) {
+		this.dineroPagos = dineroPagos;
+	}
+
+	public float getDineroCredito() {
+		return dineroCredito;
+	}
+
+	public void setDineroCredito(float dineroCredito) {
+		this.dineroCredito = dineroCredito;
+	}
+
+	public float getDineroVales() {
+		return dineroVales;
+	}
+
+	public void setDineroVales(float dineroVales) {
+		this.dineroVales = dineroVales;
+	}
+
+	public float getTotal1() {
+		total1=dineroCredito+dineroEfectivo+dineroTarjeta+dineroVales;
+		return total1;
+	}
+
+	public void setTotal1(float total1) {
+		this.total1 = total1;
+	}
+
+	public float getTotal2() {
+		return total2;
+	}
+
+	public void setTotal2(float total2) {
+		this.total2 = total2;
+	}
+
+	 public void handleKeyEvent() {
+		 
+	        this.total2 = -this.cantidadretirada;
+	    }
+	
+	
+	public void setDineroEfectivo(float dineroEfectivo) {
+		this.dineroEfectivo= dineroEfectivo;
+	}
+	
+	public int getIdCorteParcial() {
+		return idcorteparcial;
+	}
+	public void setIdCorteParcial(int idCorteParcial) {
+		this.idcorteparcial = idCorteParcial;
+	}
+	public float getCantidadRetirada() {
+		return cantidadretirada;
+	}
+	public void setCantidadRetirada(float cantidadRetirada) {
+		this.cantidadretirada = cantidadRetirada;
+	}
+	public String getComentarios() {
+		return comentarios;
+	}
+	public void setComentarios(String comentarios) {
+		this.comentarios = comentarios;
+	}
+	public Date getFecha() {
+		return fecha;
+	}
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+	public Time getHora() {
+		return hora;
+	}
+	public void setHora(Time hora) {
+		this.hora = hora;
+	}
+	public Usuario getUsuario1() {
+		if(usuario1==null)
+		{
+			usuario1=getLoginBean().getUser();
+		}
+		return usuario1;
+	}
+	
+	public void setUsuario1(Usuario usuario1) {
+		this.usuario1 = usuario1;
+	}
+	
+	public Usuario getUsuario2() {
+		if(usuario2==null)
+		{
+			usuario2=getPermisoBean().getUser();
+		}
+		return usuario2;
+	}
+	public void setUsuario2(Usuario usuario2) {
+		this.usuario2 = usuario2;
+	}
+	public CorteParcialFacade getCorteParcial() {
+		if(corteParcialFacade==null)
+		{
+			corteParcialFacade=new CorteParcialFacade();
+		}
+		return corteParcialFacade;
+	}
+	
+	public void setCorteParcial(CorteParcialFacade corteParcial) {
+		this.corteParcialFacade = corteParcial;
+	}
+
+	public float getDineroEfectivo() {
+		return dineroEfectivo;
+	}
+
+	public void setDineroEfectivo(int dineroEfectivo) {
+		this.dineroEfectivo = dineroEfectivo;
+	}
+
+	public float getDineroVentas() {
+		return dineroVentas;
+	}
+
+	public void setVentas(float dineroVentas) {
+		this.dineroVentas = dineroVentas;
+	}
+
+	public String getUltimaventa() {
+		return ultimaventa;
+	}
+
+	public void setUltimaventa(String ultimaventa) {
+		this.ultimaventa = ultimaventa;
+	}
+
+	public String getUltimopagoapartado() {
+		return ultimopagoapartado;
+	}
+
+	public void setUltimopagoapartado(String ultimopagoapartado) {
+		this.ultimopagoapartado = ultimopagoapartado;
+	}
+
+	public Cortecaja getCortecaja() {
+		if(cortecaja==null)
+		{
+			cortecaja= new Cortecaja();
+		}
+		return cortecaja;
+	}
+
+	public void setCortecaja(Cortecaja cortecaja) {
+		this.cortecaja = cortecaja;
+	}
+	
+	public void doSearch() {
+		System.out.println("Realizando busqueda por ... " + searchFecha);
+    	selected = null;	
+		try {
+			listaCorteParcial = getCorteParcialFacade().findByFecha(searchFecha);
+		} catch (Exception ex) {
+			System.out.println("Filter Exception : " + ex.getMessage());
+			keepDialogOpen();
+            displayErrorMessageToUser("Error: " + ex.getMessage());
+		}
+    	//searchFecha;
+		RequestContext.getCurrentInstance().update("CorteParcialListForm:CorteParcialListPanel");
+	}
+
+	public Date getSearchFecha() {
+		return searchFecha;
+	}
+
+	public void setSearchFecha(Date searchFecha) {
+		this.searchFecha = searchFecha;
+	}
+	
+	
+	public Corteparcial getSelected() {
+		return selected;
+	}
+
+	public void setSelected(Corteparcial selected) {
+		this.selected = selected;
+	}
+
+
+
+	public List<PagoVentaHelper> getListaSumatoriaPagos() {
+		return listaSumatoriaPagos;
+	}
+
+
+
+	public void setListaSumatoriaPagos(List<PagoVentaHelper> listaSumatoriaPagos) {
+		this.listaSumatoriaPagos = listaSumatoriaPagos;
+	}
+
+
+
+	public PagoVentaFacade getPagoVentaFacade() {
+		return pagoVentaFacade;
+	}
+
+
+
+	public void setPagoVentaFacade(PagoVentaFacade pagoVentaFacade) {
+		this.pagoVentaFacade = pagoVentaFacade;
+	}
+
+
+	public List <PagoApartadoHelper> getListaPagos() {
+		return listaPagos;
+	}
+
+
+
+	public void setListaPagos(List <PagoApartadoHelper> listaPagos) {
+		this.listaPagos = listaPagos;
+	}
+
+
+	public String getNombreCaja() {
+		return nombreCaja;
+	}
+
+
+	public void setNombreCaja(String nombreCaja) {
+		this.nombreCaja = nombreCaja;
+	}
+
+
+	public Detallecorteparcial getDetalleCorteparcial() {
+		if(detalleCorteparcial== null)
+		{
+			detalleCorteparcial= new Detallecorteparcial();
+		}
+		return detalleCorteparcial;
+	}
+
+
+	public void setDetalleCorteparcial(Detallecorteparcial detalleCorteparcial) {
+		this.detalleCorteparcial = detalleCorteparcial;
+	}
+
+
+	public DetalleCorteParcialFacade getDetalleCorteParcialFacade() {
+		return detalleCorteParcialFacade;
+	}
+
+
+	public void setDetalleCorteParcialFacade(DetalleCorteParcialFacade detalleCorteParcialFacade) {
+		this.detalleCorteParcialFacade = detalleCorteParcialFacade;
+	}
+
+
+}

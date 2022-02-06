@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="InventarioFisicoCreateDlg"
+        	widgetVar="InventarioFisicoCreateDialog" 
+        	modal="true"
+        	resizable="false" 
+        	appendTo="@(body)" 
+        	header="#{msg['catalogo.InventarioFisico.Create.MsgHeader']}">
+            <h:form id="InventarioFisicoCreateForm">
+            <p:growl id="growlCreate" showDetail="true" />
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="4">
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Fecha']}" 
+                        	for="de" />
+                        <p:inputText 
+                        	id="de" 
+                        	value="#{inventarioFisicoBean.selected.fechaInicio}" 
+                        	title="#{msg['catalogo.Label.FechaInicio']}" 
+                        	readonly="true">
+                        	<f:convertDateTime pattern="dd-MM-yyyy"/>
+                        </p:inputText>	                        	
+                    </p:panelGrid>
+                    <p:panel id="listaproductos" header="#{msg['catalogo.Tab.Title.ProductosInventarioFisico']}">
+						<p:focus context="autoCompleteProduct"/>   
+	                    <p:panelGrid >
+	    					<p:row>
+			                	<p:column>
+			                        <p:outputLabel
+			                        	value="#{msg['catalogo.Label.Producto']}"  
+			                        	for="autoCompleteProduct" />
+			                	</p:column>
+			                	<p:column>
+			       					<p:autoComplete 
+					           			id="autoCompleteProduct"                			
+					           			var="prod"
+					           			itemLabel="#{prod.nombre}"
+					           			itemValue="#{prod}"
+					           			value="#{inventarioFisicoBean.producto}"               			
+					           			completeMethod="#{inventarioFisicoBean.completeProducto}" 
+					           			minQueryLength="3"
+					           			forceSelection="true"
+					           			queryDelay="100"
+					           			size="40"		                			
+					           			converter="productConverter">
+					           			<p:ajax 
+					           				event="itemSelect" 
+					           				listener="#{inventarioFisicoBean.handleSelectProduct}" 
+				           					
+					           				update="createProductDT autoCompleteProduct growlCreate"/>					           				
+					          		</p:autoComplete>
+			                	</p:column>
+			                </p:row>
+			            </p:panelGrid>
+
+						<div style="height: 5px;"/>
+					
+			           	<p:dataTable
+			           		id="createProductDT"                		
+			         		value="#{inventarioFisicoBean.listaDetalleInventarioFisico}"
+			           		var="item"
+			           		paginator="true"	
+			           		editable="true"
+		           			editMode="cell"
+			             	rows="10"
+			               	paginatorPosition="bottom"
+			               	style="width:830px;"
+			               	emptyMessage="No existen registros">
+			               			                    	
+		                   	<p:ajax 
+		                    	event="cellEdit" 
+		                    	listener="#{inventarioFisicoBean.onCellEdit}" 
+		                    	
+		                    	update="@form:growlCreate" />	                        
+		                    	
+			                <p:column
+			                	headerText="Clave"
+			                	styleClass="leftLabel"
+			                	width="100">
+			                    <h:outputText value="#{item.producto.clave}"/>
+			                </p:column>
+			                
+			                <p:column
+			                	headerText="Producto"
+			                	styleClass="leftLabel">
+			                   	<h:outputText value="#{item.producto.nombre}"/>
+			                </p:column> 
+			                
+			                <p:column
+			                	headerText="Cantidad"
+			                	styleClass="rightLabel"
+			                	width="65">
+			                    <p:cellEditor>
+			                    	<f:facet name="output">
+			                    		<h:outputText
+			                    			id="quantityOutput"
+			                    			value="#{item.existenciafisica}">
+			                    			<f:convertNumber 
+			                    				pattern="#0.00"/>
+			                    		</h:outputText>
+		                    		</f:facet>
+			                    	<f:facet name="input">
+			                    		<h:inputText 
+			                    			id="quantityInput"
+			                    			value="#{item.existenciafisica}" >
+			                    			<f:convertNumber 
+			                    				pattern="#0.00"/>			                    			
+			                    		</h:inputText>
+		                    		</f:facet>
+		                    	</p:cellEditor>
+			                </p:column>
+			                                              
+			            </p:dataTable>  	
+			            
+		       		
+		        				            									              
+               		</p:panel>                                    	
+                    <p:commandButton 
+                    	action="#{inventarioFisicoBean.create}" 
+                    	value="#{msg['catalogo.Button.Guardar']}" 
+                    	update="display,:InventarioFisicoListForm:datalist,:growl,@form:growlCreate"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

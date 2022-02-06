@@ -1,0 +1,152 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 22/03/2015, 12:10:04 PM
+    Author     : Javy
+*/
+
+
+.badg {
+  padding: 1px 9px 2px;
+  font-size: 12.025px;
+  font-weight: bold;
+  white-space: nowrap;
+  color: #ffffff;
+  background-color: #999999;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+
+
+.badg-info {
+  background-color: #f89406;
+}
+
+
+
+.contenido
+{
+    padding-top: 68px;
+}
+
+div#container {
+    width: 200px; /*600px*/
+}
+
+div#conversations {
+    width: 300px;
+    height: 500px; 
+    visibility: hidden;
+    float: left;
+}
+
+div#conversations div.conversation {
+    padding: 10px;
+}
+
+div.conversation textarea {
+    width: 280px;
+    height: 60px;
+}
+
+div.leftPanel {
+    float: center;
+}
+
+div#onLineUsersPanel {
+    visibility: hidden;
+    padding: 20px 0;
+}
+
+
+
+input {
+    border: 1px solid #AAA;
+    padding: 3px;
+    border-radius: 3px;
+}
+
+p.messages {
+    height: 340px;
+    overflow-y: auto;
+}
+
+p.messages div.message {
+    padding: 10px;
+    background-color: #F3F3F3;
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+p.messages div.message p {
+    padding: 3px 0;
+    margin: 0;
+}
+
+
+p.messages div.message span {
+    color: #999;
+}
+
+span.connected {
+    background: url('../img/connected.png') no-repeat left;
+}
+
+span.disconnected {
+    background: url('../img/disconnected.png') no-repeat left;
+}
+
+span.onLineUserName {
+    font-weight: bold;
+    visibility: hidden;
+}
+
+span#status {
+    padding: 0 0 0 20px;
+    display: block;
+}
+
+ul#onlineUsers {
+    padding: 0;
+    margin: 5px 0;
+}
+
+ul#onlineUsers li a {
+    width: 190px;
+    cursor: pointer;
+    display: block;
+    padding: 3px;
+    background: #ddd;
+    color: #444;
+    margin: 2px 0;
+    border-radius: 1em;
+}
+
+ul#onlineUsers li a:hover {
+    color: #d27435;
+    background: #bbb;
+}
+
+
+
+
+@media(max-width:991px) {
+    .customer-img,
+    .img-related {
+        margin-bottom: 30px;
+    }
+}
+
+@media(max-width:767px) {
+    .img-portfolio {
+        margin-bottom: 15px;
+    }
+
+    header.carousel .carousel {
+        height: 70%;
+    }
+}

@@ -1,0 +1,6 @@
+TMSVentaLogin\TMSVentaLogin-app-client\src\conf\xml-resources\web-service-references\TMSSocioIntimoWSService\wsdl\wsas.estrellaroja.com.mx_8090
+
+
+
+
+en esata ruta incluir la carpeta TMSSocioIntimoWS

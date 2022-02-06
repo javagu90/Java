@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"      
+      xmlns:pos="http://pos.com/functions">
+	
+	<ui:composition>
+
+        <p:dialog id="CorteParcialViewDlg" widgetVar="CorteParcialViewDialog" modal="true"
+		resizable="false" appendTo="@(body)">
+            <h:form id="corteParcialViewForm" 
+            	onkeyup="if (event.keyCode == 13) { return false; }"
+				onkeypress="if (event.keyCode == 13) { return false; }">
+                <h:panelGroup id="display">
+                
+    				<p:panelGrid 
+		            			rendered="#{corteParcialBean.selected != null}">
+    							<f:facet name="header">
+        							<p:row>
+            							<p:column colspan="8" style="width:50%; font-weight: bold">
+            								<p:outputLabel id="labelCorteParcial" 
+            									value="Corte Parcial de Caja" 
+            									style="text-align: center"/>
+            							</p:column>
+        							</p:row>
+    							</f:facet>
+    							<p:row>
+            						<p:column colspan="4" ><!-- styleClass="ui-widget-header"  -->
+            							<p:outputLabel id="hora" value="Hora:" style="font-weight: bold;"/>
+            							<p:outputLabel id="labelHora" value="#{corteParcialBean.selected.hora}"/>
+            						</p:column>
+            						<p:column colspan="4" >
+            							<p:outputLabel id="caja" 
+            								value="Caja:" 
+            								style="font-weight: bold;"/>
+            							<p:outputLabel id="labelCaja" value="#{corteParcialBean.selected.cortecaja.caja.nombre}"/>
+            						</p:column>
+        						</p:row>
+ 								<p:row>
+            						<p:column  colspan="8">
+             							<p:outputLabel id="del" 
+             								value="Del:  " 
+             								style="font-weight: bold;"/>
+             							<p:outputLabel id="labelDel" 
+             								value="#{corteParcialBean.selected.fecha}"/>
+            						</p:column>
+       							</p:row>
+       							<p:row>
+            						<p:column  colspan="4" 
+            							styleClass="ui-widget-header">
+             							<p:outputLabel id="ventasTotales" 
+             							value="Ventas Totales" />
+            						</p:column>
+            						<p:column  colspan="4" 
+            							styleClass="ui-widget-header">
+             							<p:outputLabel id="efectivoEnCaja" 
+             								value="Efectivo en Caja" />
+            						</p:column>
+       							</p:row>
+  								<p:row rendered="#{configuracionBean.efectivo eq true}">
+        							<p:column rowspan="2" 
+        								colspan="2" >
+        								<p:outputLabel id="labelEfectivo" 
+        									value="Efectivo"/>
+        							</p:column>
+        							<p:column rowspan="2"
+        								colspan="2" >
+        								<p:outputLabel id="labelCantidadEfectivo"   
+        								 value="#{corteParcialBean.dineroEfectivo}"/>
+        							</p:column>
+        							<p:column colspan="2" >
+        								<p:outputLabel id="labelInicial" 
+        									value="Inicial"/>
+        								</p:column>
+        								<p:column colspan="2" >
+        										<p:outputLabel id="labelDineroInicial" 
+        											 value="#{corteParcialBean.dineroInicial}"/>
+        								</p:column>
+    							</p:row>
+    							<p:row rendered="#{configuracionBean.efectivo eq true}">
+    								<p:column colspan="2">
+        								<p:outputLabel id="labelVentas" 
+        									value="Ventas"/>
+        							</p:column>
+        							<p:column colspan="2">
+       							 			<p:outputLabel id="labelDineroVentas" 
+       							 				value="#{corteParcialBean.dineroVentas}" />
+        							</p:column>
+    							</p:row>
+    							<p:row rendered="#{configuracionBean.tarjeta eq true}">
+        							<p:column colspan="2">
+        								<p:outputLabel id="labelTarjeta" 
+        									value="Tarjeta"/>
+        							</p:column>
+        							<p:column colspan="2">
+        								<p:outputLabel id="labelDineroTarjeta" 
+        									value="#{corteParcialBean.dineroTarjeta}"/>
+        							</p:column>
+        							<p:column colspan="2">
+        								<p:outputLabel id="labelPagos" 
+        									value="Pagos"/>
+        							</p:column>
+        							<p:column colspan="2">
+        								<p:outputLabel id="labelSimbolo5" 
+        									value="$ "/>
+        								<p:outputLabel id="labelDineroPagos"
+        								 	value="#{corteParcialBean.dineroPagos}"/>
+        							</p:column>
+    							</p:row>
+    							<p:row rendered="#{configuracionBean.credito eq true}">
+    								<p:column colspan="2">
+    									<p:outputLabel id="labelCredito" 
+    										value="Crédito"/>
+    								</p:column>
+        							<p:column colspan="2">
+        								<p:outputLabel id="labelDineroCredito" 
+        								value="#{corteParcialBean.dineroCredito}"/>
+        							</p:column>
+        							<p:column colspan="2">
+        								<p:outputLabel id="labelRetiro" 
+        									value="Retiro"/>
+        							</p:column>
+        							<p:column colspan="2">
+        								<p:outputLabel
+        									value="$"/> 
+        									<p:outputLabel id="retiro" value="#{corteParcialBean.selected.cantidadretirada}" label="Retiro"  style="width:120px" />           	
+        	    							 	
+        							</p:column>
+     							</p:row>
+    							<p:row rendered="#{configuracionBean.vales eq true}">
+    								<p:column colspan="2">
+    									<p:outputLabel id="labelVales" 
+    										value="Vales"/>
+    								</p:column>
+        							<p:column colspan="2">
+        								<p:outputLabel id="labelDineroVales" 
+        									value="#{corteParcialBean.dineroVales}"/>
+        							</p:column>
+        							<p:column colspan="2"/>
+        							<p:column colspan="4"/>
+    							</p:row> 
+    						
+			                        
+    							<f:facet name="footer">
+        							<p:row>
+            							<p:column  
+            								colspan="2" 
+            								style="text-align: right">
+                							<p:outputLabel id="labelTotal1" 
+                								value="Total:"/> 
+           	 							</p:column>
+            							<p:column  colspan="2" 
+            								style="text-align: left">
+                 							<p:outputLabel id="labelDineroTotal1"  
+                 								value="#{corteParcialBean.total1}"/>
+                 							<!--  <p:outputLabel id="labelDineroTotal1"  
+                 								value="#{corteParcialBean.listaPagoVentaHelper.get(0).getCantidad()+
+                 										 corteParcialBean.listaPagoVentaHelper.get(1).getCantidad()+
+                 										 corteParcialBean.listaPagoVentaHelper.get(2).getCantidad()+
+                 								  		 corteParcialBean.listaPagoVentaHelper.get(3).getCantidad()+
+                 										 corteParcialBean.listaPagoApartadoHelper.get(0).getCantidad()+
+                 										 corteParcialBean.listaPagoApartadoHelper.get(1).getCantidad()+
+                 										 corteParcialBean.listaPagoApartadoHelper.get(2).getCantidad()+
+                 										 corteParcialBean.listaPagoApartadoHelper.get(3).getCantidad()}"/>-->
+            							</p:column>
+            							<p:column  colspan="2" 
+            								style="text-align: right">
+            								<p:outputLabel id="labelTotal2" 
+            									value="Total:"/> 
+            							</p:column>
+            							<p:column  colspan="2" 
+            								style="text-align: left">
+                 							<p:outputLabel id="labelDineroTotal2" 
+                 							value="#{corteParcialBean.selected.totalcaja}"/>
+                 								<!--value="$ #{corteParcialBean.selected.dineroPagos-(corteParcialBean.selected.cantidadretirada)}"/-->           
+            							</p:column>
+        							</p:row>
+        						<p:row>
+    								<p:column colspan="2">
+        							<p:outputLabel value="Comentarios"/>
+        							</p:column>
+        							<p:column colspan="6">
+        							 <p:outputLabel value="#{corteParcialBean.selected.comentarios}"/>
+        							</p:column>
+    							</p:row>	
+    							</f:facet>
+							</p:panelGrid>
+		
+                    <center>
+                    	<p:commandButton 
+                    		value="#{msg['catalogo.Button.Cerrar']}" 
+							onclick="corteParcialViewDialog.hide()" />
+					</center>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PromocionCreateDlg"
+        	widgetVar="PromocionCreateDialog" 
+        	modal="true"
+        	resizable="false" 
+        	appendTo="@(body)" 
+        	header="#{msg['catalogo.Promocion.Create.MsgHeader']}">
+            <h:form id="PromocionCreateForm">
+                <h:panelGroup id="display">
+                <p:tabView id="tabViewDisplay" style="width:540px;height:500px">
+                	<p:tab id="promocion" title="#{msg['catalogo.Tab.Title.Promocion']}">                
+                    <p:panelGrid 
+                    	columns="2" 
+                    	rendered="#{promocionBean.selected != null}">
+                    	                        	
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.Nombre']}"
+                        	for="nombre" />
+                        <p:inputText 
+                        	id="nombre" 
+                        	value="#{promocionBean.selected.nombre}" 
+                        	title="#{msg['catalogo.Label.Nombre']}" 
+                        	required="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredNombre']}"/>
+
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.Descuento']}"
+                        	for="descuento" />
+                        <p:inputText 
+                        	id="descuento" 
+                        	value="#{promocionBean.selected.descuento}" 
+                        	title="#{msg['catalogo.Label.Descuento']}"
+                        	required="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredDescuento']}">
+                        	<f:validateLongRange maximum="100" minimum="0" for="descuento" />
+                        </p:inputText>
+
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.FechaInicio']}"
+                        	for="fechainicio" />
+						<p:calendar 
+                        	id="fechainicio" 
+                        	value="#{promocionBean.selected.fechainicio}" 
+                        	title="#{msg['catalogo.Label.FechaInicio']}"
+                        	required="false" 
+                        	pattern="dd/MM/yyyy"
+                        	locale="es"
+                        	requiredMessage="#{msg['catalogo.MsgRequiredFechaInicio']}">
+                        	<f:convertDateTime pattern="dd/MM/yyyy" />
+                        </p:calendar>
+
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.FechaFin']}"
+                        	for="fechafin" />
+						<p:calendar 
+                        	id="fechafin" 
+                        	value="#{promocionBean.selected.fechafin}" 
+                        	title="#{msg['catalogo.Label.FechaFin']}"
+                        	required="false" 
+                        	pattern="dd/MM/yyyy"
+                        	locale="es"
+                        	requiredMessage="#{msg['catalogo.MsgRequiredFechaFin']}">
+                        	<f:convertDateTime pattern="dd/MM/yyyy" />
+                        </p:calendar>
+
+                        	                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Comentarios']}" 
+                        	for="comentarios" />
+                        <p:inputTextarea 
+                        	rows="6" 
+                        	cols="40"
+                        	id="comentarios" 
+                        	value="#{promocionBean.selected.comentarios}" 
+                        	title="#{msg['catalogo.Label.Comentarios']}" 
+                        	required="false" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredComentarios']}"/>
+                    </p:panelGrid>
+		        	</p:tab>    
+		        	                    	
+                	<p:tab id="elementospromocion" title="#{msg['catalogo.Tab.Title.ProductosCategorias']}">     
+	                    <p:panelGrid 
+	                    	id="dataElementos"
+	                    	columns="2" 
+	                    	rendered="#{promocionBean.selected != null}">
+					        <p:outputLabel for="tipoPromocion" value="Tipo de promoción: " styleClass="boldLabel"/>
+					        <p:outputLabel id="tipoPromocion" value="#{promocionBean.currentTipoPromocion}" />
+					        <p:outputLabel for="elementosseleccionados" value="Elementos en promoción: " styleClass="boldLabel"/>
+					        <p:outputLabel id="elementosseleccionados" value="#{promocionBean.currentElementosSeleccionados}" update="categoriaPickList"/>
+   
+						</p:panelGrid>
+
+						<p:accordionPanel widgetVar="accordion" id="acordionId" activeIndex="null"> 
+					        <p:ajax event="tabChange" listener="#{promocionBean.onTabChange}" update=":PromocionCreateForm:tabViewDisplay:elementosseleccionados :PromocionCreateForm:tabViewDisplay:tipoPromocion" />
+					        <p:ajax event="tabClose" listener="#{promocionBean.onTabClose}" update=":PromocionCreateForm:tabViewDisplay:elementosseleccionados :PromocionCreateForm:tabViewDisplay:tipoPromocion" />
+						
+							<p:tab title="Producto en promoción">
+		       					<p:autoComplete 
+				           			id="autoCompleteProduct"                			
+				           			var="prod"
+				           			itemLabel="#{prod.nombre}"
+				           			itemValue="#{prod}"
+				           			value="#{promocionBean.producto}"                			
+				           			completeMethod="#{promocionBean.completeProducto}"
+				           			minQueryLength="3"
+				           			forceSelection="true"
+				           			queryDelay="100"
+				           			size="40"		                			
+				           			converter="productConverter">
+				           			<p:ajax 
+				           				event="itemSelect" 
+				           				listener="#{promocionBean.handleSelectProduct}"
+				           				update=":PromocionCreateForm:tabViewDisplay:elementosseleccionados"/>
+				          		</p:autoComplete>
+							
+							</p:tab>
+							<p:tab title="Categorías en promoción">
+							    <p:pickList 
+							    	id="categoriaPickList" 
+							    	value="#{promocionBean.categorias}" 
+							    	var="item" 
+							    	effect="bounce"		
+							    	effectSpeed="fast"			               
+							        itemValue="#{item}" 
+							        itemLabel="#{item.nombre}" 
+							        converter="categoriaProductoConverter"
+							        showSourceControls="false"
+							        showTargetControls="false"
+							        showCheckbox="true"
+							        showSourceFilter="true" 
+							        showTargetFilter="false" 
+							        filterMatchMode="contains"
+							        addLabel="Añadir categoría(s)"
+							        addAllLabel="Añadir todo"
+							        removeLabel="Quitar categoría"
+							        removeAllLabel="Quitar todo"							        
+		                        	>
+							 		
+							        <f:facet name="sourceCaption">Categorías disponibles</f:facet>
+							        <f:facet name="targetCaption">Categorías seleccionadas</f:facet>
+		        					<p:ajax event="transfer" listener="#{promocionBean.onTransfer}" update=":PromocionCreateForm:tabViewDisplay:elementosseleccionados"/>
+		        					
+							        <p:column style="width:87%;">
+							            <h:outputText value="#{item.nombre}" />
+							        </p:column>
+		                										 				 				 
+							    </p:pickList>
+							    
+							</p:tab>						
+						</p:accordionPanel>                        	   
+						
+		        	</p:tab>    
+    			</p:tabView>
+
+                    <p:commandButton 
+                    	action="#{promocionBean.create}" 
+                    	value="#{msg['catalogo.Button.Guardar']}" 
+                    	update="display,:PromocionListForm:datalist,:growl"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pos="http://pos.com/functions">
+	            	  	
+ 	<f:view
+ 		locale="#{sessionBean.locale}"> 
+		<p:panel
+	      	id="devolucionCreatePanel"
+	      	header="#{devolucionBean.panelTitle}"
+	      	style="position:float;"
+	      	rendered="#{devolucionBean.showCreateDialog}">
+	      	<p:panelGrid 
+	      		columns="2">
+		       	<p:column>
+		       		<p:panelGrid>
+		       			<p:row>
+		       				<p:column>
+		       					<p:outputLabel
+		           					styleClass="boldLabel"
+		           					value="Tipo Operación" />
+		       				</p:column>
+		       				<p:column>
+		       					<p:selectOneMenu
+				          			value="#{devolucionBean.operacionSelected}"
+				          			style="width:160px;" >
+				          			<f:selectItems
+				          				value="#{devolucionBean.listaOperacion}"
+				          				var="operacionSelected" 
+				          				itemValue="#{operacionSelected}"/>     
+				       				<p:ajax 
+				       					listener="#{devolucionBean.valueChangeTipoOperacion}" /> 			
+				       			</p:selectOneMenu>
+		       				</p:column>
+		       				<p:column>
+		       					<p:outputLabel
+		           					styleClass="boldLabel"
+		           					value="Folio" />
+		       				</p:column>
+		       				<p:column>
+		       					<p:inputText
+				           			style="width:200px;"
+				           			value="#{devolucionBean.folio}" />
+		       				</p:column>		 
+		       				<p:column>
+		       					<p:commandButton 
+		       						rendered="#{!vistaBean.editMode}"
+			             			id="Guardar"  
+			             			icon="ui-icon-disk" 
+			             			value="Guardar"
+			             			action="#{devolucionBean.saveVistaAction}"
+			             			onclick="PF('blockPage').show().show();"
+			           				oncomplete="PF('blockPage').show().hide();"
+			             			style="width:100px;height:30px; float: rigth"/>
+		       				</p:column>      				
+		       			</p:row>
+	       			</p:panelGrid>
+		       	</p:column>		            	
+	    	</p:panelGrid>          	
+		</p:panel>
+	</f:view>
+</html>

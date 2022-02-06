@@ -1,0 +1,44 @@
+
+package com.alidasoftware.pos.facade;
+
+import java.io.Serializable;
+import java.util.List;
+
+import com.alidasoftware.pos.dao.PermisoCorteDao;
+import com.alidasoftware.pos.exception.AlidaPosException;
+import com.alidasoftware.pos.model.Perfil;
+import com.alidasoftware.pos.model.Usuario;
+
+public class PermisoCorteFacade implements Serializable {
+
+	private static final long serialVersionUID = 2608690680194315935L;
+	
+	private PermisoCorteDao permisoDao = new PermisoCorteDao();
+	
+	    
+    public Usuario findUserByNamePwd(String userName, String userPwd) throws AlidaPosException{
+    	try {
+    		permisoDao.beginTransaction();
+    		Usuario usuario = permisoDao.findByNamePwd(userName, userPwd);
+    		permisoDao.closeTransaction();
+    		/*
+    		 * findActivo();
+    		 * 
+    		*/
+    		return usuario;
+    	} catch (Exception ex) {
+    		try {
+    			permisoDao.rollback();
+    		} catch (Exception ex1) {
+    			throw new AlidaPosException(ex1.getMessage());
+    		}
+    		throw new AlidaPosException(ex.getMessage());
+    	} finally {
+    		try {
+    			permisoDao.closeTransaction();
+    		} catch (Exception ex) {
+    			throw new AlidaPosException(ex.getMessage());
+    		}
+    	}
+    }    
+}

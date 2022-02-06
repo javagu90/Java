@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/C:/Documents%20and%20Settings/imunoz/Mis%20documentos/ER/ADO/BuscaCorrida.wsdl" uri="src/conf/xml-resources/web-services/NewWebServiceFromWSDL/wsdl/BuscaCorrida.wsdl"/>
+    <system systemId="file:/C:/Documents%20and%20Settings/imunoz/Mis%20documentos/ER/ADO/ETS-ADO-V2/BuscaCorrida.wsdl" uri="src/conf/xml-resources/web-services/NewWebServiceFromWSDL/wsdl/BuscaCorrida.wsdl"/>
+    <system systemId="file:/C:/Documents%20and%20Settings/imunoz/Mis%20documentos/ER/ADO/ETS-ADO-V2/BuscaCorridaDef.xsd" uri="src/conf/xml-resources/web-services/NewWebServiceFromWSDL/wsdl/BuscaCorridaDef.xsd"/>
+    <system systemId="file:/C:/NetBeansProyects/WSS/WSCLIENTE/src/conf/xml-resources/web-services/NewWebServiceFromWSDL/wsdl/BuscaCorrida.wsdl" uri="src/conf/xml-resources/web-service-references/BuscaCorrida/wsdl/BuscaCorrida.wsdl"/>
+    <system systemId="file:/C:/NetBeansProyects/WSS/WSCLIENTE/src/conf/xml-resources/web-services/NewWebServiceFromWSDL/wsdl/BuscaCorridaDef.xsd" uri="src/conf/xml-resources/web-service-references/BuscaCorrida/wsdl/BuscaCorridaDef.xsd"/>
+    <system systemId="file:/C:/NetBeansProyects/WSS/WSCLIENTE/src/conf/xml-resources/web-services/NewWebServiceFromWSDL/BrokerMessageTag.xsd" uri="src/conf/xml-resources/web-service-references/BuscaCorrida/BrokerMessageTag.xsd"/>
+    <system systemId="file:/C:/Documents%20and%20Settings/imunoz/Mis%20documentos/ER/ADO/ETS-ADO-V2/WSDL/1-BuscaCorrida/BuscaCorrida.wsdl" uri="src/conf/xml-resources/web-service-references/BuscaCorrida/wsdl/BuscaCorrida.wsdl"/>
+    <system systemId="file:/C:/Documents%20and%20Settings/imunoz/Mis%20documentos/ER/ADO/ETS-ADO-V2/WSDL/1-BuscaCorrida/BuscaCorridaDef.xsd" uri="src/conf/xml-resources/web-service-references/BuscaCorrida/wsdl/BuscaCorridaDef.xsd"/>
+    <system systemId="file:/C:/Documents%20and%20Settings/imunoz/Mis%20documentos/ER/ADO/ETS-ADO-V2/WSDL/BrokerMessageTag.xsd" uri="src/conf/xml-resources/web-service-references/BuscaCorrida/BrokerMessageTag.xsd"/>
+</catalog>

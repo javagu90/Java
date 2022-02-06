@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProveedorCreateDlg"
+        	widgetVar="ProveedorCreateDialog" 
+        	modal="true"
+        	resizable="false" 
+        	appendTo="@(body)" 
+        	header="#{msg['catalogo.Proveedor.Create.MsgHeader']}">
+            <h:form id="ProveedorCreateForm" 
+            	onkeyup="if (event.keyCode == 13) { return false; }"
+				onkeypress="if (event.keyCode == 13) { return false; }">
+                <h:panelGroup id="display">
+                <p:tabView>
+                	<p:tab id="personal" title="#{msg['catalogo.Tab.Title.Personal']}">
+                    <p:panelGrid 
+                    	columns="2" 
+                    	rendered="#{proveedorBean.selected != null}">
+                    	                       	
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.Nombre']}"
+                        	for="nombre" />
+                        <p:inputText 
+                        	id="nombre" 
+                        	value="#{proveedorBean.selected.persona.nombre}" 
+                        	title="#{msg['catalogo.Label.Nombre']}" 
+                        	required="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredNombre']}"/>
+                        	                                 	
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.ApellidoPaterno']}"
+                        	for="paterno" />
+                        <p:inputText 
+                        	id="paterno" 
+                        	value="#{proveedorBean.selected.persona.apellidopaterno}" 
+                        	title="#{msg['catalogo.Label.ApellidoPaterno']}"
+                        	required="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredApellidoPaterno']}"/>
+
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.ApellidoMaterno']}"
+                        	for="materno" />
+                        <p:inputText 
+                        	id="materno" 
+                        	value="#{proveedorBean.selected.persona.apellidomaterno}" 
+                        	title="#{msg['catalogo.Label.ApellidoMaterno']}"
+                        	required="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredApellidoMaterno']}"/>
+
+
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.FechaNacimiento']}"
+                        	for="fecha" />
+						<p:calendar 
+                        	id="fecha" 
+                        	value="#{proveedorBean.selected.persona.fechanacimiento}" 
+                        	title="#{msg['catalogo.Label.FechaNacimiento']}"
+                        	required="true" 
+                        	pattern="dd/MM/yyyy"
+                        	locale="es"
+                        	requiredMessage="#{msg['catalogo.MsgRequiredFechaNacimiento']}">
+                        	<f:convertDateTime pattern="dd/MM/yyyy" />
+                        </p:calendar>                        	                       
+                        	
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.Clave']}"
+                        	for="clave" />
+                        <p:inputText 
+                        	id="clave" 
+                        	value="#{proveedorBean.selected.claveproveedor}" 
+                        	title="#{msg['catalogo.Label.Clave']}"
+                        	required="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredClave']}"/>
+               	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.NombreContacto']}"
+                        	for="claveacceso" />
+                        <p:inputText 
+                        	id="claveacceso" 
+                        	value="#{proveedorBean.selected.representante}" 
+                        	title="#{msg['catalogo.Label.NombreContacto']}"
+                        	required="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredNombreContacto']}"/>
+
+                         <p:outputLabel
+                        	value="#{msg['catalogo.Label.Comentarios']}" 
+                        	for="comentarios" />
+                        <p:inputTextarea 
+                        	rows="6" 
+                        	cols="40"
+                        	id="comentarios" 
+                        	value="#{proveedorBean.selected.comentarios}" 
+                        	title="#{msg['catalogo.Label.Comentarios']}" 
+                        	required="false" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredComentarios']}"/>
+                        	
+                    </p:panelGrid>
+		        	</p:tab>    
+		        	                    	
+                	<p:tab id="contacto" title="#{msg['catalogo.Tab.Title.Contacto']}">
+                    <p:panelGrid 
+                    	columns="2" 
+                    	rendered="#{proveedorBean.selected != null}">
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Calle']}"
+                        	for="calle" />
+                        <p:inputText 
+                        	id="calle" 
+                        	value="#{proveedorBean.selected.persona.contacto.direcciones[0].calle}" 
+                        	title="#{msg['catalogo.Label.Calle']}"
+                        	required="true"
+                       		requiredMessage="#{msg['catalogo.MsgRequiredCalle']}"/>
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.NumExt']}"
+                        	for="exterior" />
+                        <p:inputText 
+                        	id="exterior" 
+                        	value="#{proveedorBean.selected.persona.contacto.direcciones[0].numext}" 
+                        	title="#{msg['catalogo.Label.NumExt']}"
+                        	required="true"
+                       		requiredMessage="#{msg['catalogo.MsgRequiredNumExt']}"/>
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.NumInt']}"
+                        	for="interior" />
+                        <p:inputText 
+                        	id="interior" 
+                        	value="#{proveedorBean.selected.persona.contacto.direcciones[0].numint}" 
+                        	title="#{msg['catalogo.Label.NumInt']}"
+                        	required="false" />
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Colonia']}" 
+                        	for="colonia" />
+                        <p:inputText 
+                        	id="colonia" 
+                        	value="#{proveedorBean.selected.persona.contacto.direcciones[0].colonia}" 
+                        	title="#{msg['catalogo.Label.Colonia']}"
+                        	required="true" 
+                       		requiredMessage="#{msg['catalogo.MsgRequiredColonia']}"/>
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.CodigoPostal']}" 
+                        	for="cp" />
+                        <p:inputMask  
+                        	id="cp" 
+                        	value="#{proveedorBean.selected.persona.contacto.direcciones[0].codigopostal}" 
+                        	title="#{msg['catalogo.Label.CodigoPostal']}"
+                        	required="true" 
+                       		requiredMessage="#{msg['catalogo.MsgRequiredCodigoPostal']}"
+                       		mask="99999" 
+                       		/>
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Estado']}"
+                        	for="estado" />           	
+			            <p:selectOneMenu 
+			            	id="estado" 
+		           			value="#{proveedorBean.estadoSeleccionado}"
+		           			required="true">
+			                	<p:ajax listener="#{proveedorBean.handleStateSelect}"  update="municipio" />
+			                	<f:selectItem itemLabel="Selecciona un estado" itemValue="" noSelectionOption="true" />
+			                	<f:selectItems
+			                		value="#{estadoBean.estados}" 
+					           		var="estadoseleccionado"
+				           			itemLabel="#{estadoseleccionado.nombre}"
+				           			itemValue="#{estadoseleccionado.nombre}"
+			                	/>
+			            </p:selectOneMenu>
+                       	            
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Municipio']}"
+                        	for="municipio" />
+			            <p:selectOneMenu 
+			            	id="municipio" 
+		           			value="#{proveedorBean.municipioSeleccionado}"
+		           			required="true">
+			                	<p:ajax listener="#{proveedorBean.handleMunicipioSelect}"/>
+			                	<f:selectItem itemLabel="Selecciona un municipio" itemValue="" noSelectionOption="true" />
+			                	<f:selectItems
+			                		value="#{proveedorBean.municipios}" 
+					           		var="municipioseleccionado"
+				           			itemLabel="#{municipioseleccionado.nombre}"
+				           			itemValue="#{municipioseleccionado.nombre}"
+			                	/>
+			            </p:selectOneMenu>
+                    	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Telefono1']}"
+                        	for="telefono1" />
+                        <p:inputMask
+                        	id="telefono1" 
+                        	value="#{proveedorBean.selected.persona.contacto.telefono1}" 
+                        	title="#{msg['catalogo.Label.Telefono1']}"
+                        	required="true" 
+                        	mask="(999)999999"
+                        	/>
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Telefono2']}"
+                        	for="telefono2" />
+                        <p:inputMask
+                        	id="telefono2" 
+                        	value="#{proveedorBean.selected.persona.contacto.telefono2}" 
+                        	title="#{msg['catalogo.Label.Telefono2']}"
+                        	required="false" 
+                        	mask="(999)999999"
+                        	/>
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Email']}"
+                        	for="correoelectronico" />
+                        <p:inputText 
+                        	id="correoelectronico" 
+                        	value="#{proveedorBean.selected.persona.contacto.correoelectronico}" 
+                        	title="#{msg['catalogo.Label.Email']}"
+                        	validatorMessage="#{msg['catalogo.MsgWrongFormat']}"
+                        	required="false">
+                        		  <f:validateRegex	pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />                        	
+                        </p:inputText>
+                        	
+                    </p:panelGrid>
+		        	</p:tab>    
+		        	                    	
+		        	                    	
+                	<p:tab id="facturacion" title="#{msg['catalogo.Tab.Title.Facturacion']}">
+                    <p:panelGrid 
+                    	columns="2" 
+                    	rendered="#{proveedorBean.selected != null}">
+
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.Rfc']}"
+                        	for="rfc" />
+                        <p:inputText 
+                        	id="rfc" 
+                        	value="#{proveedorBean.selected.persona.rfc}" 
+                        	title="#{msg['catalogo.Label.Rfc']}"
+                        	required="true" />
+                        	
+                        <p:outputLabel                         	
+                        	value="#{msg['catalogo.Label.RazonSocial']}"
+                        	for="razonsocial" />
+                        <p:inputText 
+                        	id="razonsocial" 
+                        	value="#{proveedorBean.selected.persona.razonsocial}" 
+                        	title="#{msg['catalogo.Label.RazonSocial']}"
+                        	required="true" />
+                        	
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.TipoPersona']}"
+                        	for="tipopersona" />
+				        <p:selectOneRadio 
+					        id="tipopersona" 
+					        value="#{proveedorBean.selected.persona.tipopersona}"
+                        	title="#{msg['catalogo.Label.TipoPersona']}"
+                        	required="true"
+                       		requiredMessage="#{msg['catalogo.MsgRequiredTipoPersona']}">
+        
+				            <f:selectItem itemLabel="Física" itemValue="1" />
+				            <f:selectItem itemLabel="Moral" itemValue="2" />
+				        </p:selectOneRadio>
+                                	                        	
+                    </p:panelGrid>
+		        	</p:tab>    
+
+    			</p:tabView>
+
+                    <p:commandButton 
+                    	action="#{proveedorBean.create}" 
+                    	value="#{msg['catalogo.Button.Guardar']}" 
+                    	update="display,:ProveedorListForm:datalist,:growl"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

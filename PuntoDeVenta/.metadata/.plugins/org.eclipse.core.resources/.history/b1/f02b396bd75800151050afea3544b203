@@ -1,0 +1,103 @@
+package com.alidasoftware.pos.bean;
+
+import java.io.Serializable;
+
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.context.RequestContext;
+
+import com.alidasoftware.pos.facade.PermisoCorteFacade;
+import com.alidasoftware.pos.facade.UsuarioFacade;
+import com.alidasoftware.pos.model.Usuario;
+
+@ManagedBean
+public class  PermisoCorteBean extends AbstractBean implements Serializable {
+	
+	private static final long serialVersionUID = -6940659806400401287L;
+
+		private String username;
+	    private String password;
+	    private boolean activo;
+		private boolean logeado = false;
+		private PermisoCorteFacade userFacade;
+		//private UsuarioFacade userFacade;
+		private Usuario user;
+	 
+	    public String getUsername() {
+	        return username;
+	    }
+	 
+	    public void setUsername(String username) {
+	        this.username = username;
+	    }
+	 
+	    public String getPassword() {
+	        return password;
+	    }
+	 
+	    public void setPassword(String password) {
+	        this.password = password;
+	    }
+	  
+	    
+	    public String getActivo() {
+	        return username;
+	    }
+	 
+	    public void setActivo(boolean activo) {
+	        this.activo = activo;
+	    }
+	 
+	    
+		public String login() {
+			RequestContext context = RequestContext.getCurrentInstance();
+			FacesMessage mnsg = null;
+			try {
+				user = getUsuarioFacade().findUserByNamePwd(username, password);
+				if (user != null) {
+					if (user.isActivo()) {
+						logeado = true;
+						if (logeado && user.getPerfil().isActivo()==true)  { 
+							mnsg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Acceso Permitido", username);
+							System.out.println(user.getPerfil().isActivo());
+							return "/corteCaja/List.xhtml?faces-redirect=true";
+						}
+						else
+						{
+							mnsg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Acceso Denegado", "No tiene permisos para acceder a este rubro");
+							return null;
+						}
+					} else {
+						logeado = false;
+						mnsg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error", "Usuario inhabilitado...");
+					}				
+				} else {
+					logeado = false;
+					mnsg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error", "Usuario o Contraseña no válidas");
+				}
+			} catch (Exception ex) {
+				logeado = false;
+				mnsg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error", "Usuario o Contraseña no válidas");
+			}
+			username = "";
+			password = "";
+			FacesContext.getCurrentInstance().addMessage(null, mnsg);
+			RequestContext.getCurrentInstance().update(":growl");
+			//context.addCallbackParam("estaLogeado", logeado);
+			
+			return null;
+		}
+	    
+	    
+		//private UsuarioFacade getUsuarioFacade() {
+		private PermisoCorteFacade getUsuarioFacade() {	
+			if (userFacade == null) {
+				userFacade =  new PermisoCorteFacade();//new UsuarioFacade();
+			}
+			return userFacade;
+		}
+	    
+	   
+	}

@@ -1,0 +1,5 @@
+//declaracion de clase
+EncriptarMD5 pwdEnc = new EncriptarMD5();
+
+//invocacion del metodo
+String contraseñaEncriptada = pwdEnc.encriptar(String contraseña)

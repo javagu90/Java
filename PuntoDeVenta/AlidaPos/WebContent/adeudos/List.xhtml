@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"      
+      xmlns:pos="http://pos.com/functions">
+	
+	<ui:composition template="/template/template.xhtml">
+	
+        <ui:define name="body">
+        	<f:view
+ 				locale="#{sessionBean.locale}">
+	        	<h:form 
+	        		id="AdeudoVentaListForm">
+					<p:layout
+						id="adeudoLayout">
+						
+			            <p:layoutUnit 
+			            	id="adeudoWestLayout" 
+			            	position="west" 
+			            	size="150" 
+			            	header="Menu" 
+			            	collapsible="true"
+			            	style="height:auto;" >
+			            	<p:remoteCommand 
+			            		name="updateButtons" 
+			            		update="ListButton viewButton editButton" />	
+			            	<p:commandButton 			            	    
+			                	id="ListButton" 
+			                	icon="ui-icon-note"   
+			                	value="Listado"
+			                	actionListener="#{adeudoVentaBean.showListDialogListener}"
+			                	update="adeudoVentaListPanel"
+			                	onclick="PF('blockPage').show().show();"
+								oncomplete="PF('blockPage').show().hide();"
+			                	style="width:98%;height:50px" />
+			                <p:commandButton 
+			                	rendered="false"
+			                	id="viewButton"
+			                	icon="ui-icon-search"
+			                	value="Ver"
+			                	actionListener="#{adeudoVentaBean.showViewDialogListener}"
+			                	disabled="#{adeudoVentaBean.adeudoSelected == null}"
+			                	update="adeudoVentaListPanel"
+			                	onclick="PF('blockPage').show().show();"
+								oncomplete="PF('blockPage').show().hide();"
+			                	style="width:98%;height:50px" />
+			                <p:commandButton 
+			                	id="editButton"
+			                	icon="ui-icon-pencil"
+			                	value="Agregar"
+			                	actionListener="#{adeudoVentaBean.showEditDialogListener}"
+			                	disabled="#{adeudoVentaBean.adeudoSelected == null}"
+			                	update="adeudoVentaListPanel"
+			                	onclick="PF('blockPage').show().show();"
+								oncomplete="PF('blockPage').show().hide();"
+			                	style="width:98%;height:50px" >
+			                </p:commandButton>
+			            </p:layoutUnit>
+			            <p:layoutUnit
+			            	id="adeudoCenterLayout" 
+			            	position="center" >		            	
+			            	<p:panel 
+			            		id="adeudoVentaListPanel"
+			            		header="Listado Pagos"
+			            		rendered="#{adeudoVentaBean.showListDialog}" >
+
+			            		<p:dataTable		            			
+			                    	id="datalist" 
+			                    	value="#{adeudoVentaBean.listaAdeudoVenta}"
+			                    	var="item"
+			                    	selectionMode="single" 
+			                    	selection="#{adeudoVentaBean.adeudoSelected}"
+			                    	paginator="true"
+			                        rowKey="#{item.idadeudoventa}"
+			                        rows="10"
+			                        paginatorPosition="bottom"
+			                        emptyMessage="No existen registros" >
+			
+			                        <p:ajax 
+			                        	event="rowSelect"   
+			                        	oncomplete="updateButtons()" />
+			                        <p:ajax 
+			                        	event="rowUnselect" 
+			                        	oncomplete="updateButtons()" />
+			                        
+			                        <p:column
+			                        	styleClass="centerLabel"
+			                        	width="70" >
+			                            <f:facet name="header">
+			                                <h:outputText value="Fecha"/>
+			                            </f:facet>
+			                            <h:outputText		                            	 
+			                            	value="#{item.fecha}">
+			                            	<f:convertDateTime pattern="dd-MM-yyyy" />
+			                            </h:outputText>
+			                        </p:column>
+			                        <p:column
+			                        	rendered="false"
+			                        	styleClass="leftLabel">
+			                            <f:facet name="header">
+			                                <h:outputText value="Cliente"/>
+			                            </f:facet>
+			                            <h:outputText	
+			                            	value="#{pos:clientName(item.cliente)}"/>
+			                        </p:column>
+			                        <p:column
+			                        	styleClass="leftLabel"
+			                        	width="120">
+			                            <f:facet name="header">
+			                                <h:outputText value="Folio Operación"/>
+			                            </f:facet>
+			                            <h:outputText		                            	 
+			                            	value="#{item.foliooperacion}"/>
+			                        </p:column>
+			                        <p:column
+			                        	styleClass="leftLabel"
+			                        	width="120">
+			                        	<f:facet name="header">
+			                                <h:outputText value="Tipo Operación"/>
+			                            </f:facet>
+			                            <h:outputText		                            	 
+			                            	value="#{item.module}"/>
+			                        </p:column>
+			                        <p:column
+			                        	styleClass="rightLabel"
+			                        	width="60">
+			                            <f:facet name="header">
+			                                <h:outputText value="Adeudo"/>
+			                            </f:facet>
+			                            <h:outputText		                            	 
+			                            	value="#{item.adeudo}">
+			                            	<f:convertNumber 
+						     					currencySymbol="$"
+						     					type="currency"/>
+			                            </h:outputText>
+			                        </p:column>		                        	                        		                        
+			            		</p:dataTable>		            	
+			            	</p:panel>
+			            	<ui:include src="/adeudos/Edit.xhtml"/>
+		            	</p:layoutUnit>
+		            </p:layout>        	
+	        	</h:form>           
+			</f:view>        	
+           	<ui:include src="/pago/Pago.xhtml"/>
+        </ui:define>
+    </ui:composition>
+</html>

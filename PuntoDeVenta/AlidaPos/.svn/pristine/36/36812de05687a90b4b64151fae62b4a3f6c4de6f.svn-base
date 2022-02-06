@@ -1,0 +1,203 @@
+root { 
+    display: block;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #3a4f54;
+    background-color: #dfecf1;
+    font-size: small;
+}
+
+a {
+    color: #e33b06;
+}
+
+table {
+    empty-cells: show;
+}
+
+form.jsfcrud_list_form th, td th {
+    font-size: x-small;
+    color: #4e6a71;
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: #b2d5d6;
+    border-bottom-color: #b2d5d6;
+    border-left-color: #90b4bd;
+    border-right-color: #90b4bd;
+    letter-spacing: 3px;
+    text-align: left;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+    background-color: #b2d5d6;
+}
+
+td {
+    vertical-align: top;
+    padding-bottom: 8px;
+    font-size: small;
+}
+
+form.jsfcrud_list_form td, td td {
+    border-top-style: solid;
+    border-bottom-style: solid;
+    border-left-style: solid;
+    border-right-style: solid;
+    border-top-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-right-width: 1px;
+    border-top-color: #b2d5d6;
+    border-bottom-color: #b2d5d6;
+    border-left-color: #b2d5d6;
+    border-right-color: #b2d5d6;
+    vertical-align: baseline;
+    padding-bottom: 0px;
+}
+
+tr.jsfcrud_odd_row {
+    background-color: #fefeff;
+    color: #4e6a71;
+}
+
+
+tr.jsfcrud_even_row {
+    background-color: #eff5fa;
+    color: #4e6a71;
+}
+
+#busyImage {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}
+
+// MODIFICACIONES AL CSS
+.centeredPanel {
+	position:relative;
+	height: 100px;
+	margin:0 auto;
+	padding: 10% 0;
+}
+
+.number {
+	font-weight:bold;
+	color:#1C17A6;
+	background-color:transparent;
+	letter-spacing:1pt;
+	word-spacing:1pt;
+	font-size:34px;
+	text-align:right;
+	font-family:arial, helvetica, sans-serif;
+	line-height:1;
+}
+
+/*
+.ui-panelgrid tr, .ui-panelgrid td{
+	border:none !important;
+}
+
+.ui-datatable .ui-datatable-data tr,.ui-datatable .ui-datatable-data-empty tr,.ui-datatable .ui-datatable-data td,.ui-datatable .ui-datatable-data-empty td{
+	border:1px solid !important;
+}
+*/
+
+.boldLabel {
+	font-weight:bold;
+	color:#000000;
+	letter-spacing:0pt;
+	word-spacing:1pt;
+	font-size:13px;
+	text-align:left;
+	font-family:arial, helvetica, sans-serif;
+	line-height:1;
+}
+
+.rightLabel {
+	font-weight:normal;
+	color:#000000;
+	letter-spacing:0pt;
+	word-spacing:0pt;
+	font-size:12px;
+	text-align:right;
+	font-family:arial, helvetica, sans-serif;
+	line-height:1;
+}
+
+.leftLabel {
+	font-weight:normal;
+	color:#000000;
+	letter-spacing:0pt;
+	word-spacing:0pt;
+	font-size:12px;
+	text-align:left;
+	font-family:arial, helvetica, sans-serif;
+	line-height:1;
+}
+
+.centerLabel {
+	font-weight:normal;
+	color:#000000;
+	letter-spacing:0pt;
+	word-spacing:0pt;
+	font-size:12px;
+	text-align:center;
+	font-family:arial, helvetica, sans-serif;
+	line-height:1;
+}
+
+.justifyLabel {
+	font-weight:normal;
+	color:#000000;
+	letter-spacing:0pt;
+	word-spacing:0pt;
+	font-size:12px;
+	text-align:justify;
+	font-family:arial, helvetica, sans-serif;
+	line-height:1;
+}
+
+
+.ticket {
+	font-weight:bold;
+	color:#FD5800;
+	background-color:#FFFFFF;
+	letter-spacing:0pt;
+	word-spacing:1pt;
+	font-size:14px;
+	text-align:center;
+	font-family:lucida sans unicode, lucida grande, sans-serif;
+	line-height:1;
+}
+
+.dateTimeField input {
+   width:200px;
+}
+
+.columnPanelGrid {
+    text-align: right;
+    vertical-align: middle;
+}
+
+.testCol1 { 
+	background-color: #3366ff;
+}
+
+.testCol2 {
+	vertical-align: top; 
+	background-color: #66ff66;
+}
+
+.testCol3 { 
+	background-color: #66ff66;
+} 
+

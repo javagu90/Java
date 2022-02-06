@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jax-ws xmlns="http://www.netbeans.org/ns/jax-ws/1">
+  <services>
+    <service name="ERWSClientesImpl">
+      <implementation-class>wscs.ERWSClientesImpl</implementation-class>
+    </service>
+  </services>
+  <clients>
+    <client name="BuscaCorrida">
+      <wsdl-url>file:/C:/Documents%20and%20Settings/imunoz/Mis%20documentos/ER/ADO/ETS-ADO-V2/WSDL/1-BuscaCorrida/BuscaCorrida.wsdl</wsdl-url>
+      <local-wsdl-file>BuscaCorrida.wsdl</local-wsdl-file>
+      <package-name>210.249.1.128.wbi.buscacorrida</package-name>
+      <catalog-file>catalog.xml</catalog-file>
+      <wsimport-options>
+        <wsimport-option>
+          <wsimport-option-name>extension</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>verbose</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>wsdlLocation</wsimport-option-name>
+          <wsimport-option-value>file:/C:/Documents%20and%20Settings/imunoz/Mis%20documentos/ER/ADO/ETS-ADO-V2/WSDL/1-BuscaCorrida/BuscaCorrida.wsdl</wsimport-option-value>
+        </wsimport-option>
+        <wsimport-option>
+          <wsimport-option-name>xnocompile</wsimport-option-name>
+          <wsimport-option-value>true</wsimport-option-value>
+        </wsimport-option>
+      </wsimport-options>
+    </client>
+  </clients>
+</jax-ws>

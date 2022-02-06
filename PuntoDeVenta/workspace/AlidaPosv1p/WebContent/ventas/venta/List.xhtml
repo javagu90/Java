@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"      
+      xmlns:pos="http://pos.com/functions">
+	
+	<ui:composition template="/template/template.xhtml">
+		
+        <ui:define name="body">
+        	<h:form id="VentaListForm"
+        	        onkeyup="if (event.keyCode == 13) { return false; }"
+        	        onkeypress="if (event.keyCode == 13) { return false; }">
+	            <p:layout>
+		            <p:layoutUnit 
+		            	id="westLayout" 
+		            	position="west" 
+		            	size="150" 
+		            	header="Menu" 
+		            	collapsible="true"
+		            	style="height:auto;" >
+		            	<p:remoteCommand 
+		            		name="updateButtons" 
+		            		update="ListButton createButton viewButton editButton" />	
+		            	<p:commandButton 			            	    
+		                	id="ListButton" 
+		                	icon="ui-icon-note"   
+		                	value="Listado"
+		                	actionListener="#{ventaBean.showListDialogListener}"
+		                	update="VentaListForm:ventaCreatePanel ventaListPanel"
+		                	onclick="PF('blockPage').show().show();"
+							oncomplete="PF('blockPage').show().hide();"						
+		                	style="width:98%;height:50px" />            	
+		            	<p:commandButton
+		                	id="createButton"
+		                	icon="ui-icon-plus" 
+		                	value="Nuevo"
+		                	actionListener="#{ventaBean.showCreateDialogListener}"
+		                	update="VentaListForm:ventaCreatePanel ventaListPanel"
+		                	onclick="PF('blockPage').show().show();"
+							oncomplete="PF('blockPage').show().hide();"
+		                	style="width:98%;height:50px" />
+		                <p:commandButton 
+		                	id="viewButton"
+		                	icon="ui-icon-search"
+		                	value="Ver"
+		                	actionListener="#{ventaBean.showViewDialogListener}"
+		                	disabled="#{ventaBean.ventaSelected == null}"
+		                	update="VentaListForm:ventaCreatePanel ventaListPanel"
+		                	onclick="PF('blockPage').show().show();"
+							oncomplete="PF('blockPage').show().hide();"
+		                	style="width:98%;height:50px" />
+		                <p:commandButton 
+		                    rendered="false"
+		                	id="editButton"
+		                	icon="ui-icon-pencil"
+		                	value="Editar"
+		                	actionListener="#{ventaBean.showEditDialogListener}"
+		                	disabled="#{pos:disabledEditViewButton(ventaBean.ventaSelected)}"
+		                	update="VentaListForm:ventaCreatePanel ventaListPanel"
+		                	onclick="PF('blockPage').show().show();"
+							oncomplete="PF('blockPage').show().hide();"
+		                	style="width:98%;height:50px" >
+		                </p:commandButton>
+		            </p:layoutUnit>
+		            <p:layoutUnit 
+		            	position="center" >		            	
+		            	<p:panel 
+		            		id="ventaListPanel"
+		            		header="Listado Venta"
+		            		rendered="#{ventaBean.showListDialog}" >
+		            		<p:panelGrid 
+		            			columns="2" >
+		            			<h:outputText
+		            				styleClass="boldLabel" 
+		            				value="Status Venta" /> 
+			            		<p:selectOneMenu
+			            			value="#{ventaBean.ventaStatus}"
+		            				style="width:180px;" >
+			            			<f:selectItems
+		            					value="#{ventaBean.listaStatus}"
+		            					var="ventaStatus" 
+		            					itemValue="#{ventaStatus}" />
+            						<p:ajax 
+	            						listener="#{ventaBean.valueChangeVentaList}"
+	            						update="ventaListPanel"
+	            						oncomplete="updateButtons()" />	            			
+			            		</p:selectOneMenu>
+		            		</p:panelGrid>		            		
+		            		<br/>
+		            		<p:dataTable		            			
+		                    	id="datalist" 
+		                    	value="#{ventaBean.listaVenta}"
+		                    	var="item"
+		                    	selectionMode="single" 
+		                    	selection="#{ventaBean.ventaSelected}"
+		                    	paginator="true"
+		                        rowKey="#{item.idventa}"
+		                        rows="10"
+		                        paginatorPosition="bottom"
+		                        emptyMessage="No existen registros" >
+		
+		                        <p:ajax 
+		                        	event="rowSelect"   
+		                        	oncomplete="updateButtons()" />
+		                        <p:ajax 
+		                        	event="rowUnselect" 
+		                        	oncomplete="updateButtons()" />
+		                        
+		                        <p:column
+		                        	styleClass="centerLabel"
+		                        	width="70" >
+		                            <f:facet name="header">
+		                                <h:outputText value="Fecha"/>
+		                            </f:facet>
+		                            <h:outputText		                            	 
+		                            	value="#{item.fecha}">
+		                            	<f:convertDateTime pattern="dd-MM-yyyy" />
+		                            </h:outputText>
+		                        </p:column>
+		                        <p:column
+		                        	styleClass="leftLabel">
+		                            <f:facet name="header">
+		                                <h:outputText value="Cliente"/>
+		                            </f:facet>
+		                            <h:outputText		                            	 
+		                            	value="#{pos:clientName(item.cliente)}"/>
+		                        </p:column>
+		                        <p:column
+		                        	styleClass="leftLabel"
+		                        	width="120">
+		                            <f:facet name="header">
+		                                <h:outputText value="Folio"/>
+		                            </f:facet>
+		                            <h:outputText		                            	 
+		                            	value="#{item.folio}"/>
+		                        </p:column>		                        			                        
+		                        <p:column
+		                        	styleClass="centerLabel"
+		                        	width="60">
+		                            <f:facet name="header">
+		                                <h:outputText value="Status"/>
+		                            </f:facet>
+		                            <h:outputText		                            	 
+		                            	value="#{pos:ventaStatus(item.status)}"/>
+		                        </p:column>
+		                        <p:column
+		                        	styleClass="leftLabel">
+		                            <f:facet name="header">
+		                                <h:outputText value="Comentarios"/>
+		                            </f:facet>
+		                            <h:outputText		                            	 
+		                            	value="#{item.comentarios}"/>
+		                        </p:column>		                        
+		                        <p:column
+		                        	width="24" >
+                					<p:commandButton
+	                					icon="ui-icon-trash"
+	                					title="Eliminar Venta"
+	                					update="datalist"
+	                					rendered="#{pos:showDeleteVenta(item.status)}"	                					
+	                					action="#{ventaBean.deleteVentaRecord}"
+	                					onclick="if (confirm('Se eliminara la venta y los productos asociados.\n\nEsta operación no se puede deshacer.\n\n¿Seguro de continuar ?\n') == false) return false;"           	
+	                					style="width:24px;height:24px;">
+	                					<f:setPropertyActionListener
+             								target="#{ventaBean.ventaSelected}"
+             								value="#{item}" />
+	                					</p:commandButton>
+		                        </p:column>
+		            		</p:dataTable>		            	
+		            	</p:panel>		            	
+		            	<ui:include src="/ventas/venta/Create.xhtml"/>
+		            	<ui:include src="/ventas/venta/View.xhtml"/>
+		            </p:layoutUnit>               
+	            </p:layout>
+			</h:form>            
+			<ui:include src="/catalogos/cliente/ClientSearch.xhtml"/>
+           	<ui:include src="/pago/Pago.xhtml"/>
+        </ui:define>
+    </ui:composition>
+</html>

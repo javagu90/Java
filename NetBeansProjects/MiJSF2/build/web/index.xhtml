@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="Nombre"/>
+                <h:inputText value="#{personaBean.persona.nombre}"/>
+                <h:outputLabel value="Apellido"/>
+                <h:inputText value="#{personaBean.persona.apellido}"/>
+                <h:outputLabel value="Sexo"/>
+                <h:selectOneMenu value="#{personaBean.persona.sexo}">
+                    <f:selectItem itemValue="M" itemLabel="Masculino"/>
+                    <f:selectItem itemValue="F" itemLabel="Femenino"/>
+                </h:selectOneMenu>
+                <h:commandButton  value="Aceptar" actionListener="#{personaBean.agregarPersona()}"/>
+            </h:panelGrid>
+            <h:dataTable value="#{personaBean.lstPersona}" var="personaje" rendered="#{personaBean.lstPersona.size() > 0 eq true}">
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputLabel value="Nombres"/>
+                    </f:facet>
+                    <h:outputLabel value="#{personaje.nombre}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header">
+                        <h:outputLabel value="Apellidos"/>
+                    </f:facet>
+                    
+                <h:outputLabel value="#{personaje.apellido}"/>
+                </h:column>
+                 <h:column>
+                     <f:facet name="header">
+                        <h:outputLabel value="Sexo"/>
+                    </f:facet>
+                    
+                <h:outputLabel value="#{personaje.sexo}"/>
+                </h:column>
+                <h:column>
+                    <h:commandLink value="Eliminar" actionListener="#{personaBean.eliminarPersona(personaje)}"/>
+                </h:column> 
+            </h:dataTable>
+        </h:form>
+    </h:body>
+</html>
+

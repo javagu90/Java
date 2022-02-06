@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CajaCreateDlg"
+        	widgetVar="CajaCreateDialog" 
+        	modal="true"
+        	resizable="false" 
+        	appendTo="@(body)" 
+        	header="#{msg['catalogo.Caja.Create.MsgHeader']}">
+            <h:form id="CajaCreateForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid 
+                    	columns="2" 
+                    	rendered="#{cajaBean.selected != null}">
+                    	
+                        <p:outputLabel 
+                        	rendered="false"
+                        	styleClass="boldLabel"
+                        	value="#{msg['catalogo.Label.Id']}"
+                        	for="idcaja" />
+                        <p:inputText 
+                        	rendered="false"
+                        	id="idcaja" 
+                        	value="#{cajaBean.selected.idcaja}" 
+                        	title="#{msg['catalogo.Label.Id']}" 
+                        	required="true" 
+                        	readonly="true"
+                        	requiredMessage="#{msg['catalogo.MsgRequiredId']}"/>
+                        	
+                        <p:outputLabel
+                        	styleClass="boldLabel"
+                        	value="#{msg['catalogo.Label.Nombre']}"
+                        	for="nombre" />
+                        <p:inputText 
+                        	id="nombre" 
+                        	value="#{cajaBean.selected.nombre}" 
+                        	title="#{msg['catalogo.Label.Nombre']}" 
+                        	required="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredNombre']}" >
+                        	<f:validateLength 
+                        		minimum="3" />
+                        </p:inputText>
+                        	
+                        <p:outputLabel
+                        	styleClass="boldLabel"
+                        	value="#{msg['catalogo.Label.Clave']}" 
+                        	for="clave" />
+                        <p:inputText 
+                        	id="clave" 
+                        	value="#{cajaBean.selected.clave}" 
+                        	title="#{msg['catalogo.Label.Clave']}"
+                        	required="true"                        	
+                        	requiredMessage="#{msg['catalogo.MsgRequiredClave']}"
+                        	>
+                        	<f:validateLength 
+                        		minimum="3" />
+                        </p:inputText>                        	
+
+                        <p:outputLabel
+                        	styleClass="boldLabel"
+                        	value="#{msg['catalogo.Label.Comentarios']}" 
+                        	for="comentarios" />
+                        <p:inputTextarea 
+                        	rows="6" 
+                        	cols="40"
+                        	id="comentarios" 
+                        	value="#{cajaBean.selected.comentarios}" 
+                        	title="#{msg['catalogo.Label.Comentarios']}" 
+                        	required="false" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredComentarios']}"/>                        
+                        	
+                       	<p:outputLabel
+                        	styleClass="boldLabel"
+                        	value="#{msg['catalogo.Label.Tienda']}" 
+                        	for="tienda" />
+                        <p:selectOneMenu
+                        	id="tienda"
+                        	value="#{cajaBean.selectedTienda.idtienda}">
+	                        <f:selectItems
+								value="#{cajaBean.tiendaList}" />
+                        </p:selectOneMenu>
+                         
+                                       
+                    </p:panelGrid>
+                    <p:commandButton 
+                    	actionListener="#{cajaBean.create}" 
+                    	value="#{msg['catalogo.Button.Guardar']}" 
+                    	update="display,:CajaListForm:datalist,:growl"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

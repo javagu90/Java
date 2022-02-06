@@ -1,0 +1,26 @@
+.example 
+		 	{ 
+		 		width:200px;
+		 		height:90px;
+		 		border: thin solid black;
+		 		padding:0 5px 5px 5px;
+		 		background-color:red; 
+		 		position:relative; 
+		 	} 
+		 	#newDiv 
+		 	{ 
+		 		background-color:yellow; 
+		 		width:180px; 
+		 		margin: 10px; 
+		 		position:absolute; 
+		 	} 
+		 	.button 
+		 	{ 
+		 		margin: 20px 0 0 0; 
+		 	} 
+		 	p 
+		 	{ 
+		 		position:relative; 
+		 		float:left; 
+		 		padding:10px; 
+		 	} 

@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+    xmlns:pos="http://pos.com/functions">
+
+    <ui:composition>
+
+        <p:dialog id="TraspasoCreateDlg"
+        	widgetVar="TraspasoCreateDialog" 
+        	modal="true"
+        	resizable="false" 
+        	appendTo="@(body)" 
+        	header="#{msg['catalogo.Traspaso.Create.MsgHeader']}">
+            <h:form id="TraspasoCreateForm">
+            	<p:growl id="growlCreate" showDetail="true" /> 
+                <h:panelGroup id="display">
+                    <p:panelGrid>
+    					<p:row>
+		                	<p:column>
+		                        <p:outputLabel
+		                        	value="#{msg['catalogo.Label.TiendaOrigen']}"
+		                        	for="tiendaorigen" />
+		                	</p:column>
+		                	<p:column>
+		 			            <p:selectOneMenu 
+					            	id="tiendaorigen" 
+					            	title="#{msg['catalogo.Label.TiendaOrigen']}"
+					            	required="true"
+					            	requiredMessage="#{msg['catalogo.MsgRequiredTiendaOrigen']}"
+				           			value="#{traspasoBean.tiendaSeleccionada1}">
+					                	<p:ajax listener="#{traspasoBean.handleTiendaSelect}" update="tiendadestino"/>
+					                	<f:selectItem itemLabel="Selecciona la tienda Origen" itemValue="" noSelectionOption="true" />
+					                	<f:selectItems
+					                		value="#{traspasoBean.tiendas}" 
+							           		var="item"
+						           			itemLabel="#{item.nombre}"
+						           			itemValue="#{item.nombre}"
+					                	/>
+					            </p:selectOneMenu>
+			                </p:column>
+			                <p:column>
+		                        <p:outputLabel
+		                        	value="#{msg['catalogo.Label.TiendaDestino']}"
+		                        	for="tiendadestino" />
+			               	</p:column>
+			                <p:column>
+		 			            <p:selectOneMenu 
+					            	id="tiendadestino" 
+					            	title="#{msg['catalogo.Label.TiendaDestino']}"
+					            	required="true"
+					            	requiredMessage="#{msg['catalogo.MsgRequiredTiendaDestino']}"
+				           			value="#{traspasoBean.tiendaSeleccionada2}">
+					                	<f:selectItem itemLabel="Selecciona la tienda destino" itemValue="" noSelectionOption="true" />
+					                	<f:selectItems
+					                		value="#{traspasoBean.tiendasDestino}" 
+							           		var="item"
+						           			itemLabel="#{item.nombre}"
+						           			itemValue="#{item.nombre}"
+					                	/>
+					            </p:selectOneMenu>
+		               		</p:column>
+		       				<p:column>
+		       					<p:dialog id="commentDialog"
+									modal="true"
+	      							resizable="false" 
+	      							header="#{msg['catalogo.Label.Comentarios']}"
+	      							appendTo="@(body)"
+									widgetVar="commentDlg">
+									<h:inputTextarea
+										style="width:300px;height:150px;" 
+										value="#{traspasoBean.selected.comentarios}" />
+								</p:dialog>
+								<center>							
+									<p:commandButton 
+										id="AddComment"  
+				             			icon="ui-icon-comment"
+										value="#{msg['catalogo.Label.AddComentarios']}"								 
+										type="button" 
+										onclick="PF('commentDlg').show()" />
+								</center>
+		       				</p:column>      						               		
+		            	</p:row>           	
+                    </p:panelGrid>
+                    
+		        	<div style="height: 5px;"/>       
+		        	             	                	
+					<p:panel id="listaproductos" header="#{msg['catalogo.Tab.Title.ProductosTraspaso']}">
+						<p:focus context="autoCompleteProduct"/>   
+	                    <p:panelGrid >
+	    					<p:row>
+			                	<p:column>
+			                        <p:outputLabel
+			                        	value="#{msg['catalogo.Label.Producto']}"  
+			                        	for="autoCompleteProduct" />
+			                	</p:column>
+			                	<p:column>
+			       					<p:autoComplete 
+					           			id="autoCompleteProduct"                			
+					           			var="prod"
+					           			itemLabel="#{prod.nombre}"
+					           			itemValue="#{prod}"
+					           			value="#{traspasoBean.producto}"               			
+					           			completeMethod="#{traspasoBean.completeProducto}" 
+					           			minQueryLength="3"
+					           			forceSelection="true"
+					           			queryDelay="100"
+					           			size="40"		                			
+					           			converter="productConverter">
+					           			<p:ajax 
+					           				event="itemSelect" 
+					           				listener="#{traspasoBean.handleSelectProduct}" 
+				           					oncomplete="updateResultPanel()"
+					           				update="createProductDT autoCompleteProduct growlCreate"/>					           				
+					          		</p:autoComplete>
+			                	</p:column>
+			                </p:row>
+			            </p:panelGrid>
+
+						<div style="height: 5px;"/>
+					
+			           	<p:dataTable
+			           		id="createProductDT"                		
+			         		value="#{traspasoBean.detalleTraspasos}"
+			           		var="item"
+			           		paginator="true"	
+			           		editable="true"
+		           			editMode="cell"
+			             	rows="10"
+			               	paginatorPosition="bottom"
+			               	style="width:830px;"
+			               	emptyMessage="No existen registros">
+			               			                    	
+		                   	<p:ajax 
+		                    	event="cellEdit" 
+		                    	listener="#{traspasoBean.onCellEdit}" 
+		                    	oncomplete="updateResultPanel()"
+		                    	update="@form:growlCreate" />	                        
+		                    	
+			                <p:column
+			                	headerText="Clave"
+			                	styleClass="leftLabel"
+			                	width="100">
+			                    <h:outputText value="#{item.producto.clave}"/>
+			                </p:column>
+			                
+			                <p:column
+			                	headerText="Producto"
+			                	styleClass="leftLabel">
+			                   	<h:outputText value="#{item.producto.nombre}"/>
+			                </p:column> 
+			                
+			                <p:column
+			                	headerText="Cantidad"
+			                	styleClass="rightLabel"
+			                	width="65">
+			                    <p:cellEditor>
+			                    	<f:facet name="output">
+			                    		<h:outputText
+			                    			id="quantityOutput"
+			                    			value="#{item.cantidad}">
+			                    			<f:convertNumber 
+			                    				pattern="#0.00"/>
+			                    		</h:outputText>
+		                    		</f:facet>
+			                    	<f:facet name="input">
+			                    		<h:inputText 
+			                    			id="quantityInput"
+			                    			value="#{item.cantidad}" >
+			                    			<f:convertNumber 
+			                    				pattern="#0.00"/>			                    			
+			                    		</h:inputText>
+		                    		</f:facet>
+		                    	</p:cellEditor>
+			                </p:column>
+
+			                <p:column
+			                	headerText="Precio unitario"
+			                	styleClass="rightLabel"
+			                	width="90">
+			                    <p:cellEditor>
+			                    	<f:facet name="output">
+			                    		<h:outputText
+			                    			id="precioUnitarioOutput"
+			                    			value="#{item.preciounitario}">
+					                    	<f:convertNumber 
+					     					currencySymbol="$"
+					     					type="currency"/>
+			                    		</h:outputText>
+		                    		</f:facet>
+			                    	<f:facet name="input">
+			                    		<h:inputText 
+			                    			id="precioUnitarioInput"
+			                    			value="#{item.preciounitario}" >
+			                    			<f:convertNumber 
+			                    				pattern="#0.00"/>
+			                    		</h:inputText>
+		                    		</f:facet>
+		                    	</p:cellEditor>
+			                </p:column>		
+			                
+			                <p:column
+			                	headerText="Importe"
+			                	styleClass="rightLabel"
+			                	width="90">
+			                    <h:outputText value="#{pos:obtenImporte(item.preciounitario, item.cantidad)}">
+			                    	<f:convertNumber 
+			     					currencySymbol="$"
+			     					type="currency"/>
+			                    </h:outputText>
+			                </p:column>
+			                
+			                <p:column
+			                	width="30">
+			            		<p:commandButton
+			             			icon="ui-icon-trash" 	
+			             			title="Eliminar producto" 
+			             			oncomplete="updateResultPanel()"
+			             			actionListener="#{traspasoBean.deleteProduct}"   
+			             			process="@this" 	
+			             			style="width:30px;height:30px;">     
+									<f:setPropertyActionListener
+									       target="#{traspasoBean.productoSeleccionado}"
+									       value="#{item}" />			             			    						
+			             		</p:commandButton>
+			                </p:column>	                                                
+			            </p:dataTable>  	
+			            
+		       		<p:remoteCommand 
+		       			name="updateResultPanel" 
+		       			update=":TraspasoCreateForm:lblSubtotal,:TraspasoCreateForm:createProductDT" />	
+
+                    <p:panelGrid id="resultPanel">
+    					<p:row>
+		                	<p:column>
+					       		<h:outputText 
+					       			styleClass="boldLabel" 
+					       			value="Importe total:" />
+		                	</p:column>
+		                	<p:column>					       			
+					        	<div 
+					        		class="number">
+					        		<h:outputText
+					        			id="lblSubtotal" 
+					        			value="#{traspasoBean.importeTotal}">
+					        			<f:convertNumber 
+					        				currencySymbol="$"
+					        				type="currency"/>
+					        		</h:outputText>
+					        	</div>
+		                	</p:column>
+		                </p:row>
+		            </p:panelGrid>
+		        				            									              
+               		</p:panel>                                    	
+                    <p:commandButton 
+                    	action="#{traspasoBean.create}" 
+                    	value="#{msg['catalogo.Button.Guardar']}" 
+                    	update="display,:TraspasoListForm:datalist,:growl,@form:growlCreate"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

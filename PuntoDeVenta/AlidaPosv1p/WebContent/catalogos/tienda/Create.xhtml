@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="TiendaCreateDlg"
+        	widgetVar="TiendaCreateDialog" 
+        	modal="true"
+        	resizable="false" 
+        	appendTo="@(body)" 
+        	header="#{msg['catalogo.Tienda.Create.MsgHeader']}">
+            <h:form id="TiendaCreateForm" 
+            	onkeyup="if (event.keyCode == 13) { return false; }"
+				onkeypress="if (event.keyCode == 13) { return false; }">
+                <h:panelGroup id="display">
+                	<p:tabView>
+                		<p:tab title="Datos Tienda">
+                			<p:panelGrid 
+		                    	columns="2" 
+		                    	rendered="#{tiendaBean.selected != null}">
+		                    	
+		                        <p:outputLabel 
+		                        	rendered="false"
+		                        	styleClass="boldLabel"
+		                        	value="#{msg['catalogo.Label.Id']}" 
+		                        	for="idtienda" />
+		                        <p:inputText 
+		                        	rendered="false"
+		                        	id="idtienda" 
+		                        	value="#{tiendaBean.selected.idtienda}" 
+		                        	title="#{msg['catalogo.Label.Id']}" 
+		                        	required="true" 
+		                        	readonly="true"
+		                        	requiredMessage="#{msg['catalogo.MsgRequiredId']}"/>
+		                        	
+		                        <p:outputLabel
+		                        	styleClass="boldLabel"
+		                        	value="#{msg['catalogo.Label.Nombre']}" 
+		                        	for="nombre" />
+		                        <p:inputText 
+		                        	id="nombre" 
+		                        	value="#{tiendaBean.selected.nombre}" 
+		                        	title="#{msg['catalogo.Label.Nombre']}" 
+		                        	required="true" 
+		                        	requiredMessage="#{msg['catalogo.MsgRequiredNombre']}">
+		                        <f:validateLength maximum="200" minimum="3"/>	
+		                        </p:inputText>
+		                        	
+		                        <p:outputLabel
+		                        	styleClass="boldLabel"
+		                        	value="#{msg['catalogo.Label.Descripcion']}" 
+		                        	for="descripcion" />
+		                        <p:inputTextarea 
+		                        	rows="4" 
+		                        	cols="40"
+		                        	id="descripcion" 
+		                        	value="#{tiendaBean.selected.descripcion}" 
+		                        	title="#{msg['catalogo.Label.Descripcion']}" 
+		                        	required="false" 
+		                        	requiredMessage="#{msg['catalogo.MsgRequiredDescripcion']}">
+		                        	<f:validateLength maximum="200"/>
+		                        	</p:inputTextarea>		                        			                       
+		                        
+		                        <p:outputLabel
+		                        	styleClass="boldLabel"
+		                        	value="Teléfono Fijo" 
+		                        	for="telefonoFijo" />
+		                        <p:inputMask
+		                        	id="telefonoFijo" 
+		                        	value="#{tiendaBean.contacto.telefono1}" 
+		                        	title="#{msg['catalogo.Label.Telefono1']}"
+		                        	required="true" 
+		                        	mask="(999)9999999" />
+		                        	
+		                        <p:outputLabel
+		                        	styleClass="boldLabel"
+		                        	value="Teléfono Móvil" 
+		                        	for="telefonoMovil" />
+		                        <p:inputMask
+		                        	id="telefonoMovil" 
+		                        	value="#{tiendaBean.contacto.telefono2}" 
+		                        	title="#{msg['catalogo.Label.Telefono2']}"
+		                        	required="false" 
+		                        	mask="(999)9999999" />
+		                        	
+		                        <p:outputLabel
+		                        	styleClass="boldLabel"
+		                        	value="Email" 
+		                        	for="email" />	
+		                        <p:inputText 
+                        			id="email" 
+		                        	value="#{tiendaBean.contacto.correoelectronico}" 
+		                        	title="#{msg['catalogo.Label.Email']}"
+		                        	validatorMessage="#{msg['catalogo.MsgWrongFormat']}"
+		                        	required="false" >
+		                        		  <f:validateRegex	
+		                        		  	pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />                        	
+		                        </p:inputText>
+		                        
+		                      	<p:outputLabel
+		                        	styleClass="boldLabel"
+		                        	value="Responsable" />
+		                        <p:selectOneMenu
+		                        	value="#{tiendaBean.responsable}" >
+		                        	<f:selectItems
+		                        		value="#{tiendaBean.empleados}" />                	
+		                        </p:selectOneMenu>
+		                        
+		                        <p:outputLabel
+		                        	styleClass="boldLabel"
+		                        	value="Comentarios" 
+		                        	for="comentarios" />
+		                        <p:inputTextarea 
+		                        	rows="4" 
+		                        	cols="40"
+		                        	id="comentarios" 
+		                        	value="#{tiendaBean.selected.comentarios}" 
+		                        	title="Comentarios" 
+		                        	required="false" 
+		                        	requiredMessage="#{msg['catalogo.MsgRequiredComentarios']}"/>
+		                        		
+		                    </p:panelGrid>
+                		</p:tab>
+                		
+                		<p:tab title="Dirección">
+                			<p:panelGrid 
+                				id="dirPanel"
+		                    	columns="2" 
+		                    	rendered="#{tiendaBean.selected != null}" >
+	                			<p:outputLabel
+	                				styleClass="boldLabel"
+		                        	value="#{msg['catalogo.Label.Calle']}"
+		                        	for="calle" />
+		                        <p:inputText 
+		                        	id="calle" 
+		                        	value="#{tiendaBean.direccion.calle}" 
+		                        	title="#{msg['catalogo.Label.Calle']}"
+		                        	required="true"
+		                       		requiredMessage="#{msg['catalogo.MsgRequiredCalle']}"/>
+		                       		
+		                       	<p:outputLabel
+		                       		styleClass="boldLabel"
+		                        	value="#{msg['catalogo.Label.NumExt']}"
+		                        	for="exterior" />
+		                        <p:inputText 
+		                        	id="exterior" 
+		                        	value="#{tiendaBean.direccion.numext}" 
+		                        	title="#{msg['catalogo.Label.NumExt']}"
+		                        	required="true"
+		                       		requiredMessage="#{msg['catalogo.MsgRequiredNumExt']}" />
+		                       	
+		                       	<p:outputLabel
+		                       		styleClass="boldLabel"
+		                        	value="#{msg['catalogo.Label.NumInt']}"
+		                        	for="interior" />
+		                        <p:inputText 
+		                        	id="interior" 
+		                        	value="#{tiendaBean.direccion.numint}" 
+		                        	title="#{msg['catalogo.Label.NumInt']}"
+		                        	required="false" />
+		                        	
+		                        <p:outputLabel
+		                        	styleClass="boldLabel"
+		                        	value="#{msg['catalogo.Label.Colonia']}" 
+		                        	for="colonia" />
+		                        <p:inputText 
+		                        	id="colonia" 
+		                        	value="#{tiendaBean.direccion.colonia}" 
+		                        	title="#{msg['catalogo.Label.Colonia']}"
+		                        	required="true" 
+		                       		requiredMessage="#{msg['catalogo.MsgRequiredColonia']}" />
+		                       		
+		                       	<p:outputLabel
+		                       		styleClass="boldLabel"
+		                        	value="#{msg['catalogo.Label.CodigoPostal']}" 
+		                        	for="cp" />
+		                        <p:inputMask  
+		                        	id="cp" 
+		                        	value="#{tiendaBean.direccion.codigopostal}" 
+		                        	title="#{msg['catalogo.Label.CodigoPostal']}"
+		                        	required="true" 
+		                       		requiredMessage="#{msg['catalogo.MsgRequiredCodigoPostal']}"
+		                       		mask="99999" />
+		                       		
+		                       	<p:outputLabel
+		                       		styleClass="boldLabel"
+		                        	value="#{msg['catalogo.Label.Estado']}"
+		                        	for="estado" />           	
+					            <p:selectOneMenu 
+					            	id="estado" 
+					            	required="true"
+				           			value="#{tiendaBean.estadoSelected}">
+					                	<p:ajax 
+					                		listener="#{tiendaBean.handleStateSelect}"  
+					                		update="municipio" />
+					                	<f:selectItem 
+					                		itemLabel="Selecciona un estado" 
+					                		itemValue="" 
+					                		noSelectionOption="true" />
+					                	<f:selectItems
+					                		value="#{estadoBean.estados}" 
+							           		var="estadoseleccionado"
+						           			itemLabel="#{estadoseleccionado.nombre}"
+						           			itemValue="#{estadoseleccionado.nombre}" />
+					            </p:selectOneMenu>
+		                       	            
+		                        <p:outputLabel
+		                        	styleClass="boldLabel"
+		                        	value="#{msg['catalogo.Label.Municipio']}"
+		                        	for="municipio" />
+					            <p:selectOneMenu 
+					            	id="municipio" 
+					            	required="true"
+				           			value="#{tiendaBean.municipioSelected}">
+					                	<p:ajax 
+					                		listener="#{tiendaBean.handleMunicipioSelect}"/>
+					                	<f:selectItem 
+					                		itemLabel="Selecciona un municipio" 
+					                		itemValue="" 
+					                		noSelectionOption="true" />
+					                	<f:selectItems
+					                		value="#{tiendaBean.municipios}" 
+							           		var="municipioseleccionado"
+						           			itemLabel="#{municipioseleccionado.nombre}"
+						           			itemValue="#{municipioseleccionado.nombre}"
+					                	/>
+					            </p:selectOneMenu>
+                        	
+                			</p:panelGrid>
+                		</p:tab>
+
+                	</p:tabView>
+                    
+                    <p:commandButton 
+                    	action="#{tiendaBean.create}" 
+                    	value="#{msg['catalogo.Button.Guardar']}" 
+                    	update="display,:TiendaListForm:datalist,:growl"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

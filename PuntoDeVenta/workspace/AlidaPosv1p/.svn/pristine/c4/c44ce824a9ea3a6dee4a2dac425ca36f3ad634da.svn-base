@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"      
+      xmlns:pos="http://pos.com/functions">
+	
+	<ui:composition template="/template/template.xhtml">
+
+		<ui:define name="body">
+        	<h:form id="ConfiguracionListForm">
+	            <p:layout>	
+		            <p:layoutUnit 
+		            	position="center" >		            	
+		            	<p:panel 
+		            		id="configuracionListPanel"
+		            		header="General">
+		            		<br/>
+		            		<h:outputText
+	            				styleClass="boldLabel" 
+	            				value="Formas de Pago" /> 
+		            		<br/>
+		            		<br/>
+		            		<h:panelGrid columns="8" style="margin-bottom:10px" cellpadding="5">
+		            			<p:selectBooleanCheckbox value="#{configuracionBean.efectivo}"/>
+		            			<h:outputText value="Efectivo" />
+		            			<p:selectBooleanCheckbox value="#{configuracionBean.tarjeta}"/>
+		            			<h:outputText value="Tarjetas"/>
+		            			<p:selectBooleanCheckbox value="#{configuracionBean.credito}"/>
+		            			<h:outputText value="Crédito"/>
+		            			<p:selectBooleanCheckbox value="#{configuracionBean.vales}"/>
+		            			<h:outputText value="Vales"/>
+		            		</h:panelGrid>
+		            		<h:outputText
+	            				styleClass="boldLabel" 
+	            				value="Promociones" /> 
+		            		<br/>
+		            		<br/>
+		            		<h:panelGrid id="panelGridPromocion"  columns="4" style="margin-bottom:10px" cellpadding="5" >
+		            			<p:selectBooleanCheckbox value="#{configuracionBean.promocionTodas}" disabled="#{configuracionBean.promocionMayorDesc}" > 
+		            				<p:ajax event="change" update="@form:panelGridPromocion" /> 
+		            			</p:selectBooleanCheckbox>
+		            			<h:outputText value="Todas"/>
+		            			<p:selectBooleanCheckbox value="#{configuracionBean.promocionMayorDesc}" disabled="#{configuracionBean.promocionTodas}">
+		            				<p:ajax event="change" update="@form:panelGridPromocion" /> 
+		            			</p:selectBooleanCheckbox>
+		            			<h:outputText value="El mayor descuento"/>
+		            		</h:panelGrid>
+						</p:panel>	
+						<p:commandButton 
+                    	action="#{configuracionBean.update}" 
+                    	value="#{msg['catalogo.Button.Guardar']}"
+                    	update=":growl"/>	            	
+		            </p:layoutUnit>		            		
+				</p:layout>
+			</h:form>            
+        </ui:define>
+    </ui:composition>
+</html>	

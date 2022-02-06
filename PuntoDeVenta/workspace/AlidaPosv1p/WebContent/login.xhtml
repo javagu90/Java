@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3c.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<title>Alida Software - Punto de Venta</title>
+	<h:outputStylesheet library="css" name="jsfcrud.css" />
+	<h:outputScript library="javascript" name="jsfcrud.js" />
+</h:head>
+<h:body>
+	<p:growl 
+		id="mensajes" 
+		showDetail="true" 
+		life="2000" />
+	<h:form id="LoginForm">
+		<p:layout fullPage="true">
+			<ui:include src="/template/header.xhtml"/>
+			<p:layoutUnit position="center">
+				<div class="centeredPanel" />
+				<p:panel 
+					header="#{msg['lbl.login']}" 
+					style="width:300px;">
+					<h:panelGrid 
+						columns="2" 
+						cellpadding="5"
+						columnClasses="testCol1,testCol2">
+						<p:outputLabel 
+							styleClass="boldLabel"
+							for="username" 
+							value="#{msg['lbl.username']}" />
+						<p:inputText 
+							value="#{loginBean.nombre}" 
+							id="username"
+							required="true" 
+							label="username" />
+						<p:outputLabel 
+							styleClass="boldLabel"
+							for="password" 
+							value="#{msg['lbl.password']}" />
+						<p:password
+							value="#{loginBean.clave}" 
+							id="password" 
+							required="true"
+							label="password" />					
+						<f:facet name="footer">
+							<p:commandButton 
+								id="loginButton"
+								value="Login"
+								action="#{loginBean.login}" 
+								update=":mensajes" />
+						</f:facet>
+					</h:panelGrid>
+				</p:panel>		
+			</p:layoutUnit>
+		</p:layout>
+	</h:form>
+</h:body>
+<!-- script type="text/javascript">
+  //<![CDATA[
+  function manejarLogin(xhr, status, args) {
+    if (!args.validationFailed && args.estaLogeado) {
+      setTimeout(function() {
+        window.location = args.view;
+      }, 500);
+    }
+  }
+//]]>
+</script -->
+</html>

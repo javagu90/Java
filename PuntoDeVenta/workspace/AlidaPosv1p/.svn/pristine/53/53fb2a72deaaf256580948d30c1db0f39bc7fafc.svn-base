@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pos="http://pos.com/functions">
+
+    <ui:composition>
+
+        <p:dialog id="TipoVencimientoEditDlg"
+        	widgetVar="TipoVencimientoEditDialog"
+        	modal="true"
+        	resizable="false" 
+        	appendTo="@(body)" 
+        	header="#{msg['catalogo.TipoVencimiento.Edit.MsgHeader']}">
+            <h:form id="TipoVencimientoEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid 
+                    	columns="2" 
+                    	rendered="#{tipoVencimientoBean.selected != null}">
+                        <p:outputLabel
+                        	styleClass="boldLabel"
+                        	value="#{msg['catalogo.Label.Nombre']}" 
+                        	for="nombre" />
+                        <p:inputText 
+                        	id="nombre" 
+                        	value="#{tipoVencimientoBean.selected.nombre}" 
+                        	title="#{msg['catalogo.Label.Nombre']}" 
+                        	readonly="true"/>
+                        	
+                        <p:outputLabel
+                        	styleClass="boldLabel"
+                        	value="#{msg['catalogo.Label.Descripcion']}" 
+                        	for="descripcion" />
+                        <p:inputTextarea 
+                        	rows="6" 
+                        	cols="40"
+                        	id="descripcion" 
+                        	value="#{tipoVencimientoBean.selected.descripcion}" 
+                        	title="#{msg['catalogo.Label.Descripcion']}" 
+                        	required="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredDescripcion']}"> 
+                        	<f:validateLength maximum="200"/>	
+                        </p:inputTextarea>
+                        	
+                        <p:outputLabel
+                        	styleClass="boldLabel"
+                        	value="#{msg['catalogo.Label.Dias']}" 
+                        	for="dias" />
+                        <p:inputText 
+                        	id="dias"
+                        	readonly="true" 
+                        	value="#{tipoVencimientoBean.selected.dias}" 
+                        	title="#{msg['catalogo.Label.Dias']}" />
+                        	
+                        <p:outputLabel
+                        	styleClass="boldLabel"
+                        	value="#{msg['catalogo.Label.TipoDias']}" 
+                        	for="tipodias" />
+                        <p:inputText 
+                        	id="tipodias"
+                        	readonly="true" 
+                        	value="#{pos:getTipoDias(tipoVencimientoBean.selected.tipodias)}" 
+                        	title="#{msg['catalogo.Label.TipoDias']}" />
+				        
+				        <p:outputLabel
+				        	styleClass="boldLabel"
+				        	value="#{msg['catalogo.Label.Activo']}"
+				        	for="status"/>
+				        <p:selectBooleanCheckbox
+			        		id="status"
+			        		value="#{tipoVencimientoBean.selected.activo}" />
+                        	
+                        <p:outputLabel
+                        	styleClass="boldLabel"
+                        	value="#{msg['catalogo.Label.Comentarios']}" 
+                        	for="comentarios" />
+                        <p:inputTextarea 
+                        	rows="6" 
+                        	cols="40"
+                        	id="comentarios" 
+                        	value="#{tipoVencimientoBean.selected.comentarios}" 
+                        	title="#{msg['catalogo.Label.Comentarios']}" 
+                        	/>
+                        	                    	
+                    </p:panelGrid>
+                    <p:commandButton 
+                    	action="#{tipoVencimientoBean.update}" 
+                    	value="#{msg['catalogo.Button.Guardar']}" 
+                    	update="display,:TipoVencimientoListForm:datalist,:growl"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

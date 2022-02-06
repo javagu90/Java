@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+  <tlib-version>1.0</tlib-version>
+  <short-name>misetiquetas</short-name>
+  <uri>/WEB-INF/tlds/misEtiquetas</uri>
+  
+  <!-- primera etiqueta llamada STS-->
+  <tag>
+      <description>Etiqueta que muestra mensaje echa con Simple tag support</description>
+      <name>simpletagsuport1</name>
+      <tag-class>etiquetas.EtiquetaSTS</tag-class>
+      <body-content> empty</body-content>
+  </tag>
+  
+  <!-- etiqueta que realiza una suma mediante attributos estaticos-->         
+  <tag>
+      <description>Etiqueta STS que realiza una suma</description>
+      <name>STSuma</name>
+      <tag-class>etiquetas.Suma</tag-class>
+      <body-content>empty</body-content>
+      <attribute>
+          <name>sumando1</name>
+          <required>true</required>
+          <rtexprvalue>true</rtexprvalue>
+      </attribute>
+      <attribute>
+          <name>sumando2</name>
+          <required>true</required>
+          <rtexprvalue>true</rtexprvalue>
+      </attribute>
+  </tag>
+  <tag>
+      <name> Mayusculas</name>
+      <tag-class>etiquetas.Mayus</tag-class>
+      <body-content>tagdependent</body-content>
+      <attribute>
+          <name> nombre</name>
+          <required> false</required>
+      </attribute> 
+  </tag>
+</taglib>

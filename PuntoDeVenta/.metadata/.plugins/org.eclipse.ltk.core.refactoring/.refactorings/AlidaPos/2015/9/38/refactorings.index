@@ -1,0 +1,39 @@
+1442255869924	Encapsulate field 'corteCajaFacade'
+1442256066455	Delete element
+1442269220661	Copy compilation unit
+1442269789812	Delete element
+1442269796190	Delete element
+1442269800474	Delete element
+1442269806113	Copy compilation unit
+1442269814180	Delete element
+1442270034272	Delete element
+1442330451717	Encapsulate field 'corteParcial'
+1442335280058	Encapsulate field 'efectivoTotal'
+1442339574088	Encapsulate field 'ventas'
+1442354195383	Copy file
+1442502611021	Delete element
+1442502634131	Delete element
+1442502648552	Delete element
+1442502669645	Delete element
+1442517404035	Delete element
+1442525647549	Delete element
+1442530366353	Encapsulate field 'usuarioFacade'
+1442530378342	Encapsulate field 'corteCaja'
+1442530386031	Encapsulate field 'logeado'
+1442531229224	Encapsulate field 'corteCaja'
+1442531236605	Encapsulate field 'usuarioFacade'
+1442531251856	Encapsulate field 'logeado'
+1442534425591	Encapsulate field 'ultimaventa'
+1442534461873	Encapsulate field 'ultimopagoapartado'
+1442534602705	Encapsulate field 'ultimaventa'
+1442534711577	Encapsulate field 'ultimopagoapartado'
+1442534806256	Encapsulate field 'idcortecaja'
+1442534911294	Encapsulate field 'cortecaja'
+1442588506149	Move 1 resources to 'reportes'
+1442590241117	Encapsulate field 'listaCorteCaja'
+1442592428317	Copy file
+1442592438149	Copy file
+1442592449750	Copy file
+1442592459058	Copy file
+1442614089491	Encapsulate field 'cantidadfisica'
+1442614098150	Encapsulate field 'cantidadsistema'

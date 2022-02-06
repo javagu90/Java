@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pos="http://pos.com/functions">
+
+	<ui:composition>
+		<f:view
+ 			locale="#{sessionBean.locale}">
+			<p:dialog 
+				modal="true" 
+				widgetVar="valeDialog"
+				showHeader="true"
+				header="Crear Vale"
+				appendTo="@(body)"						
+				resizable="false" 
+				draggable="false">
+				<p:outputPanel>
+					<h:form 
+						id="creaValeForm">
+						<p:panelGrid 
+							id="createValePanel" 
+							columns="2">
+							<h:outputText
+								styleClass="boldLabel"
+								value="Vencimiento" />
+							<p:column>
+								<p:selectOneMenu
+				          			value="#{valeBean.vencimiento}"
+				          			style="width:160px;" >
+				          			<f:selectItems
+				          				value="#{valeBean.listaVencimiento}"
+				          				var="vencimiento" 
+				          				itemValue="#{vencimiento}"/>	
+				       				<f:converter 
+				       					converterId="tipoVencimientoConverter" />      
+				       				<p:ajax 
+				       					listener="#{valeBean.valueChangeVencimiento}"
+				         				update="expirationDateLabel" /> 			
+				       			</p:selectOneMenu>
+				       			<br/>
+				       			<p:inputText       					 	
+									styleClass="centerLabel"
+									style="color:#8B0000;width:110px;"
+									id="expirationDateLabel"
+									readonly="true"
+									value="#{valeBean.expirationDate}">
+									<f:convertDateTime 
+										pattern="dd-MM-yyyy" />
+				        		</p:inputText>
+							</p:column>
+							<h:outputText
+								styleClass="boldLabel"
+								value="Bueno por" />
+							<h:outputText 
+								styleClass="boldLabel"
+								value="#{valeBean.vale.cantidad}">
+		                    	<f:convertNumber 
+			     					currencySymbol="$"
+			     					type="currency"/>
+		                    </h:outputText>
+		                    <h:outputText
+			           			styleClass="boldLabel" 
+			           			value="Folio" />
+			           		<h:outputText 
+			           			styleClass="ticket" 
+			           			value="#{valeBean.vale.folio}"/>
+			           		<p:outputLabel
+			           			styleClass="boldLabel"
+	                        	value="Comentarios" 
+	                        	for="comentarios" />
+	                        <p:inputTextarea 
+	                        	rows="4" 
+	                        	cols="40"
+	                        	id="comentarios" 
+	                        	value="#{valeBean.vale.comentarios}" 
+	                        	title="Comentarios"/>
+						</p:panelGrid>				
+						<p:commandButton
+							value="Aceptar" 
+							onclick="executeCreate()"
+							/>
+						<p:remoteCommand
+							name="executeCreate"
+							action="#{valeBean.createVale}"/>
+					</h:form>
+				</p:outputPanel>
+			</p:dialog>
+		</f:view>
+	</ui:composition>      
+</html>	

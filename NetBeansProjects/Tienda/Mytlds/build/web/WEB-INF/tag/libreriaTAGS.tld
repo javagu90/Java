@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-jsptaglibrary_2_1.xsd">
+  <tlib-version>1.0</tlib-version>
+  <short-name>libreriatags</short-name>
+  <uri>/WEB-INF/tlds/libreriaTAGS</uri>
+  
+  <tag>
+      <name>etiquetaSimple</name>
+      <tag-class>etiquetas.tag.TagSimple</tag-class>
+      <description>etiqueta que utiliza do start(EVAL BODY INCLUDE) y do end(SKIP PAGE)</description>
+      <body-content>tagdependent</body-content> 
+  </tag>
+  
+  <tag>
+      <name>etiquetaSimple2</name>
+      <tag-class>etiquetas.tag.TagSimple2</tag-class>
+      <description>etiqueta que utiliza dostartTag(Skip_body) y do end tag(Eval_page)</description>
+      <body-content>scriptless</body-content>
+  </tag>
+ 
+   <tag>
+      <name>etiquetaSimple3</name>
+      <tag-class>etiquetas.tag.TagSimple3</tag-class>
+      <description>etiqueta que utiliza dostartTag(EVAL BODY AGAIN)</description>
+      <body-content>scriptless</body-content>
+  </tag>
+ 
+</taglib>

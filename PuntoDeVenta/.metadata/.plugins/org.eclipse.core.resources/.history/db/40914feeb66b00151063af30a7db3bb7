@@ -1,0 +1,622 @@
+package com.alidasoftware.pos.bean;
+
+import java.io.Serializable;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.faces.event.ActionEvent;
+import javax.faces.event.ValueChangeEvent;
+import javax.faces.model.SelectItem;
+
+import org.primefaces.context.RequestContext;
+import org.primefaces.event.SelectEvent;
+
+import com.alidasoftware.pos.exception.AlidaPosException;
+import com.alidasoftware.pos.facade.CajaEfectivoFacade;
+import com.alidasoftware.pos.facade.CajaFacade;
+import com.alidasoftware.pos.facade.CorteCajaFacade;
+import com.alidasoftware.pos.facade.UsuarioFacade;
+import com.alidasoftware.pos.model.Caja;
+import com.alidasoftware.pos.model.Cajaefectivo;
+import com.alidasoftware.pos.model.Cortecaja;
+import com.alidasoftware.pos.model.Corteparcial;
+import com.alidasoftware.pos.model.Detallecortecaja;
+import com.alidasoftware.pos.model.Usuario;
+import com.alidasoftware.pos.util.Utils;
+
+
+public class CorteCajaBean extends AbstractBean implements Serializable {
+
+	private static final long serialVersionUID = -7511752856456833241L;
+	
+	private CajaFacade cajaFacade;
+	private CajaEfectivoFacade cajaEfectivoFacade;
+	private Caja caja;
+	private String selectedCaja;
+	private List<SelectItem> listaCaja;
+	private float efectivoInicial;
+	private String message;
+	private Integer idTienda;
+	private List<Cortecaja> listaCorteCaja;
+	private UsuarioFacade usuarioFacade;
+	private Usuario user;
+	private Cajaefectivo cajaEfectivo;
+	
+	private int idcortecaja;
+	private int cantidadfisica;
+	private int cantidadsistema;
+	private String comentarios;
+	private Date fecha;
+	private Time horafin;
+	private Time horainicio;
+	private Usuario usuario1;
+	private Usuario usuario2;
+	private List<Corteparcial>corteparcials;
+	private List<Detallecortecaja>detallecortecajas;
+	private CorteCajaFacade corteCajaFacade= new CorteCajaFacade();
+	private Cortecaja selected;
+	private Date searchFecha;
+	private String stringFecha;
+	private String stringHoraFin;
+	
+	public CorteCajaBean() {
+		//System.out.println("Constructor");
+		efectivoInicial = 0.0f;
+		caja = null;
+		selectedCaja = null;
+		listaCaja =  new ArrayList<SelectItem>();
+		prepareCreate();
+		listar();
+		//loadCajaSelectItems();
+	}
+	
+	
+	public Cortecaja prepareCreate()
+	{
+		selected= new Cortecaja();
+		return selected;
+	}
+	
+	public void prepareCreateNew()
+	{
+/*		System.out.println("Corte de Caja");
+		System.out.println("ID CORTE"+ getCorteParcialBean().getCortecaja().getIdcortecaja());
+		System.out.println("ID CAJA "+ getCaja().getIdcaja());
+		System.out.println("ID SUPER"+ getCorteParcialBean().getUsuario1().getIdusuario());
+		System.out.println("ID USER"+ getCorteParcialBean().getUsuario2().getIdusuario());
+		System.out.println("FECHA"+ getCorteParcialBean().getFecha());
+		System.out.println("INICIO"+ getHorainicio());
+		
+	*/	this.selected=getCorteParcialBean().getCortecaja();
+		this.selected.setIdcortecaja(getCorteParcialBean().getCortecaja().getIdcortecaja());
+		this.selected.setCaja(getCaja());
+		this.selected.getCaja().setIdcaja(getCaja().getIdcaja());
+		this.selected.setUsuario1(getCorteParcialBean().getUsuario1());
+		this.selected.getUsuario1().setIdusuario(getCorteParcialBean().getUsuario1().getIdusuario());
+		this.selected.setUsuario2(getCorteParcialBean().getUsuario2());
+		this.selected.getUsuario2().setIdusuario(getCorteParcialBean().getUsuario2().getIdusuario());
+		this.selected.setFecha(getCorteParcialBean().getFecha());
+		this.selected.setHorainicio(getCorteParcialBean().getHora());
+		
+		getStringHoraFin();
+		getStringFecha();
+		this.selected.setHorafin(horafin);
+		this.selected.setComentarios(comentarios);
+		this.selected.setCantidadfisica(89);
+		this.selected.setCantidadsistema(98);
+		
+		/*System.out.println("FIN"+ getHorafin());
+		System.out.println("COMEN"+ comentarios);
+		System.out.println("CANT FISICA"+ getCantidadfisica());
+		System.out.println("CANTIDAD REAL"+ getCantidadsistema());
+		System.out.println("TOTAL CAJA");*/
+		
+		actualizarCorteCaja();
+	}
+	
+	
+	public String getStringFecha()
+	{
+		Date fecha= new Date();
+		stringFecha=null;
+		DateFormat format = new SimpleDateFormat("dd-MM-yyyy");
+		stringFecha= format.format(fecha);
+		this.fecha=fecha;
+		return stringFecha;
+	}
+	
+	public String getStringHoraFin()
+	{
+		Date fecha= new Date();
+		int h=fecha.getHours();
+		int m=fecha.getMinutes();
+		int s=fecha.getSeconds();
+		Time hora= new Time(h,m,s);
+		this.horafin=hora;
+		if(m<10 && s<10)
+		{
+			stringHoraFin=h+":0"+m+":0"+s;
+		}
+		else
+		{
+			if(m<10 && s>10)
+			{
+				stringHoraFin=h+":0"+m+":"+s;
+			}
+			else
+			{
+				if(m>10 && s<10)
+				{
+					stringHoraFin=h+":"+m+":0"+s;
+				}
+				else
+				{
+					stringHoraFin=h+":"+m+":"+s;
+				}
+			}
+		}
+		return stringHoraFin;
+	}
+	
+	
+	
+	public void actualizarCorteCaja()
+	{
+		
+		try {
+		corteCajaFacade.updateCortecaja(selected);
+	} catch (AlidaPosException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+		
+		try {
+			if(cajaEfectivo==null)
+			{
+				closeDialog("VentanaCCCreado");
+		    	displayInfoMessageToUser("La caja ya ha sido cerrada o no se ha seleccionado una caja");
+			}
+			cajaEfectivoFacade.deleteCajaEfectivo(cajaEfectivo);
+		} catch (AlidaPosException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		closeDialog("VentanaCCCreado");
+    	displayInfoMessageToUser("El registro se ha creado");
+       	listar();
+    	prepareCreate();
+ }
+
+	
+	
+	private CorteParcialBean getCorteParcialBean()
+	{
+		return (CorteParcialBean) Utils.getManagedBean("corteParcialBean");
+	}
+	
+	
+	public void onRowDblClckSelect(SelectEvent event) {  
+		System.out.println("entro a esto");
+		if (event != null && event.getObject() != null) {
+			selected = (Cortecaja) event.getObject();
+			//sumarPagos(this.selected.getFecha());
+	        viewRecord();	        
+		}
+    }
+	
+	public void viewRecord() {
+		RequestContext.getCurrentInstance().update("CierreCajaViewDlg");
+	}
+	
+	public void listar()
+	{
+
+		//System.out.println("Mensaje listar");
+		try {
+			listaCorteCaja=corteCajaFacade.listAll();
+		} catch (AlidaPosException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public List<Cortecaja> getListaCorteCaja() {
+		//System.out.println("obteniendo lista"+ listaCorteCaja);
+		return listaCorteCaja;
+	}
+
+	public void setListaCorteCaja(List<Cortecaja> listaCorteCaja) {
+		this.listaCorteCaja = listaCorteCaja;
+	}
+	
+	
+	public CorteCajaFacade getCorteCajaFacade() {
+		return corteCajaFacade;
+	}
+
+	public void setCorteCajaFacade(CorteCajaFacade corteCajaFacade) {
+		this.corteCajaFacade = corteCajaFacade;
+	}
+	
+	public int getIdcortecaja() {
+		return idcortecaja;
+	}
+
+	public void setIdcortecaja(int idcortecaja) {
+		this.idcortecaja = idcortecaja;
+	}
+
+	
+	public String getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(String comentarios) {
+		this.comentarios = comentarios;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public Time getHorafin() {
+		return horafin;
+	}
+
+	public void setHorafin(Time horafin) {
+		this.horafin = horafin;
+	}
+
+	public Time getHorainicio() {
+		return horainicio;
+	}
+
+	public void setHorainicio(Time horainicio) {
+		this.horainicio = horainicio;
+	}
+
+	public Usuario getUsuario1() {
+		return usuario1;
+	}
+
+	public void setUsuario1(Usuario usuario1) {
+		this.usuario1 = usuario1;
+	}
+
+	public Usuario getUsuario2() {
+		return usuario2;
+	}
+
+	public void setUsuario2(Usuario usuario2) {
+		this.usuario2 = usuario2;
+	}
+
+	public List<Corteparcial> getCorteparcials() {
+		return corteparcials;
+	}
+
+	public void setCorteparcials(List<Corteparcial> corteparcials) {
+		this.corteparcials = corteparcials;
+	}
+
+	public List<Detallecortecaja> getDetallecortecajas() {
+		return detallecortecajas;
+	}
+
+	public void setDetallecortecajas(List<Detallecortecaja> detallecortecajas) {
+		this.detallecortecajas = detallecortecajas;
+	}
+
+	public Usuario getUser() {
+		return user;
+	}
+
+	public void setUser(Usuario user) {
+		this.user = user;
+	}
+
+
+	public UsuarioFacade getUsuarioFacade() {
+		if (usuarioFacade == null) {
+			usuarioFacade = new UsuarioFacade();
+		}
+		return usuarioFacade;
+	}
+	
+	private LoginBean getLoginBean() {
+		return (LoginBean) Utils.getManagedBean("loginBean");
+	}
+	
+	private VentaBean getVentaBean() {
+		return (VentaBean) Utils.getManagedBean("ventaBean");
+	}
+	
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public float getEfectivoInicial() {
+		return efectivoInicial;
+	}
+
+	public void setEfectivoInicial(float efectivoInicial) {
+		this.efectivoInicial = efectivoInicial;
+	}
+
+	public String getSelectedCaja() {
+		return selectedCaja;
+	}
+
+	public void setSelectedCaja(String selectedCaja) {
+		this.selectedCaja = selectedCaja;
+	}	
+
+	public List<SelectItem> getListaCaja() {
+		return listaCaja;
+	}
+
+	public void setListaCaja(List<SelectItem> listaCaja) {
+		this.listaCaja = listaCaja;
+	}
+
+	public Caja getCaja() {
+		return caja;
+	}
+
+	public void setCaja(Caja caja) {
+		this.caja = caja;
+	}
+	
+	private CajaFacade getCajaFacade() {
+		if (cajaFacade == null) {
+			cajaFacade = new CajaFacade();
+		}
+		return cajaFacade;
+	}
+	
+	private CajaEfectivoFacade getCajaEfectivoFacade() {
+		if (cajaEfectivoFacade == null) {
+			cajaEfectivoFacade = new CajaEfectivoFacade();
+		}
+		return cajaEfectivoFacade;
+	}
+	
+	
+	public void showListDialogListener() {
+		
+	}
+	
+	public String showListDialogAction() {
+		RequestContext.getCurrentInstance().execute("PF('blockPage').show().show();");
+		showListDialogListener();
+		RequestContext.getCurrentInstance().execute("PF('blockPage').show().hide();");
+		return "/caja/List.xhtml?faces-redirect=true";
+	}
+
+	//********************************************************************
+	// Metodos para controlar que caja es la que utilizara en la sesion.
+	//********************************************************************
+	
+	public void cajaListener(ActionEvent event) {
+		initializeVars();
+	}
+	
+	public void cleanUp() {
+		initializeVars();
+	}
+	
+	private void initializeVars() {
+		message = "";
+		efectivoInicial = 0.0f;
+		caja = null;
+		selectedCaja = "";
+	}
+	
+	public void cajaChangeListener(ValueChangeEvent event) {
+		if (event != null) {
+			try {			
+				//System.out.println("caja valueChange : " + event.getNewValue().getClass().toString());
+				selectedCaja = event.getNewValue().toString();
+				message = "";
+			} catch (Exception ex) {
+				System.out.println("ErrorValueChangeCaja : " + ex.getMessage());
+				keepDialogOpen();
+	            displayErrorMessageToUser("Error: " + ex.getMessage());
+			}
+		}
+	}
+	
+	private void loadCajaSelectItems(Integer idTienda) {
+		this.idTienda = idTienda;
+		try {
+			listaCaja = new ArrayList<SelectItem>();
+			List<Caja> list = getCajaFacade().listByTienda(idTienda);
+			if (list != null && list.size() > 0) {
+				String label = "";
+				for (int i = 0; i < list.size(); i++) {
+					label = list.get(i).getClave();
+					listaCaja.add(new SelectItem( label ));
+				}
+				selectedCaja = list.get(0).getClave();
+			}			
+		} catch (Exception ex) {
+			System.out.println("ErrorCaja : " + ex.getMessage());
+			keepDialogOpen();
+            displayErrorMessageToUser("Error: No exiten cajas.. verifique catálogo");
+		}
+	}
+	
+	private void loadCajaSelectItems() {
+		try {
+			List<Cajaefectivo> listaCajaEfectivo = getCajaEfectivoFacade().listAll();			
+			listaCaja = new ArrayList<SelectItem>();
+			List<Caja> list = getCajaFacade().listAll();
+			if (list != null && list.size() > 0) {
+				String label = "";
+				for (int i = 0; i < list.size(); i++) {
+					label = list.get(i).getNombre();
+					//System.out.println("CajaName : " + label);
+					if (listaCajaEfectivo != null && listaCajaEfectivo.size() > 0) {
+						for (int j = 0; j < listaCajaEfectivo.size(); j++) {
+							if (!listaCajaEfectivo.get(j).getCaja().getClave().equals(label)) {
+								listaCaja.add(new SelectItem( label ));
+							}
+						}
+					} else {
+						listaCaja.add(new SelectItem( label ));
+					}
+				}
+				selectedCaja = list.get(0).getClave();
+				//System.out.println("Init Caja seleccionada : " + selectedCaja);				
+			}
+			
+		} catch (Exception ex) {
+			System.out.println("ErrorCaja : " + ex.getMessage());
+			keepDialogOpen();
+            displayErrorMessageToUser("Error: No exiten cajas.. verifique catálogo");
+		}
+	}	
+	
+	private boolean checkCajainUse(Caja auxCaja) throws AlidaPosException {
+		Cajaefectivo auxCajaEfectivo = getCajaEfectivoFacade().findByCaja(auxCaja);
+		if (auxCajaEfectivo != null) {
+			return true;
+		}
+		return false;
+	}
+	
+	public String checkCashier() {
+		try {
+			if (Float.compare(efectivoInicial, (float) 0.0) > 0) {
+				caja = getCajaFacade().findByClaveIdTienda(selectedCaja, idTienda);	
+				if (caja != null && !checkCajainUse(caja)) {					
+					//Cajaefectivo cajaEfectivo = new Cajaefectivo();
+					cajaEfectivo = new Cajaefectivo();
+					cajaEfectivo.setEfectivo(efectivoInicial);
+					cajaEfectivo.setFecha(new Date());
+					cajaEfectivo.setCaja(caja);
+					cajaEfectivo.setUsuario(getLoginBean().getUser());
+					getCajaEfectivoFacade().createCajaEfectivo(cajaEfectivo);
+					RequestContext.getCurrentInstance().update("menuForm:mainMenuBar");
+					message = "";
+					RequestContext.getCurrentInstance().execute("PF('cashierDialog').hide();");
+					getVentaBean().showCreateDialogListener();		
+					String uri = "/ventas/venta/List.xhtml?faces-redirect=true";
+					return uri;
+				} else {
+					message = "La caja ya esta utilizada, seleccione otra.";
+					RequestContext.getCurrentInstance().update("abreCajaForm:panelOpenCaja");				
+				}	
+			} else {
+				message = "La cantidad ingresada debe ser mayor a cero.";
+				RequestContext.getCurrentInstance().update("abreCajaForm:panelOpenCaja");
+			}
+		} catch (Exception ex) {
+			System.out.println("ErrorCerrarCaja : " + ex.getMessage());
+			keepDialogOpen();
+            displayErrorMessageToUser("Error: " + ex.getMessage());
+		}
+		efectivoInicial = 0.0f;
+		return null;
+	}
+	
+	public String openCajaDialogAction(Integer idTienda) {
+		loadCajaSelectItems(idTienda);		
+		RequestContext.getCurrentInstance().update("abreCajaForm:panelOpenCaja");
+		RequestContext.getCurrentInstance().execute("PF('cashierDialog').show();");
+		return null;
+	}
+	
+	public String openCajaDialogAction() {
+		try {
+			int idTienda = getLoginBean().getUser().getTienda().getIdtienda();
+			loadCajaSelectItems(idTienda);
+			RequestContext.getCurrentInstance().update("abreCajaForm:panelOpenCaja");
+			RequestContext.getCurrentInstance().execute("PF('cashierDialog').show();");
+		} catch (Exception ex) {
+			
+		}
+		return null;
+	}
+	
+
+	public void setUsuarioFacade(UsuarioFacade usuarioFacade) {
+		this.usuarioFacade = usuarioFacade;
+	}
+
+	
+	public int getCantidadfisica() {
+		return cantidadfisica;
+	}
+
+	public void setCantidadfisica(int cantidadfisica) {
+		this.cantidadfisica = cantidadfisica;
+	}
+
+	public int getCantidadsistema() {
+		return cantidadsistema;
+	}
+
+	public void setCantidadsistema(int cantidadsistema) {
+		this.cantidadsistema = cantidadsistema;
+	}
+
+	
+	
+	public void doSearch() {
+		System.out.println("Realizando busqueda por ... " + searchFecha);
+    	selected = null;	
+		try {
+			System.out.println("Fecha: " + fecha);
+			listaCorteCaja = getCorteCajaFacade().findByFecha(searchFecha);
+		} catch (Exception ex) {
+			System.out.println("Filter Exception : " + ex.getMessage());
+			keepDialogOpen();
+            displayErrorMessageToUser("Error: " + ex.getMessage());
+		}
+    	//searchFecha;
+		RequestContext.getCurrentInstance().update("CierreCajaListForm:CierreCajaListPanel");
+	}
+
+	public Date getSearchFecha() {
+		return searchFecha;
+	}
+
+	public void setSearchFecha(Date searchFecha) {
+		this.searchFecha = searchFecha;
+	}
+	
+	
+	public Cortecaja getSelected() {
+		return selected;
+	}
+
+	public void setSelected(Cortecaja selected) {
+		this.selected = selected;
+	}
+
+
+	public void setStringFecha(String stringFecha) {
+		this.stringFecha = stringFecha;
+	}
+
+
+	public void setStringHoraFin(String stringHoraFin) {
+		this.stringHoraFin = stringHoraFin;
+	}
+
+}
+

@@ -1,0 +1,388 @@
+/*
+ * TMSEjecutarReportesMonitor.java
+ *
+ * Created on 7 de noviembre de 2007, 06:47 PM
+ */
+
+package tms_ejecutarreportes;
+
+import DialogosExeRrp.JClsImpresionReporte;
+import DialogosExeRrp.JDlgAceptar;
+import DialogosExeRrp.JDlgSiNo;
+import Reportes.VentaDiaria.JDlgVentaRuta;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.beans.PropertyVetoException;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+    import java.util.Vector;
+    import javax.swing.JComponent;
+import javax.swing.KeyStroke;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+
+/**
+ *
+ * @author  ocruz
+ */
+public class TMSEjecutarReportesMonitor extends javax.swing.JInternalFrame {
+    /**
+     * Creates new form TMSEjecutarReportesMonitor
+     */
+    public TMSEjecutarReportesMonitor(Vector datosIniciales) {
+        InicioGral = true;
+        System.out.println(datosIniciales.toString());
+        this.USUARIO_ID = Long.valueOf(datosIniciales.get(0).toString());
+        this.USUARIO_NUMERO = datosIniciales.get(1).toString();
+        this.USUARIO_NOMBRE = datosIniciales.get(2).toString();
+        this.SESION_ID = Long.valueOf(datosIniciales.get(3).toString());
+        this.MENU_ID = Long.valueOf(datosIniciales.get(4).toString());
+        sesionVenta = new SesionVenta();
+        int error = sesionVenta.proceso(USUARIO_ID, datosIniciales.get(5).toString(),
+                Integer.valueOf(datosIniciales.get(6).toString()));
+        System.out.println("error: "+error);
+        switch(error){
+            case -21: DialogoAceptar = new JDlgAceptar("¡No existe una conexión válida con la Base de Datos!","Contacte al administrador del sistema.",Color.RED); break;
+            case -1: DialogoAceptar = new JDlgAceptar("¡Configuracion incorrecta!","No tiene asignado ningun reporte.",Color.RED); break;
+            case -2: DialogoAceptar = new JDlgAceptar("¡Parametros de impresion de reportes incorrectos!","Contacte al administrador del sistema.", Color.RED); break;
+        }
+        if(error != 0){
+            InicioGral=false;
+            return;
+        }
+        initComponents();
+        //((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
+        this.setTitle("Ejecucion de Reportes Rev11.06.2008");
+        this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        this.jTblReportes.registerKeyboardAction(new ActionListener() {
+        public void actionPerformed(ActionEvent e) { ; }}, KeyStroke.getKeyStroke(KeyEvent.VK_F10, 0), JComponent.WHEN_FOCUSED);
+        centrarJIF();
+        paramReportes=sesionVenta.getParamReportes();
+        cargarDatosIniciales();
+        jClsImpresionReporte = new JClsImpresionReporte(sesionVenta.getContext());
+    }
+    
+    private void cargarDatosIniciales(){
+        grupoR = new Object[sesionVenta.getCtdGrupos()][1];
+        int j=0;
+        for(int i=0; i<grupoR.length; i++){
+            grupoR[i][0] = sesionVenta.getReportes().get(j).getGrupoNombre();
+            j=sesionVenta.getReportes().get(j).getCtdReportes();
+        }
+        yTabla.setDataVector(grupoR, encgrupo);
+        AnchoColumnasG();
+        muestraReportes(0);
+    }
+    
+    private void muestraReportes(int num){
+        String nombreGrupo = grupoR[num][0].toString();
+        int contador=0;
+        for(int i=0; i<sesionVenta.getReportes().size(); i++)
+            if(nombreGrupo.equals(sesionVenta.getReportes().get(i).getGrupoNombre()))
+                contador++;
+        listaR=new Object[contador][3];
+        contador=0;
+        for(int i=0; i<sesionVenta.getReportes().size(); i++){
+            if(nombreGrupo.equals(sesionVenta.getReportes().get(i).getGrupoNombre())){
+                listaR[contador][0] = sesionVenta.getReportes().get(i).getReporteNombre();
+                listaR[contador][1] = sesionVenta.getReportes().get(i).getDescripcion();
+                listaR[contador][2] = sesionVenta.getReportes().get(i).getReporteExecutable();
+                contador++;
+            }
+        }
+        xTabla.setDataVector(listaR, encabezado);
+        AnchoColumnas();
+    }
+    
+    private void centrarJIF(){
+            Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension frameSize = this.getSize();
+        if (frameSize.height > screenSize.height) {
+            frameSize.height = screenSize.height;
+        }
+        if (frameSize.width > screenSize.width) {
+            frameSize.width = screenSize.width;
+        }
+        this.setLocation( ( screenSize.width - frameSize.width ) / 2, ( screenSize.height - frameSize.height ) / 2 );
+    }
+    
+    public boolean getInicioGral(){ return this.InicioGral; }
+    
+    /** This method is called from within the constructor to
+     * initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is
+     * always regenerated by the Form Editor.
+     */
+    // <editor-fold defaultstate="collapsed" desc=" Generated Code ">//GEN-BEGIN:initComponents
+    private void initComponents() {
+        jLblBarraEstado = new javax.swing.JLabel();
+        jScpReportes = new javax.swing.JScrollPane();
+        jTblReportes = new javax.swing.JTable();
+        jScpGReportes = new javax.swing.JScrollPane();
+        jTblGReportes = new javax.swing.JTable();
+
+        setIconifiable(true);
+        setTitle("Reportes");
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentShown(java.awt.event.ComponentEvent evt) {
+                formComponentShown(evt);
+            }
+        });
+
+        jLblBarraEstado.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jLblBarraEstado.setText("<html><font color=ff0000>ARRIBA</font>/<font color=ff0000>ABAJO</font> Seleccionar reporte | <font color=ff0000>F10</font> Ejecutar Reporte | <font color=FF0000>CTRL+2</font> Minimizar ventana<br><font color=FF0000>CTRL+1</font> Mostrar siguiente ventana | <font color=ff0000>F4</font> Cerrar Aplicacion</html>");
+
+        jScpReportes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Reportes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), java.awt.Color.black));
+        jScpReportes.setFocusable(false);
+        jTblReportes.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jTblReportes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jTblReportes.setModel(xTabla);
+        jTblReportes.setFocusTraversalKeysEnabled(true);
+        jTblReportes.getTableHeader().setReorderingAllowed(false);
+        jTblReportes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTblReportesKeyPressed(evt);
+            }
+        });
+
+        jScpReportes.setViewportView(jTblReportes);
+
+        jScpGReportes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Grupo de Reportes", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11), java.awt.Color.black));
+        jScpGReportes.setFocusable(false);
+        jTblGReportes.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jTblGReportes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jTblGReportes.setModel(yTabla);
+        jTblGReportes.setFocusTraversalKeysEnabled(true);
+        jTblGReportes.getTableHeader().setReorderingAllowed(false);
+        jTblGReportes.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTblGReportesKeyReleased(evt);
+            }
+        });
+
+        jScpGReportes.setViewportView(jTblGReportes);
+
+        org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(layout.createSequentialGroup()
+                .add(10, 10, 10)
+                .add(jScpReportes, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
+                .add(10, 10, 10))
+            .add(layout.createSequentialGroup()
+                .addContainerGap()
+                .add(jScpGReportes, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 291, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(299, Short.MAX_VALUE))
+            .add(jLblBarraEstado, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .add(jScpGReportes, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 90, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jScpReportes, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLblBarraEstado, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 26, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+        );
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jTblGReportesKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTblGReportesKeyReleased
+// TODO add your handling code here:
+        int fila = jTblGReportes.getSelectedRow();
+        switch(evt.getKeyCode()){
+            case KeyEvent.VK_UP: case KeyEvent.VK_PAGE_UP:
+            case KeyEvent.VK_DOWN: case KeyEvent.VK_PAGE_DOWN:
+                muestraReportes(fila);
+                break;
+            case KeyEvent.VK_ENTER:
+                muestraReportes(fila);
+                break;
+            case KeyEvent.VK_1: if(evt.isControlDown()){
+                                    this.eventoTeclado=evt;
+                                    try {this.setIcon(true);} catch (PropertyVetoException ex) { ; }
+                                  }
+                                  break;
+            case KeyEvent.VK_2: if(evt.isControlDown()) 
+                                try {this.setIcon(true);
+                                } catch (PropertyVetoException ex) { ; } break;
+            case KeyEvent.VK_F4:
+                CerrarVentana();
+                break;
+            case KeyEvent.VK_F1:
+                jLblBarraEstado.setText(mensajes.getMensajeComun(2));
+                muestraReportes(fila);
+                jTblReportes.setRowSelectionInterval(0,0);
+                jTblReportes.setColumnSelectionInterval(0,0);
+                jTblReportes.requestFocusInWindow();
+                break;
+        }
+    }//GEN-LAST:event_jTblGReportesKeyReleased
+
+    private void jTblReportesKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTblReportesKeyPressed
+// TODO add your handling code here:
+        switch(evt.getKeyCode()){
+            case KeyEvent.VK_ESCAPE:
+                muestraReportes(0);
+                jLblBarraEstado.setText(mensajes.getMensajeComun(1));
+                jTblGReportes.setRowSelectionInterval(0,0);
+                jTblGReportes.setColumnSelectionInterval(0,0);
+                jTblGReportes.requestFocusInWindow();
+                break;
+            case KeyEvent.VK_1: if(evt.isControlDown()){
+                                    this.eventoTeclado=evt;
+                                    try {this.setIcon(true);} catch (PropertyVetoException ex) { ; }
+                                  }
+                                  break;
+            case KeyEvent.VK_2: if(evt.isControlDown()) 
+                                try {this.setIcon(true);
+                                } catch (PropertyVetoException ex) { ; } break;
+            case KeyEvent.VK_F4:
+                CerrarVentana();
+                break;
+            case KeyEvent.VK_F10:
+                ejecutaReporte(jTblReportes.getSelectedRow());
+                break;
+        }
+    }//GEN-LAST:event_jTblReportesKeyPressed
+    
+    private void ejecutaReporte(int i){
+        String nombreReporte = jTblReportes.getValueAt(jTblReportes.getSelectedRow(),0).toString();
+        System.out.println(nombreReporte);
+        if (nombreReporte.equals("Monitor: Venta por Ruta"))
+            new JDlgVentaRuta(nombreReporte,new JClsImpresionReporte(sesionVenta.getContext()), nombreReporte, true).setVisible(true);
+        if (nombreReporte.equals("Monitor: FIK"))
+            new JDlgVentaRuta(nombreReporte,new JClsImpresionReporte(sesionVenta.getContext()), nombreReporte, false).setVisible(true);
+        /*
+        System.out.println("NOMBRE REPORTE "+sesionVenta.getReportes().get(i+(sesionVenta.getReportes().get(i).getCtdReportes()*jTblGReportes.getSelectedRow())).getReporteExecutable()+".rdf'");
+        ArgumentoControl="cmdkey="+paramReportes[0]+"&'"+sesionVenta.getReportes().get(i+(sesionVenta.getReportes().get(i).getCtdReportes()*jTblGReportes.getSelectedRow())).getReporteExecutable()+".rdf'";
+        bc = new BrowserControl();
+        bc.displayURL(paramReportes[2]+ArgumentoControl);
+        DialogoAceptar = new JDlgAceptar("¡Importante!","Reporte enviado al explorador de Internet predeterminado.", Color.RED);
+         */
+    }
+    
+    private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown
+// TODO add your handling code here:
+        AnchoColumnas();
+        jLblBarraEstado.setText(mensajes.getMensajeComun(1));
+        jTblGReportes.setRowSelectionInterval(0,0);
+        jTblGReportes.setColumnSelectionInterval(0,0);
+        jTblGReportes.requestFocusInWindow();
+    }//GEN-LAST:event_formComponentShown
+    
+    public void setFoco(){
+        /*if(jTblReportes.getRowCount()>0){
+            jTblReportes.requestFocusInWindow();
+            return;
+        }*/
+        jTblGReportes.requestFocusInWindow();
+    }
+    
+    private void CerrarVentana(){
+        if(transaccion!=TXBUSQ) return;
+        DialogoSiNo = new JDlgSiNo("¡Confirme!","¿Desea cerrar la aplicacion?");
+        boolean r = DialogoSiNo.getResultado();
+        if(!r) return;
+        this.dispose();
+    }
+    
+    private void AnchoColumnas() {
+        int anchoContenedor = jScpReportes.getWidth();
+        TableColumn column;
+        for (int i = 0; i < jTblReportes.getColumnCount(); i++) {
+            column = jTblReportes.getColumnModel().getColumn(i);
+            switch (i) {
+                case 0: column.setPreferredWidth(Math.round(anchoContenedor*(float)0.40)); break;
+                case 1: column.setPreferredWidth(Math.round(anchoContenedor*(float)0.60)); break;
+            }
+        }
+    }
+    
+    private void AnchoColumnasG() {
+        int anchoContenedor = jScpGReportes.getWidth();
+        TableColumn column;
+        for (int i = 0; i < jTblGReportes.getColumnCount(); i++) {
+            column = jTblGReportes.getColumnModel().getColumn(i);
+            switch (i) {
+                case 0: column.setPreferredWidth(Math.round(anchoContenedor*(float)1.0)); break;
+            }
+        }
+    }
+    
+    public KeyEvent getEventoTeclado(){ return this.eventoTeclado; }
+    
+    public void setEventoTeclado(KeyEvent evento){ this.eventoTeclado=evento; }
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLblBarraEstado;
+    private javax.swing.JScrollPane jScpGReportes;
+    private javax.swing.JScrollPane jScpReportes;
+    private javax.swing.JTable jTblGReportes;
+    private javax.swing.JTable jTblReportes;
+    // End of variables declaration//GEN-END:variables
+    private long MENU_ID;
+    private long USUARIO_ID;
+    private String USUARIO_NUMERO;
+    private String USUARIO_NOMBRE;
+    private long SESION_ID;
+    private boolean InicioGral;
+    private SesionVenta sesionVenta;
+    private JDlgAceptar DialogoAceptar;
+    private JDlgSiNo DialogoSiNo;
+    //private SimpleDateFormat formatoFechaHora = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+    private SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+    private Timestamp tmFecha, tmFecha2;
+    private final long dia = 86400000;
+    
+    private final int TXBUSQ=0;
+    private final int TXREG=1;
+    private final int TXMOD=2;
+    private int transaccion=TXBUSQ;
+    
+    private Object[] encabezado = {"Nombre de Reporte", "Descripcion"};
+    private DefaultTableModel xTabla = new DefaultTableModel(null,encabezado){
+        public boolean isCellEditable(int row, int col){
+            return false;
+        }
+    };
+    
+    private Object[] encgrupo = {"Nombre"};
+    private DefaultTableModel yTabla = new DefaultTableModel(null,encgrupo){
+        public boolean isCellEditable(int row, int col){
+            return false;
+        }
+    };
+    
+    Mensajes mensajes = new Mensajes();
+    
+    private Object[][] grupoR;
+    private Object[][] listaR;
+
+    private String ArgumentoControl;
+
+    private BrowserControl bc;
+    private String[] paramReportes;
+
+    private KeyEvent eventoTeclado;
+    private JClsImpresionReporte jClsImpresionReporte;
+}

@@ -1,0 +1,38 @@
+package com.alidasoftware.pos.helper;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class PagoVentaHelper {
+	@Id
+	private int idFormaPago;
+	@Column
+	private float cantidad;
+
+	public int getIdFormaPago() {
+		return idFormaPago;
+	}
+
+	public void setIdFormaPago(int idFormaPago) {
+		this.idFormaPago = idFormaPago;
+	}
+
+	public float getCantidad() {
+		return cantidad;
+	}
+
+	public void setCantidad(float cantidad) {
+		this.cantidad = cantidad;
+	}
+	
+	public PagoVentaHelper() {
+		
+	}
+	
+	public PagoVentaHelper(int idFormaPago, float cantidad) {
+		this.idFormaPago = idFormaPago;
+		this.cantidad = cantidad;
+	}
+}

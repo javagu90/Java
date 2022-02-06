@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+	  xmlns:pos="http://pos.com/functions">
+	 <h:body>
+ 		<p:dialog  id="PerfilCreateDlgPrueba"
+ 			widgetVar="PerfilCreateDialogPrueba"
+ 			modal="true"
+ 			appendTo="@(body)"
+ 			header="Perfil Nuevo"
+ 			height="500"
+   			width="1000">
+ 			<h:form id="PerfilCreateFormPrueba"
+ 				onkeyup="if (event.keyCode == 13) { return false; }"
+				onkeypress="if (event.keyCode == 13) { return false; }">
+           		<h:panelGroup id="displayPrueba">
+           			<p:layout>
+           				<p:layoutUnit id="westLayoutPrueba" position="west" size="200" >
+           					<p:dataTable var="item" value="#{PerfilBeanPrueba.modulosGeneral}" 
+           					selectionMode="single" selection="#{PerfilBeanPrueba.categoriaSelected}" rowKey="#{item}">
+           					<p:ajax event="rowSelect" listener="#{PerfilBeanPrueba.onRowSelect}"/>
+	                    	<p:column>
+	                    		 	<f:facet name="header">
+		                                <h:outputText value="Categorias"/>
+		                            </f:facet>
+		                            <h:outputText value="#{item}" />
+	                    		</p:column>
+           					</p:dataTable>
+           				</p:layoutUnit>
+           				<p:layoutUnit position="center" size="850" header="Modulo">
+           					<p:panel id="moduloListPanelPrueba">
+				           		<p:panelGrid columns="2" id="panelCenterPrueba">
+				           		<p:outputLabel
+		                        	value="#{msg['catalogo.Label.Nombre']}" 
+		                        	for="nombre" />
+		                        <p:inputText 
+		                        	id="nombre" 
+		                        	value="Nombre" 
+		                        	title="Nombre" 
+		                        	required="true" 
+		                        	requiredMessage="Nombre?"/>
+		                        	
+		                        	<p:outputLabel
+		                        	value="#{msg['catalogo.Label.Descripcion']}" 
+		                        	for="descripcion" />
+		                        <p:inputText 
+		                        	id="descripcion" 
+		                        	value="Descripcion" 
+		                        	title="Descripcion"/>
+				           		</p:panelGrid>
+				           		<p:dataTable id="tableModulo" widgetVar="tableModulo" var="modulo" value="#{perfilBeanPrueba.listModulos}">
+			                    		<p:column style="width:30px;">
+			                    			<f:facet name="header">
+			                    				<h:outputText value="" style="width:50px;"/>
+			                    			</f:facet>
+			                    			<p:selectBooleanCheckbox id="selection" value="#{modulo.selected}">
+				                    			<p:ajax execute="@this" 
+	                                				listener="#{perfilBeanPrueba.doSomething}"/>
+	                                			<f:attribute name="modulo" value="#{modulo}"/>
+                                			</p:selectBooleanCheckbox>
+			                    		</p:column>
+			                    		<p:column>
+			                    			<f:facet name="header">
+			                    				<h:outputText value="#{msg['catalogo.Label.Nombre']}"/>
+			                    			</f:facet>
+			                    			<h:outputText value="#{modulo.nombre}"/>
+			                    		</p:column>
+			                    		<p:column>
+			                    			<f:facet name="header">
+			                    				<h:outputText value="#{msg['catalogo.Label.Descripcion']}"/>
+			                    			</f:facet>
+			                    			<h:outputText value="#{modulo.descripcion}"/>
+			                    		</p:column>
+		                    	</p:dataTable>
+				           	 <p:commandButton 
+		                    	action="#{perfilBeanPrueba.create}" 
+		                    	value="#{msg['catalogo.Button.Guardar']}" />
+		                    </p:panel>	                
+			            </p:layoutUnit>
+	                </p:layout>		
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+	</h:body>
+</html>

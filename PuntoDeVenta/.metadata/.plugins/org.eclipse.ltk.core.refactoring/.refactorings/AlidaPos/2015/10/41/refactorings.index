@@ -1,0 +1,5 @@
+1444079653945	Encapsulate field 'stringFecha'
+1444079659508	Encapsulate field 'stringHoraInicio'
+1444079683562	Encapsulate field 'stringHoraFin'
+1444242043245	Encapsulate field 'detalleCorteparcial'
+1444242048866	Encapsulate field 'detalleCorteParcialFacade'

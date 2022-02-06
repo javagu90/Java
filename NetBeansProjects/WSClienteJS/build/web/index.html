@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title></title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+        <script src="http://code.jquery.com/jquery-latest.js"></script>
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    </head>
+    <body>
+        <h2>Calcular factorial</h2>
+        Número:<input type="text" name="base" id="base"/>
+        <button type="button" id="calcularBtn">Calcular</button>
+        <div id="resultado">
+            Resultado: <span></span>
+        </div>
+        <script type="text/javascript">
+            $("#calcularBtn").click(function(){
+                var base = $("#base").val();
+                $.get("http://localhost:8080/WSRF/webresources/factorial",{
+                    base:base
+                },function(resultado){
+                   $("#resultado span").text(resultado)
+                })
+            })
+        </script>
+    </body>
+</html>

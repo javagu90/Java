@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CategoriaProductoCreateDlg"
+        	widgetVar="CategoriaProductoCreateDialog" 
+        	modal="true"
+        	resizable="false" 
+        	appendTo="@(body)" 
+        	header="#{msg['catalogo.CategoriaProducto.Create.MsgHeader']}">
+            <h:form id="CategoriaProductoCreateForm" 
+            	onkeyup="if (event.keyCode == 13) { return false; }"
+				onkeypress="if (event.keyCode == 13) { return false; }">
+                <h:panelGroup id="display">
+                    <p:panelGrid 
+                    	columns="2" 
+                    	rendered="#{categoriaProductoBean.selected != null}">                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Nombre']}"
+                        	for="nombre" />
+                        <p:inputText 
+                        	id="nombre" 
+                        	value="#{categoriaProductoBean.selected.nombre}" 
+                        	title="#{msg['catalogo.Label.Nombre']}" 
+                        	required="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredNombre']}">
+                        <f:validateLength maximum="100" minimum="3"/>	
+                        </p:inputText>
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Descripcion']}" 
+                        	for="descripcion" />
+                        <p:inputTextarea 
+                        	rows="6" 
+                        	cols="40"
+                        	id="descripcion" 
+                        	value="#{categoriaProductoBean.selected.descripcion}" 
+                        	title="#{msg['catalogo.Label.Descripcion']}" 
+                        	required="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredDescripcion']}"/>
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Comentarios']}" 
+                        	for="comentarios" />
+                        <p:inputTextarea 
+                        	rows="6" 
+                        	cols="40"
+                        	id="comentarios" 
+                        	value="#{categoriaProductoBean.selected.comentarios}" 
+                        	title="#{msg['catalogo.Label.Comentarios']}" 
+                        	required="false" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredComentarios']}"/>
+                        	                        	
+                    </p:panelGrid>
+                    <p:commandButton 
+                    	action="#{categoriaProductoBean.create}" 
+                    	value="#{msg['catalogo.Button.Guardar']}" 
+                    	update="display,:CategoriaProductoListForm:datalist,:growl"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="InventarioFisicoViewDlg" widgetVar="InventarioFisicoViewDialog" modal="true"
+		resizable="false" appendTo="@(body)"
+        	header="#{msg['catalogo.InventarioFisico.Ver.MsgHeader']}">
+            <h:form id="InventarioFisicoViewForm" 
+            	onkeyup="if (event.keyCode == 13) { return false; }"
+				onkeypress="if (event.keyCode == 13) { return false; }">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="4">
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.De']}" 
+                        	for="de" />
+                        <p:inputText 
+                        	id="de" 
+                        	value="#{inventarioFisicoBean.selected.fechaInicio}" 
+                        	title="#{msg['catalogo.Label.De']}" 
+                        	readonly="true">
+                        	<f:convertDateTime pattern="dd-MM-yyyy"/>	
+                        </p:inputText>
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Al']}" 
+                        	for="al" />
+                        <p:inputText 
+                        	id="al" 
+                        	value="#{inventarioFisicoBean.selected.fechaFin}" 
+                        	title="#{msg['catalogo.Label.Al']}" 
+                        	readonly="true">
+                        	<f:convertDateTime pattern="dd-MM-yyyy"/>	
+                        </p:inputText>
+                        	
+                    </p:panelGrid>
+                    <p:dataTable
+			           		id="viewProductDT"                		
+			         		value="#{inventarioFisicoBean.selected.detalleinventariofisicos}"
+			           		var="item"
+			           		paginator="true"	
+			             	rows="10"
+			               	paginatorPosition="bottom"
+			               	style="width:830px;"
+			               	emptyMessage="No existen registros">
+			               	
+			              	<p:column
+			                	headerText="Clave"
+			                	styleClass="leftLabel"
+			                	width="100">
+			                    <h:outputText value="#{item.producto.clave}"/>
+			                </p:column>
+			                
+			                <p:column
+			                	headerText="Producto"
+			                	styleClass="leftLabel">
+			                   	<h:outputText value="#{item.producto.nombre}"/>
+			                </p:column>
+			                
+			                <p:column
+			                	headerText="Total en Inventario"
+			                	styleClass="leftLabel">
+			                   	<h:outputText value="#{item.existenciafisica}"/>
+			                </p:column>
+			                
+			                <p:column
+			                	headerText="Total en Sistema"
+			                	styleClass="leftLabel">
+			                   	<h:outputText value="#{item.existenciasistema}"/>
+			                </p:column> 
+                    </p:dataTable>
+                    <p:panelGrid id="CostoTotalPanel">
+    					<p:row>
+		                	<p:column>
+					       		<h:outputText 
+					       			styleClass="boldLabel" 
+					       			value="Valor Total:" />
+		                	</p:column>
+		                	<p:column>					       			
+					        	<div class="number">
+					        		<h:outputText
+					        			id="lblTotal" 
+					        			value="#{inventarioFisicoBean.selected.costototal}">
+					        			<f:convertNumber 
+					        				currencySymbol="$"
+					        				type="currency"/>
+					        		</h:outputText>
+					        	</div>
+		                	</p:column>
+		                </p:row>
+		            </p:panelGrid>
+                    <h:commandLink>
+		                <p:graphicImage library="images" name="print.png" width="24"/>
+		                <p:printer target="viewProductDT"/>
+		            </h:commandLink>
+                    <h:commandLink>
+		                <p:graphicImage library="images" name="pdf.png" width="24"/>
+		                <p:dataExporter type="pdf" target="viewProductDT" fileName="inventario" />
+		            </h:commandLink>
+		            <h:commandLink>
+		                <p:graphicImage library="images" name="excel.png" width="24"/>
+		                <p:dataExporter type="xls" target="viewProductDT" fileName="inventario" />
+		            </h:commandLink>
+		            <br/>
+                    <p:commandButton 
+                    value="#{msg['catalogo.Button.Cerrar']}" 
+					onclick="InventarioFisicoViewDialog.hide()" />
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

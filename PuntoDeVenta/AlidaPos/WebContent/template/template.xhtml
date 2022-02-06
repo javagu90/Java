@@ -1,0 +1,102 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+    	<link rel="shortcut icon" href="alida.ico" type="image/x-icon" />
+        <title><h:outputFormat value="#{msg['app.name']}" /></title>
+        <h:outputStylesheet library="css" name="jsfcrud.css"/>        
+        <h:outputScript library="javascript" name="jsfcrud.js"/>
+        <h:outputScript library="javascript" name="chartData.js"/>
+        
+        <!--script type="text/javascript" src="${request.contextPath}/dwr/engine.js"/>
+        <script type="text/javascript" src="${request.contextPath}/dwr/interface/ChartData.js"/>        
+        <script type="text/javascript" src="../resources/javascript/chartData.js"></script>
+        <script type="text/javascript" src="../resources/javascript/jqplot/jquery.jqplot.min.js"></script>
+        <script type="text/javascript" src="../resources/javascript/jqplot/scripts/shCore.min.js"></script>
+        <script type="text/javascript" src="../resources/javascript/jqplot/scripts/shBrushJScript.min.js"></script>
+        <script type="text/javascript" src="../resources/javascript/jqplot/scripts/shBrushXml.min.js"></script>
+        <script type="text/javascript" src="../resources/javascript/jqplot/plugins/jqplot.barRenderer.min.js"></script>
+        <script type="text/javascript" src="../resources/javascript/jqplot/plugins/jqplot.pieRenderer.min.js"></script>
+        <script type="text/javascript" src="../resources/javascript/jqplot/plugins/jqplot.categoryAxisRenderer.min.js"></script>
+        <script type="text/javascript" src="../resources/javascript/jqplot/plugins/jqplot.pointLabels.min.js"></script -->
+    </h:head>
+
+    <h:body>
+		<f:event type="preRenderView" listener="#{loginBean.init}" />
+        <p:growl 
+        	id="growl" 
+        	showDetail="true"
+        	life="3000" />
+
+		<p:dialog 
+			id="dlgBlockMsg"
+			modal="true" 
+			widgetVar="blockPage" 
+			showHeader="false"
+			resizable="false" 
+			draggable="false">
+			<div style="float: left">
+				<p:graphicImage 
+					id="imgLoading"
+					value="/resources/images/ajax-loader.gif" />
+			</div>
+			<div style="float: left; line-height: 52px; margin-left: 10px;">
+				<h:outputText
+					id="imgLoadingMsg" 
+					value="Cargando..." />
+			</div>
+		</p:dialog>
+		
+        <p:layout 
+        	id="mainLayout"
+        	fullPage="true">
+            <p:layoutUnit 
+            	id="mainCenterLayout"
+            	position="center" >		     
+	            <table style="width:100%;" cellpadding="0" cellspacing="0">
+					<tr>
+						<td width="240px">
+							<p:graphicImage 
+								id="imgLogo"
+								library="images" 
+								name="alida_logo.png" 
+								height="70px;"  />
+						</td>
+						<td>
+							<ui:include src="/template/menuOptions.xhtml"/>
+						</td>
+					</tr>
+				</table>	
+				<ui:include src="/corteCaja/OpenCashier.xhtml"/>
+				<ui:include src="/corteCaja/Permiso.xhtml"/>				
+				<ui:insert name="body"/>
+            </p:layoutUnit>
+           	
+	        <p:layoutUnit 
+	        	id="mainSouthLayout"
+	        	position="south" 
+	        	size="30" 
+	        	style="float:right" >
+	        	<h:form id="formDockMenu">
+	        		<p:dock
+	        			rendered="false"
+	        			id="dockMenu" 
+		        		position="bottom" 
+		        		model="#{loginBean.dockMenu}">
+					</p:dock>
+				</h:form>
+	        	<h:form id="formDateTime">
+	        		<p:clock pattern="dd/MM/yyyy HH:mm:ss tt"/>
+				</h:form>				
+				<ui:insert name="footer"/>
+            </p:layoutUnit>
+        </p:layout>
+	
+    </h:body>
+
+</html>

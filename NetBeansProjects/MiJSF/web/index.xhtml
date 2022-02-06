@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css"/>
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <h:form class="form-horizontal">
+            <div class="form-group">
+                <h4><h:outputText  value="Nombre" class="col-sm-2 control-label"></h:outputText></h4>
+                <div class="col-sm-2">
+                    <h:inputText id="entrada" class="form-control" required="true" value="#{personaBean.nombre}" ></h:inputText>
+            </div>
+                <div class="col-sm-2">
+                    <h:commandButton value="Saludar" class="btn btn-success" actionListener="#{personaBean.saludar()}">
+                    <f:ajax execute="entrada" render="salida"/>
+                    </h:commandButton>
+                    </div>
+                    <div class="col-sm-4">
+                    <h:outputText  id="salida" value="#{personaBean.mensaje !=null ? personaBean.mensaje:''}"></h:outputText>
+            </div>
+            </div>
+        </h:form>
+    </h:body>
+</html>
+

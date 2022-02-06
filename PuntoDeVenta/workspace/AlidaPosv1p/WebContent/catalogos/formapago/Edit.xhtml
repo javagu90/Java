@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="FormaPagoEditDlg"
+        	widgetVar="FormaPagoEditDialog"
+        	modal="true"
+        	resizable="false" 
+        	appendTo="@(body)" 
+        	header="#{msg['catalogo.FormaPago.Edit.MsgHeader']}">
+            <h:form id="FormaPagoEditForm" 
+            	onkeyup="if (event.keyCode == 13) { return false; }"
+				onkeypress="if (event.keyCode == 13) { return false; }">
+                <h:panelGroup id="display">
+                    <p:panelGrid 
+                    	columns="2" 
+                    	rendered="#{formaPagoBean.selected != null}">
+                    	
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.Id']}" 
+                        	for="idformapago" />
+                        <p:inputText 
+                        	id="idformapago" 
+                        	value="#{formaPagoBean.selected.idformapago}" 
+                        	title="#{msg['catalogo.Label.Id']}" 
+                        	required="true" 
+                        	readonly="true"
+                        	requiredMessage="#{msg['catalogo.MsgRequiredId']}"/>
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Nombre']}"
+                        	for="nombre" />
+                        <p:inputText 
+                        	id="nombre" 
+                        	value="#{formaPagoBean.selected.nombre}" 
+                        	title="#{msg['catalogo.Label.Nombre']}" 
+                        	required="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredNombre']}"/>
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Descripcion']}"
+                        	for="descripcion" />
+                        <p:inputTextarea 
+                        	rows="6" 
+                        	cols="40"
+                        	id="descripcion" 
+                        	value="#{formaPagoBean.selected.descripcion}" 
+                        	title="#{msg['catalogo.Label.Descripcion']}" 
+                        	required="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredDescripcion']}"/>
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Comentarios']}" 
+                        	for="comentarios" />
+                        <p:inputTextarea 
+                        	rows="6" 
+                        	cols="40"
+                        	id="comentarios" 
+                        	value="#{formaPagoBean.selected.comentarios}" 
+                        	title="#{msg['catalogo.Label.Comentarios']}" 
+                        	required="false" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredComentarios']}"/>
+                        	
+                    </p:panelGrid>
+                    <p:commandButton 
+                    	action="#{formaPagoBean.update}" 
+                    	value="#{msg['catalogo.Button.Guardar']}" 
+                    	update="display,:FormaPagoListForm:datalist,:growl"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

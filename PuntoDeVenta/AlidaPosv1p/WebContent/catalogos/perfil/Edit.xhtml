@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PerfilEditDlg"
+        	widgetVar="PerfilEditDialog"
+        	modal="true"        	
+        	appendTo="@(body)" 
+        	header="#{msg['catalogo.Perfil.Edit.MsgHeader']}"
+        	height="500"
+        	width="1000">
+            <h:form id="PerfilEditForm" 
+            	onkeyup="if (event.keyCode == 13) { return false; }"
+				onkeypress="if (event.keyCode == 13) { return false; }">
+                <h:panelGroup id="display">
+                	<p:layout >
+                    	<p:layoutUnit id="westLayout" position="west" size="150">
+	                    	<p:dataTable var="item" value="#{perfilBean.modulosGeneral}"
+	                    	selectionMode="single" selection="#{perfilBean.categoriaSelected}" rowKey="#{item}">
+	                    	<p:ajax event="rowSelect" listener="#{perfilBean.onRowSelect}" update="@form:tableModuloEdit"/>
+	                    		<p:column>
+	                    		 	<f:facet name="header">
+		                                <h:outputText value="Categorias"/>
+		                            </f:facet>
+		                            <h:outputText value="#{item}" />
+	                    		</p:column>
+	                    	</p:dataTable>
+			            </p:layoutUnit>
+			            <p:layoutUnit id="center" position="center" size="800" header="Modulo">
+			            	<p:panel id="moduloListPanelEdit">
+				           	<p:panelGrid columns="2" id="panelCenter">
+		                    	<p:outputLabel
+		                        	value="#{msg['catalogo.Label.Nombre']}" 
+		                        	for="nombreEdit" />
+		                        <p:inputText 
+		                        	id="nombreEdit" 
+		                        	value="#{perfilBean.selected.nombre}" 
+		                        	title="#{msg['catalogo.Label.Nombre']}" 
+		                        	readonly="true"/>
+		                        	
+		                        <p:outputLabel
+		                        	value="#{msg['catalogo.Label.Descripcion']}" 
+		                        	for="descripcionEdit" />
+		                        <p:inputText 
+		                        	id="descripcionEdit" 
+		                        	value="#{perfilBean.selected.descripcion}" 
+		                        	title="#{msg['catalogo.Label.Descripcion']}"
+		                        	readonly="#{perfilBean.readOnly}"/>
+		                        <p:outputLabel rendered="#{!perfilBean.readOnly}"
+		                        	value="#{msg['catalogo.Label.Estatus']}"/>	
+		                        <p:selectBooleanCheckbox rendered="#{!perfilBean.readOnly}"
+		                        	value="#{perfilBean.selected.activo}"/>
+	                        </p:panelGrid>		
+						        <p:dataTable id="tableModuloEdit" widgetVar="tableModuloEdit" var="modulo" value="#{perfilBean.listModulos}">
+			                    		<p:column style="width:30px;">
+			                    			<f:facet name="header">
+			                    				<h:outputText value="" style="width:50px;"/>
+			                    			</f:facet>
+			                    			<p:selectBooleanCheckbox id="selection" value="#{modulo.selected}" disabled="#{perfilBean.readOnly}">
+				                    			<p:ajax execute="@this" 
+	                                				listener="#{perfilBean.doSomething}"/>
+	                                			<f:attribute name="modulo" value="#{modulo}"/>
+                                			</p:selectBooleanCheckbox>
+			                    		</p:column>
+			                    		<p:column>
+			                    			<f:facet name="header">
+			                    				<h:outputText value="#{msg['catalogo.Label.Nombre']}"/>
+			                    			</f:facet>
+			                    			<h:outputText value="#{modulo.nombre}"/>
+			                    		</p:column>
+			                    		<p:column>
+			                    			<f:facet name="header">
+			                    				<h:outputText value="#{msg['catalogo.Label.Descripcion']}"/>
+			                    			</f:facet>
+			                    			<h:outputText value="#{modulo.descripcion}"/>
+			                    		</p:column>
+		                    	</p:dataTable>
+					         <p:commandButton rendered="#{!perfilBean.readOnly}"
+		                    	action="#{perfilBean.update}" 
+		                    	value="#{msg['catalogo.Button.Guardar']}" 
+		                    	update="display,:PerfilListForm:datalist,:growl"/>
+		                    <p:commandButton rendered="#{perfilBean.readOnly}"
+			                    value="#{msg['catalogo.Button.Cerrar']}" 
+								onclick="PerfilViewDialog.hide()" /> 
+		                    </p:panel>	                
+			            </p:layoutUnit>
+	                </p:layout>		
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

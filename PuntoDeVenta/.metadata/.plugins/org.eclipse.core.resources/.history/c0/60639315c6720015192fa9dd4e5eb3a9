@@ -1,0 +1,5 @@
+package com.alidasoftware.pos.helper;
+
+public class DetalleCorteParcialHelper {
+
+}

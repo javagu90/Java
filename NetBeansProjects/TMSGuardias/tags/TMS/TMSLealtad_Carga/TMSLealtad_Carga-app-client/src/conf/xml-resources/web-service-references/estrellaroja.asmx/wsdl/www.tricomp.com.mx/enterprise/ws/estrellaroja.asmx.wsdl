@@ -1,0 +1,920 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.tricomp.com.mx/enterprise/ws/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" targetNamespace="http://www.tricomp.com.mx/enterprise/ws/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.tricomp.com.mx/enterprise/ws/">
+      <s:element name="HelloWorld">
+        <s:complexType />
+      </s:element>
+      <s:element name="HelloWorldResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="HelloWorldResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPuntosXTarjeta">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NoTarjeta" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="usuario" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="usrkey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetPuntosXTarjetaResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetPuntosXTarjetaResult" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegistraTransaccion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NoTarjeta" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Ticket" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="sucursal" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="usuario" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="fecha" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="tipotransaccion" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="total" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="descuento" type="s:double" />
+            <s:element minOccurs="0" maxOccurs="1" name="taquilla" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="usrkey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegistraTransaccionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RegistraTransaccionResult" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegistraDetalleTransaccion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="transaccion" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="producto" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="cantidad" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="precio" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="descuento" type="s:double" />
+            <s:element minOccurs="0" maxOccurs="1" name="folio" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="unidad_negocio" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="usuario" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="usrkey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegistraDetalleTransaccionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RegistraDetalleTransaccionResult" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CierraTransaccion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="transaccion" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="totalredimido" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="descuento" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="usuario" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="usrkey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CierraTransaccionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="CierraTransaccionResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CierraTransaccionStr">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="transaccion" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="totalredimido" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="descuento" type="s:double" />
+            <s:element minOccurs="1" maxOccurs="1" name="usuario" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="usrkey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CierraTransaccionStrResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CierraTransaccionStrResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="EstructuraTransaccionXML">
+        <s:complexType />
+      </s:element>
+      <s:element name="EstructuraTransaccionXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="EstructuraTransaccionXMLResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegistraTransaccionXML">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Strxml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegistraTransaccionXMLResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RegistraTransaccionXMLResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegistraTransaccionXMLStr">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Strxml" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegistraTransaccionXMLStrResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="RegistraTransaccionXMLStrResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AnularTransaccion">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NoTarjeta" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="usuario" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="usrkey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AnularTransaccionResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AnularTransaccionResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AnularFolio">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="Folio" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="usuario" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="usrkey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="AnularFolioResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="AnularFolioResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegistraSolicitud">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NoTarjeta" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Nombre" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ApPaterno" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ApMaterno" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Domicilio" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Colonia" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CodigoPostal" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Delegacion" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EdoCivil" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="FechaAniv" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="Sexo" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="tipotarjeta" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="usuario" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="usrkey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegistraSolicitudResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RegistraSolicitudResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertaSolicitud">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NoTarjeta" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Nombre" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ApPaterno" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ApMaterno" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Domicilio" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Colonia" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CodigoPostal" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Delegacion" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EdoCivil" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="FechaAniv" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="Sexo" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="tipotarjeta" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="usuario" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="usrkey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="InsertaSolicitudResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="InsertaSolicitudResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegistraSolicitudSoloRegalo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NoTarjeta" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Nombre" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ApPaterno" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ApMaterno" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="Saldo" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="Domicilio" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Colonia" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CodigoPostal" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Delegacion" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EdoCivil" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="FechaAniv" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="Sexo" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="tipotarjeta" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="usuario" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="usrkey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="RegistraSolicitudSoloRegaloResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="RegistraSolicitudSoloRegaloResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModificaSolicitud">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NoTarjeta" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Nombre" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ApPaterno" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ApMaterno" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="FechaVen" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="Domicilio" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Colonia" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CodigoPostal" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Delegacion" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EdoCivil" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="FechaAniv" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="Sexo" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="tipotarjeta" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="usuario" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="usrkey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModificaSolicitudResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ModificaSolicitudResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModificaSolicitudSoloRegalo">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NoTarjeta" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Nombre" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ApPaterno" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="ApMaterno" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="FechaVen" type="s:dateTime" />
+            <s:element minOccurs="1" maxOccurs="1" name="Saldo" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="Domicilio" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Colonia" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="CodigoPostal" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Delegacion" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="Email" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="EdoCivil" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="FechaAniv" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="Sexo" type="s:string" />
+            <s:element minOccurs="1" maxOccurs="1" name="tipotarjeta" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="usuario" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="usrkey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ModificaSolicitudSoloRegaloResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="ModificaSolicitudSoloRegaloResult" type="s:boolean" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDescuentoXSucursal">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="sucursal" type="s:long" />
+            <s:element minOccurs="1" maxOccurs="1" name="usuario" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="usrkey" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GetDescuentoXSucursalResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="GetDescuentoXSucursalResult" type="s:double" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaSolicitud">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NoTarjeta" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaSolicitudResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsultaSolicitudResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaSolicitudJSON">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="NoTarjeta" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ConsultaSolicitudJSONResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ConsultaSolicitudJSONResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="HelloWorldSoapIn">
+    <wsdl:part name="parameters" element="tns:HelloWorld" />
+  </wsdl:message>
+  <wsdl:message name="HelloWorldSoapOut">
+    <wsdl:part name="parameters" element="tns:HelloWorldResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetPuntosXTarjetaSoapIn">
+    <wsdl:part name="parameters" element="tns:GetPuntosXTarjeta" />
+  </wsdl:message>
+  <wsdl:message name="GetPuntosXTarjetaSoapOut">
+    <wsdl:part name="parameters" element="tns:GetPuntosXTarjetaResponse" />
+  </wsdl:message>
+  <wsdl:message name="RegistraTransaccionSoapIn">
+    <wsdl:part name="parameters" element="tns:RegistraTransaccion" />
+  </wsdl:message>
+  <wsdl:message name="RegistraTransaccionSoapOut">
+    <wsdl:part name="parameters" element="tns:RegistraTransaccionResponse" />
+  </wsdl:message>
+  <wsdl:message name="RegistraDetalleTransaccionSoapIn">
+    <wsdl:part name="parameters" element="tns:RegistraDetalleTransaccion" />
+  </wsdl:message>
+  <wsdl:message name="RegistraDetalleTransaccionSoapOut">
+    <wsdl:part name="parameters" element="tns:RegistraDetalleTransaccionResponse" />
+  </wsdl:message>
+  <wsdl:message name="CierraTransaccionSoapIn">
+    <wsdl:part name="parameters" element="tns:CierraTransaccion" />
+  </wsdl:message>
+  <wsdl:message name="CierraTransaccionSoapOut">
+    <wsdl:part name="parameters" element="tns:CierraTransaccionResponse" />
+  </wsdl:message>
+  <wsdl:message name="CierraTransaccionStrSoapIn">
+    <wsdl:part name="parameters" element="tns:CierraTransaccionStr" />
+  </wsdl:message>
+  <wsdl:message name="CierraTransaccionStrSoapOut">
+    <wsdl:part name="parameters" element="tns:CierraTransaccionStrResponse" />
+  </wsdl:message>
+  <wsdl:message name="EstructuraTransaccionXMLSoapIn">
+    <wsdl:part name="parameters" element="tns:EstructuraTransaccionXML" />
+  </wsdl:message>
+  <wsdl:message name="EstructuraTransaccionXMLSoapOut">
+    <wsdl:part name="parameters" element="tns:EstructuraTransaccionXMLResponse" />
+  </wsdl:message>
+  <wsdl:message name="RegistraTransaccionXMLSoapIn">
+    <wsdl:part name="parameters" element="tns:RegistraTransaccionXML" />
+  </wsdl:message>
+  <wsdl:message name="RegistraTransaccionXMLSoapOut">
+    <wsdl:part name="parameters" element="tns:RegistraTransaccionXMLResponse" />
+  </wsdl:message>
+  <wsdl:message name="RegistraTransaccionXMLStrSoapIn">
+    <wsdl:part name="parameters" element="tns:RegistraTransaccionXMLStr" />
+  </wsdl:message>
+  <wsdl:message name="RegistraTransaccionXMLStrSoapOut">
+    <wsdl:part name="parameters" element="tns:RegistraTransaccionXMLStrResponse" />
+  </wsdl:message>
+  <wsdl:message name="AnularTransaccionSoapIn">
+    <wsdl:part name="parameters" element="tns:AnularTransaccion" />
+  </wsdl:message>
+  <wsdl:message name="AnularTransaccionSoapOut">
+    <wsdl:part name="parameters" element="tns:AnularTransaccionResponse" />
+  </wsdl:message>
+  <wsdl:message name="AnularFolioSoapIn">
+    <wsdl:part name="parameters" element="tns:AnularFolio" />
+  </wsdl:message>
+  <wsdl:message name="AnularFolioSoapOut">
+    <wsdl:part name="parameters" element="tns:AnularFolioResponse" />
+  </wsdl:message>
+  <wsdl:message name="RegistraSolicitudSoapIn">
+    <wsdl:part name="parameters" element="tns:RegistraSolicitud" />
+  </wsdl:message>
+  <wsdl:message name="RegistraSolicitudSoapOut">
+    <wsdl:part name="parameters" element="tns:RegistraSolicitudResponse" />
+  </wsdl:message>
+  <wsdl:message name="InsertaSolicitudSoapIn">
+    <wsdl:part name="parameters" element="tns:InsertaSolicitud" />
+  </wsdl:message>
+  <wsdl:message name="InsertaSolicitudSoapOut">
+    <wsdl:part name="parameters" element="tns:InsertaSolicitudResponse" />
+  </wsdl:message>
+  <wsdl:message name="RegistraSolicitudSoloRegaloSoapIn">
+    <wsdl:part name="parameters" element="tns:RegistraSolicitudSoloRegalo" />
+  </wsdl:message>
+  <wsdl:message name="RegistraSolicitudSoloRegaloSoapOut">
+    <wsdl:part name="parameters" element="tns:RegistraSolicitudSoloRegaloResponse" />
+  </wsdl:message>
+  <wsdl:message name="ModificaSolicitudSoapIn">
+    <wsdl:part name="parameters" element="tns:ModificaSolicitud" />
+  </wsdl:message>
+  <wsdl:message name="ModificaSolicitudSoapOut">
+    <wsdl:part name="parameters" element="tns:ModificaSolicitudResponse" />
+  </wsdl:message>
+  <wsdl:message name="ModificaSolicitudSoloRegaloSoapIn">
+    <wsdl:part name="parameters" element="tns:ModificaSolicitudSoloRegalo" />
+  </wsdl:message>
+  <wsdl:message name="ModificaSolicitudSoloRegaloSoapOut">
+    <wsdl:part name="parameters" element="tns:ModificaSolicitudSoloRegaloResponse" />
+  </wsdl:message>
+  <wsdl:message name="GetDescuentoXSucursalSoapIn">
+    <wsdl:part name="parameters" element="tns:GetDescuentoXSucursal" />
+  </wsdl:message>
+  <wsdl:message name="GetDescuentoXSucursalSoapOut">
+    <wsdl:part name="parameters" element="tns:GetDescuentoXSucursalResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaSolicitudSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultaSolicitud" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaSolicitudSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultaSolicitudResponse" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaSolicitudJSONSoapIn">
+    <wsdl:part name="parameters" element="tns:ConsultaSolicitudJSON" />
+  </wsdl:message>
+  <wsdl:message name="ConsultaSolicitudJSONSoapOut">
+    <wsdl:part name="parameters" element="tns:ConsultaSolicitudJSONResponse" />
+  </wsdl:message>
+  <wsdl:portType name="estrellarojaSoap">
+    <wsdl:operation name="HelloWorld">
+      <wsdl:input message="tns:HelloWorldSoapIn" />
+      <wsdl:output message="tns:HelloWorldSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPuntosXTarjeta">
+      <wsdl:input message="tns:GetPuntosXTarjetaSoapIn" />
+      <wsdl:output message="tns:GetPuntosXTarjetaSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistraTransaccion">
+      <wsdl:input message="tns:RegistraTransaccionSoapIn" />
+      <wsdl:output message="tns:RegistraTransaccionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistraDetalleTransaccion">
+      <wsdl:input message="tns:RegistraDetalleTransaccionSoapIn" />
+      <wsdl:output message="tns:RegistraDetalleTransaccionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CierraTransaccion">
+      <wsdl:input message="tns:CierraTransaccionSoapIn" />
+      <wsdl:output message="tns:CierraTransaccionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CierraTransaccionStr">
+      <wsdl:input message="tns:CierraTransaccionStrSoapIn" />
+      <wsdl:output message="tns:CierraTransaccionStrSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="EstructuraTransaccionXML">
+      <wsdl:input message="tns:EstructuraTransaccionXMLSoapIn" />
+      <wsdl:output message="tns:EstructuraTransaccionXMLSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistraTransaccionXML">
+      <wsdl:input message="tns:RegistraTransaccionXMLSoapIn" />
+      <wsdl:output message="tns:RegistraTransaccionXMLSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistraTransaccionXMLStr">
+      <wsdl:input message="tns:RegistraTransaccionXMLStrSoapIn" />
+      <wsdl:output message="tns:RegistraTransaccionXMLStrSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AnularTransaccion">
+      <wsdl:input message="tns:AnularTransaccionSoapIn" />
+      <wsdl:output message="tns:AnularTransaccionSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="AnularFolio">
+      <wsdl:input message="tns:AnularFolioSoapIn" />
+      <wsdl:output message="tns:AnularFolioSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistraSolicitud">
+      <wsdl:input message="tns:RegistraSolicitudSoapIn" />
+      <wsdl:output message="tns:RegistraSolicitudSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="InsertaSolicitud">
+      <wsdl:input message="tns:InsertaSolicitudSoapIn" />
+      <wsdl:output message="tns:InsertaSolicitudSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="RegistraSolicitudSoloRegalo">
+      <wsdl:input message="tns:RegistraSolicitudSoloRegaloSoapIn" />
+      <wsdl:output message="tns:RegistraSolicitudSoloRegaloSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ModificaSolicitud">
+      <wsdl:input message="tns:ModificaSolicitudSoapIn" />
+      <wsdl:output message="tns:ModificaSolicitudSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ModificaSolicitudSoloRegalo">
+      <wsdl:input message="tns:ModificaSolicitudSoloRegaloSoapIn" />
+      <wsdl:output message="tns:ModificaSolicitudSoloRegaloSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDescuentoXSucursal">
+      <wsdl:input message="tns:GetDescuentoXSucursalSoapIn" />
+      <wsdl:output message="tns:GetDescuentoXSucursalSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaSolicitud">
+      <wsdl:input message="tns:ConsultaSolicitudSoapIn" />
+      <wsdl:output message="tns:ConsultaSolicitudSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaSolicitudJSON">
+      <wsdl:input message="tns:ConsultaSolicitudJSONSoapIn" />
+      <wsdl:output message="tns:ConsultaSolicitudJSONSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="estrellarojaSoap" type="tns:estrellarojaSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPuntosXTarjeta">
+      <soap:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/GetPuntosXTarjeta" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegistraTransaccion">
+      <soap:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/RegistraTransaccion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegistraDetalleTransaccion">
+      <soap:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/RegistraDetalleTransaccion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CierraTransaccion">
+      <soap:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/CierraTransaccion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CierraTransaccionStr">
+      <soap:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/CierraTransaccionStr" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EstructuraTransaccionXML">
+      <soap:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/EstructuraTransaccionXML" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegistraTransaccionXML">
+      <soap:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/RegistraTransaccionXML" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegistraTransaccionXMLStr">
+      <soap:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/RegistraTransaccionXMLStr" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AnularTransaccion">
+      <soap:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/AnularTransaccion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AnularFolio">
+      <soap:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/AnularFolio" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegistraSolicitud">
+      <soap:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/RegistraSolicitud" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertaSolicitud">
+      <soap:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/InsertaSolicitud" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegistraSolicitudSoloRegalo">
+      <soap:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/RegistraSolicitudSoloRegalo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModificaSolicitud">
+      <soap:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/ModificaSolicitud" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModificaSolicitudSoloRegalo">
+      <soap:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/ModificaSolicitudSoloRegalo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDescuentoXSucursal">
+      <soap:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/GetDescuentoXSucursal" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaSolicitud">
+      <soap:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/ConsultaSolicitud" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaSolicitudJSON">
+      <soap:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/ConsultaSolicitudJSON" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="estrellarojaSoap12" type="tns:estrellarojaSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="HelloWorld">
+      <soap12:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/HelloWorld" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPuntosXTarjeta">
+      <soap12:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/GetPuntosXTarjeta" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegistraTransaccion">
+      <soap12:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/RegistraTransaccion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegistraDetalleTransaccion">
+      <soap12:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/RegistraDetalleTransaccion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CierraTransaccion">
+      <soap12:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/CierraTransaccion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CierraTransaccionStr">
+      <soap12:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/CierraTransaccionStr" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EstructuraTransaccionXML">
+      <soap12:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/EstructuraTransaccionXML" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegistraTransaccionXML">
+      <soap12:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/RegistraTransaccionXML" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegistraTransaccionXMLStr">
+      <soap12:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/RegistraTransaccionXMLStr" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AnularTransaccion">
+      <soap12:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/AnularTransaccion" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AnularFolio">
+      <soap12:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/AnularFolio" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegistraSolicitud">
+      <soap12:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/RegistraSolicitud" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="InsertaSolicitud">
+      <soap12:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/InsertaSolicitud" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RegistraSolicitudSoloRegalo">
+      <soap12:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/RegistraSolicitudSoloRegalo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModificaSolicitud">
+      <soap12:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/ModificaSolicitud" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ModificaSolicitudSoloRegalo">
+      <soap12:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/ModificaSolicitudSoloRegalo" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDescuentoXSucursal">
+      <soap12:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/GetDescuentoXSucursal" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaSolicitud">
+      <soap12:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/ConsultaSolicitud" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ConsultaSolicitudJSON">
+      <soap12:operation soapAction="http://www.tricomp.com.mx/enterprise/ws/ConsultaSolicitudJSON" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="estrellaroja">
+    <wsdl:port name="estrellarojaSoap" binding="tns:estrellarojaSoap">
+      <soap:address location="http://www.tricomp.com.mx/enterprise/ws/estrellaroja.asmx" />
+    </wsdl:port>
+    <wsdl:port name="estrellarojaSoap12" binding="tns:estrellarojaSoap12">
+      <soap12:address location="http://www.tricomp.com.mx/enterprise/ws/estrellaroja.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

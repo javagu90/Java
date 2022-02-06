@@ -1,0 +1,19 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.8.1
+Created-By: 1.6.0_22-b04 (Sun Microsystems Inc.)
+X-COMMENT: Main-Class will be added automatically by build
+Class-Path: TMSIncidencias-ejb.jar toplink-essentials.jar toplink-esse
+ ntials-agent.jar lib/toplink-essentials.jar toplink-essentials-agent.
+ jar swing-layout-1.0.4.jar lib/swing-layout-1.0.4.jar barbecue-1.1.ja
+ r lib/barbecue-1.1.jar bsh-2.0b4.jar lib/bsh-2.0b4.jar commons-beanut
+ ils-1.7.jar lib/commons-beanutils-1.7.jar commons-collections-2.1.jar
+  lib/commons-collections-2.1.jar commons-digester-1.7.jar lib/commons
+ -digester-1.7.jar commons-javaflow-20060411.jar lib/commons-javaflow-
+ 20060411.jar commons-logging-1.0.2.jar lib/commons-logging-1.0.2.jar 
+ itext-1.3.1.jar lib/itext-1.3.1.jar iReport.jar lib/iReport.jar jaspe
+ rreports-2.0.4.jar lib/jasperreports-2.0.4.jar ojdbc14.jar lib/ojdbc1
+ 4.jar poi-3.0.1-FINAL-20070705.jar lib/poi-3.0.1-FINAL-20070705.jar T
+ ms_desktop.jar lib/Tms_desktop.jar Tms_TextFields.jar lib/Tms_TextFie
+ lds.jar 
+Main-Class: tms_incidencias.Main
+

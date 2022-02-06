@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CommitComments>	<CommitComment>Creacion del bean que redireccionara a la pagina de corte caja o cierre caja depenndiendo el menu que haya seleccionado, modificación de interfaces</CommitComment>
+	<CommitComment>Actualización de interfaces con busqueda y llenado de datos para la creación de un nuevo corte Parcial... (La fecha y hora ya aparecen, aunque la clase para obtener la Hora esta obsoleta [date.get hours... etc])</CommitComment>
+	<CommitComment>Busqueda de cierre de caja  funcionando</CommitComment>
+	<CommitComment>Modificación de las interfaces de Corte Parcial y cierre de caja de acuerdo a la información que se requeria, ademas de cambiar el formato de fecha a un  SimpleDateFormat para una mejor visualización de la fecha. opcion de busqueda en ambas interfaces</CommitComment>
+	<CommitComment>Creadas las interfaces graficas para los reportes (hechas en hard code) para que despues con planificacion puedan ser rediseñadas.
+Actualización de la vista de Corte Parcial y Cierre de Caja (la tabal muestra los datos de la bd) </CommitComment>
+	<CommitComment>Modificación de las clases para poder obervar todos los cortes parciales que se enncuentran en la tabla de la bd</CommitComment>
+	<CommitComment>Asigna la clase que permite el acceso a las interfaces de CorteParcial y Cierre de Caja</CommitComment>
+	<CommitComment>Clase que ayuda al acceso a las interfaces de Corte Parcial y Cierre de Caja </CommitComment>
+	<CommitComment>Clase que ayuda al la obtención de acceso a las interfaces de Corte Parcial y Cierre de Caja </CommitComment>
+	<CommitComment>Clase que otorga los permisos para realizar Corte Parcial y Cierre de Caja comparando el perfil del usuario que requiere ingresar a estas interfaces</CommitComment>
+</CommitComments>

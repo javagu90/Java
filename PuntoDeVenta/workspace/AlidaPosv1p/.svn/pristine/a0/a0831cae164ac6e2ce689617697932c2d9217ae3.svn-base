@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pos="http://pos.com/functions">
+
+	<ui:composition>
+		<f:view
+ 			locale="#{sessionBean.locale}">
+			<p:dialog 
+				id="dlgPago"
+				modal="true" 
+				widgetVar="pagoDialog"
+				showHeader="true"
+				header="#{pagoBean.titlePago}"
+				appendTo="@(body)" 
+				resizable="false" 
+				draggable="true">
+				<p:ajax
+					event="close"
+					listener="#{pagoBean.handleClose}"/>
+				<h:form id="pagoForm">
+					<p:panelGrid 
+						id="pnlBtnOptions"
+						columns="4">
+						<p:commandButton
+							value="EFE"
+							actionListener="#{pagoBean.showEfectivoListener}"
+							update="pagoGrid"/>
+						<p:commandButton
+							rendered="#{pagoBean.flagPagoVenta}"
+							value="CRED"
+							actionListener="#{pagoBean.showCreditoListener}"
+							update="pagoGrid"/>
+						<p:commandButton
+							value="TAR"
+							actionListener="#{pagoBean.showTarjetaListener}"
+							update="pagoGrid"/>
+						<p:commandButton
+							value="VAL"
+							actionListener="#{pagoBean.showValeListener}"
+							update="pagoGrid"/>
+					</p:panelGrid>
+					<p:panelGrid
+						id="pagoGrid">					
+						<p:row
+							rendered="#{pagoBean.showEfectivo}">				
+							<p:column>
+								<p:inputText
+									rendered="false"
+									id="lblPagoEfectivo"
+									styleClass="rightLabel"
+									style="width:110px;"								
+									value="#{pagoBean.efectivo}" >								
+									<p:ajax								
+										partialSubmit="true" 
+										update="pagoGrid"/>
+								</p:inputText>
+								<p:message  
+									showSummary="true"
+									showDetail="true"
+									display="both"
+									for="lblPagoEfectivo" 
+									style="color: red; font-weight: bold" 
+									title="Dato Inválido" />							
+							</p:column>
+							<p:column>
+								<p:outputLabel
+									styleClass="boldLabel"
+									value="Pagó con"/>
+							</p:column>
+							<p:column>
+								<p:inputText
+									id="lblPagoIngresado"
+									styleClass="rightLabel"
+									style="width:110px;" 
+									value="#{pagoBean.ingresado}" >
+									<p:ajax								
+										partialSubmit="true" 
+										update="pagoGrid"/>
+								</p:inputText>
+								<p:message  
+									showSummary="true"
+									showDetail="true"
+									display="both"
+									for="lblPagoIngresado" 
+									style="color: red; font-weight: bold" 
+									title="Dato Inválido" />
+							</p:column>						
+						</p:row>
+						<p:row
+							rendered="#{pagoBean.showCredito}">
+							<p:column 
+								rendered="#{pagoBean.client.credito}">
+								<p:outputLabel
+									styleClass="boldLabel"
+									value="Disponible"/>
+							</p:column>
+							<p:column
+								rendered="#{pagoBean.client.credito}">
+								<p:inputText
+									styleClass="rightLabel"
+									style="width:110px;" 
+									readonly="true"
+									value="#{pagoBean.client.creditodisponible}" >								
+								</p:inputText>
+							</p:column>
+							<p:column
+								rendered="#{pagoBean.client.credito}">
+								<p:inputText
+									styleClass="rightLabel"
+									style="width:110px;" 
+									value="#{pagoBean.credito}" >
+									<p:ajax								
+										partialSubmit="true" 
+										update="pagoGrid"/>								
+								</p:inputText>
+							</p:column>						
+							<p:column
+								rendered="#{!pagoBean.client.credito}">
+								<p:outputLabel
+									styleClass="boldLabel"
+									value="Limite Crédito"/>
+							</p:column>						
+							<p:column
+								rendered="#{!pagoBean.client.credito}">
+								<p:inputText
+									styleClass="rightLabel"
+									style="width:110px;" 
+									value="#{pagoBean.limiteCredito}" >
+									<p:ajax								
+										partialSubmit="true" 
+										update="pagoGrid"/>								
+								</p:inputText>
+							</p:column>
+							<p:column
+								rendered="#{!pagoBean.client.credito}">
+								<p:commandButton								
+									value="Habilita Crédito"
+									actionListener="#{pagoBean.enableCredit}"
+									update="pagoGrid">
+								</p:commandButton>				
+							</p:column>
+						</p:row>
+						<p:row
+							rendered="#{pagoBean.showTarjeta}">
+							<p:column>
+								<p:inputText
+									styleClass="rightLabel"
+									style="width:110px;" 
+									value="#{pagoBean.tarjeta}" >								
+								</p:inputText>
+							</p:column>	
+							<p:column colspan="2">
+								<p:outputLabel
+									styleClass="boldLabel"
+									value="Referencia   "/>
+								<br/>
+								<p:inputText
+									styleClass="leftLabel"
+									style="width:190px;"
+									value="#{pagoBean.refTarjeta}" />						
+							</p:column>
+						</p:row>
+						<p:row
+							rendered="#{pagoBean.showVale}">							
+							<p:column colspan="3">
+								<p:outputLabel
+								styleClass="boldLabel"
+									value="Referencia   "/>
+								<br/>
+								<p:inputText
+									styleClass="leftLabel"
+									style="width:190px;"
+									value="#{pagoBean.refVale}" />							
+								<p:commandButton								
+									value="Validar"
+									actionListener="#{pagoBean.checkValeListener}"
+									update="pagoGrid" >	
+								</p:commandButton>
+								<p:commandButton
+									value="Cancelar"
+									actionListener="#{pagoBean.cancelValeListener}"
+									update="pagoGrid" >								
+								</p:commandButton>		
+							</p:column>	
+						</p:row>
+						<p:row 
+							rendered="#{pagoBean.pagoCompleto}">
+							<p:column>
+							</p:column>
+							<p:column 
+								styleClass="rightLabel">
+								<p:outputLabel							
+									styleClass="boldLabel"
+									value="Pago Acumulado"/>
+							</p:column>
+							<p:column>
+								<p:inputText
+									styleClass="rightLabel"
+									style="width:110px;"
+									readonly="true"
+									value="#{pagoBean.pago}" >
+								</p:inputText>
+							</p:column>
+						</p:row>
+						<p:row
+							rendered="#{pagoBean.resto}">
+							<p:column>
+							</p:column>
+							<p:column 
+								styleClass="rightLabel">
+								<p:outputLabel							
+									styleClass="boldLabel"
+									value="Restan"/>
+							</p:column>
+							<p:column>
+								<p:inputText
+									styleClass="rightLabel"
+									style="width:110px;"
+									readonly="true"
+									value="#{pagoBean.total - pagoBean.pago}" >
+									<f:convertNumber 
+				     					currencySymbol="$"
+				     					type="currency"/>
+								</p:inputText>
+							</p:column>
+						</p:row>						
+						<p:row>
+							<p:column>
+							</p:column>
+							<p:column
+								styleClass="rightLabel">
+								<p:outputLabel
+									styleClass="boldLabel"
+									value="Cambio"/>
+							</p:column>
+							<p:column>
+								<p:inputText
+									styleClass="rightLabel"
+									style="width:110px;"
+									readonly="true" 
+									value="#{pagoBean.cambio}" >
+								</p:inputText>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column>
+							</p:column>
+							<p:column
+								styleClass="rightLabel">
+								<p:outputLabel
+									styleClass="boldLabel"
+									value="Total a Pagar"/>
+							</p:column>
+							<p:column>
+								<p:inputText
+									styleClass="rightLabel"
+									style="width:110px;"
+									readonly="true"
+									value="#{pagoBean.total}" >
+									<f:convertNumber 
+				     					currencySymbol="$"
+				     					type="currency"/>
+								</p:inputText>
+							</p:column>
+						</p:row>
+						<p:row>
+							<p:column
+								colspan="3">
+								<p:outputLabel
+									id="msgPago"			
+									styleClass="boldLabel"				
+									value="#{pagoBean.message}"
+									style="color: #FF0000;" />
+							</p:column>
+						</p:row>									
+					</p:panelGrid>
+					<p:commandButton
+						value="Pagar"
+						action="#{pagoBean.savePayment}" />		
+				</h:form>
+			</p:dialog>
+		</f:view>      
+	</ui:composition>      
+</html>

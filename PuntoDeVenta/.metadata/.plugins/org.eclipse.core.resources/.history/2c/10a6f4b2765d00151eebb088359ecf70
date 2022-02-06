@@ -1,0 +1,142 @@
+package com.alidasoftware.pos.bean;
+
+import java.sql.Date;
+import java.sql.Time;
+import java.util.List;
+
+import com.alidasoftware.pos.exception.AlidaPosException;
+import com.alidasoftware.pos.facade.CorteParcialFacade;
+import com.alidasoftware.pos.model.Corteparcial;
+
+public class CorteParcialBean 
+{
+	private CorteParcialFacade corteParcialFacade;
+	private List<Corteparcial> corteParcialList;
+	private int id;
+	private int idUsuario;
+	private int idSupervisor;
+	private int idCorteCaja;
+	private Date fecha;
+	private Time hora;
+	private float cantidadRetirada;
+	private String comentarios;
+	private String ultimaVenta;
+	private String ultimoPagoApartado;
+	
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getIdUsuario() {
+		return idUsuario;
+	}
+
+	public void setIdUsuario(int idUsuario) {
+		this.idUsuario = idUsuario;
+	}
+
+	public int getIdSupervisor() {
+		return idSupervisor;
+	}
+
+	public void setIdSupervisor(int idSupervisor) {
+		this.idSupervisor = idSupervisor;
+	}
+
+	public int getIdCorteCaja() {
+		return idCorteCaja;
+	}
+
+	public void setIdCorteCaja(int idCorteCaja) {
+		this.idCorteCaja = idCorteCaja;
+	}
+
+	public Date getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(Date fecha) {
+		this.fecha = fecha;
+	}
+
+	public Time getHora() {
+		return hora;
+	}
+
+	public void setHora(Time hora) {
+		this.hora = hora;
+	}
+
+	public float getCantidadRetirada() {
+		return cantidadRetirada;
+	}
+
+	public void setCantidadRetirada(float cantidadRetirada) {
+		this.cantidadRetirada = cantidadRetirada;
+	}
+
+	public String getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(String comentarios) {
+		this.comentarios = comentarios;
+	}
+
+	public String getUltimaVenta() {
+		return ultimaVenta;
+	}
+
+	public void setUltimaVenta(String ultimaVenta) {
+		this.ultimaVenta = ultimaVenta;
+	}
+
+	public String getUltimoPagoApartado() {
+		return ultimoPagoApartado;
+	}
+
+	public void setUltimoPagoApartado(String ultimoPagoApartado) {
+		this.ultimoPagoApartado = ultimoPagoApartado;
+	}
+
+	public List<Corteparcial> mostrarTodo() throws AlidaPosException
+	{
+		corteParcialFacade= new CorteParcialFacade();
+		corteParcialList=corteParcialFacade.findAll();
+		id;
+		idUsuario;
+		idSupervisor;
+		idCorteCaja;
+		fecha;
+		hora;
+		cantidadRetirada;
+		comentarios;
+		ultimaVenta;
+		ultimoPagoApartado;
+		return corteParcialList;
+	}
+	
+	public List<Corteparcial> getCorteParcialList() {
+		return corteParcialList;
+	}
+
+	public void setCorteParcialList(List<Corteparcial> corteParcialList) {
+		this.corteParcialList = corteParcialList;
+	}
+
+	public CorteParcialFacade getCorteParcialFacade() {
+		return corteParcialFacade;
+	}
+
+	public void setCorteParcialFacade(CorteParcialFacade corteParcialFacade) {
+		this.corteParcialFacade = corteParcialFacade;
+	}
+
+	
+}

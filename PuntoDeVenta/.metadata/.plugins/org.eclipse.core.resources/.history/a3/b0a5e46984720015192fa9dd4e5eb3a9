@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="AlidaPosPU">
+		<class>com.alidasoftware.pos.model.AdeudoVenta</class>
+		<class>com.alidasoftware.pos.model.Apartado</class>
+		<class>com.alidasoftware.pos.model.Caja</class>
+		<class>com.alidasoftware.pos.model.Cajaefectivo</class>
+		<class>com.alidasoftware.pos.model.Categoriacliente</class>
+		<class>com.alidasoftware.pos.model.Categoriaproducto</class>
+		<class>com.alidasoftware.pos.model.Cliente</class>
+		<class>com.alidasoftware.pos.model.Configuracion</class>
+		<class>com.alidasoftware.pos.model.Contacto</class>
+		<class>com.alidasoftware.pos.model.Corteparcial</class>
+		<class>com.alidasoftware.pos.model.Detalleapartado</class>
+		<class>com.alidasoftware.pos.model.Detallecortecaja</class>
+		<class>com.alidasoftware.pos.model.Detallecorteparcial</class>
+		<class>com.alidasoftware.pos.model.Detalledevolucion</class>
+		<class>com.alidasoftware.pos.model.Detalleinventario</class>
+		<class>com.alidasoftware.pos.model.Detalleinventariofisico</class>
+		<class>com.alidasoftware.pos.model.Detallepromocion</class>
+		<class>com.alidasoftware.pos.model.Detalletraspaso</class>
+		<class>com.alidasoftware.pos.model.Detalleventa</class>
+		<class>com.alidasoftware.pos.model.Detallevista</class>
+		<class>com.alidasoftware.pos.model.Devolucion</class>
+		<class>com.alidasoftware.pos.model.Diasfestivos</class>
+		<class>com.alidasoftware.pos.model.Direccion</class>
+		<class>com.alidasoftware.pos.model.Empleado</class>
+		<class>com.alidasoftware.pos.model.Entradainventario</class>
+		<class>com.alidasoftware.pos.model.Estado</class>
+		<class>com.alidasoftware.pos.model.Factura</class>
+		<class>com.alidasoftware.pos.model.Formapago</class>
+		<class>com.alidasoftware.pos.model.Inventario</class>
+		<class>com.alidasoftware.pos.model.Inventariofisico</class>
+		<class>com.alidasoftware.pos.model.Modulo</class>
+		<class>com.alidasoftware.pos.model.Municipio</class>
+		<class>com.alidasoftware.pos.model.Pagoapartado</class>
+		<class>com.alidasoftware.pos.model.Pagoventa</class>
+		<class>com.alidasoftware.pos.model.Persona</class>
+		<class>com.alidasoftware.pos.model.Perfil</class>
+		<class>com.alidasoftware.pos.model.Precioventa</class>
+		<class>com.alidasoftware.pos.model.Producto</class>
+		<class>com.alidasoftware.pos.model.Promocion</class>
+		<class>com.alidasoftware.pos.model.Proveedor</class>
+		<class>com.alidasoftware.pos.model.Proveedorproducto</class>
+		<class>com.alidasoftware.pos.model.Tienda</class>
+		<class>com.alidasoftware.pos.model.Tipovencimiento</class>
+		<class>com.alidasoftware.pos.model.Traspaso</class>
+		<class>com.alidasoftware.pos.model.Unidad</class>
+		<class>com.alidasoftware.pos.model.Usuario</class>
+		<class>com.alidasoftware.pos.model.Vale</class>
+		<class>com.alidasoftware.pos.model.Venta</class>
+		<class>com.alidasoftware.pos.model.Vista</class>
+		<class>com.alidasoftware.pos.model.Configuracionfactura</class>
+		<class>com.alidasoftware.pos.model.Cortecaja</class>
+		<class>com.alidasoftware.pos.helper.PagoVentaHelper</class>
+		<class>com.alidasoftware.pos.helper.PagoApartadoHelper</class>
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+	      <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+	      <property name="javax.persistence.jdbc.user" value="postgres"/>
+	      
+	     <!--  <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/local"/>
+	      <property name="javax.persistence.jdbc.password" value="postgres"/>-->
+	      
+	      <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://10.100.192.67:5432/alidaPos"/>
+	      <property name="javax.persistence.jdbc.password" value="admin"/>
+	      
+	      <!-- property name="eclipselink.logging.level" value="FINEST"/ -->
+	    </properties>	
+	</persistence-unit>
+</persistence>

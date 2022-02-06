@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="ClienteViewDlg" widgetVar="ClienteViewDialog" modal="true"
+		resizable="false" appendTo="@(body)"
+        header="#{msg['catalogo.Cliente.Ver.MsgHeader']}">
+		<h:form id="ClienteViewForm">
+			<h:panelGroup id="display">
+				<p:tabView>
+                	<p:tab id="personal" title="#{msg['catalogo.Tab.Title.Personal']}">
+                    <p:panelGrid 
+                    	columns="2">
+                    	<p:outputLabel
+                        	value="#{msg['catalogo.Label.Nombre']}"
+                        	for="nombre" />
+                        <p:inputText 
+                        	id="nombre" 
+                        	value="#{clienteBean.selected.persona.nombre}" 
+                        	readonly="true"/>
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.ApellidoPaterno']}"
+                        	for="apellidopaterno" />
+                        <p:inputText 
+                        	id="apellidopaterno" 
+                        	value="#{clienteBean.selected.persona.apellidopaterno}" 
+                        	readonly="true"/>
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.ApellidoMaterno']}"
+                        	for="apellidomaterno" />
+                        <p:inputText 
+                        	id="apellidomaterno" 
+                        	value="#{clienteBean.selected.persona.apellidomaterno}" 
+                        	readonly="true"/>
+
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.FechaNacimiento']}"
+                        	for="fecha" />
+						<p:calendar 
+                        	id="fecha" 
+                        	value="#{clienteBean.selected.persona.fechanacimiento}" 
+                        	disabled="true"
+                        	pattern="dd/MM/yyyy"
+                        	locale="es">
+                        	<f:convertDateTime pattern="dd/MM/yyyy" />
+                        </p:calendar>                       	                        	                       
+                        	
+                         <p:outputLabel
+                        	value="#{msg['catalogo.Label.Clave']}"
+                        	for="clave" />
+                        <p:inputText 
+                        	id="clave" 
+                        	value="#{clienteBean.selected.clavecliente}" 
+                        	readonly="true"/>
+               	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.CategoriaCliente']}"
+                        	for="categoriacliente" />
+                       	<p:inputText 
+                        	id="categoriacliente" 
+                        	value="#{clienteBean.selected.categoriacliente.nombre}" 
+                        	readonly="true"/>
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Descuento']}"/>
+                        <p:inputText
+                        	id="descuento"                         
+                        	value="#{clienteBean.selected.categoriacliente.descuento}"
+                        	readonly="true">
+                        	<f:convertNumber 
+                           		minFractionDigits="2"
+                           		maxFractionDigits="2"
+								type="percent" />
+                        </p:inputText>
+
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Credito']}" 
+                        	for="credito" />
+                        <p:selectBooleanCheckbox 
+                        	id="credito" 
+                        	value="#{clienteBean.selected.credito}" 
+                        	disabled="true">
+                       </p:selectBooleanCheckbox>
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.LimiteCredito']}" 
+                        	for="limitecredito" />
+                        <p:inputText 
+                        	id="limitecredito" 
+                        	value="#{clienteBean.selected.limitecredito}" 
+                        	readonly="true"/>
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.CreditoDisponible']}" 
+                        	for="creditodisponible" />
+                        <p:inputText 
+                        	id="creditodisponible" 
+                        	value="#{clienteBean.selected.creditodisponible}" 
+                        	readonly="true"/>
+
+
+                         <p:outputLabel
+                        	value="#{msg['catalogo.Label.Comentarios']}" 
+                        	for="comentarios" />
+                        <p:inputTextarea 
+                        	rows="6" 
+                        	cols="40"
+                        	id="comentarios" 
+                        	value="#{clienteBean.selected.comentarios}" 
+                        	title="#{msg['catalogo.Label.Comentarios']}" 
+                        	readonly="true"/>
+   	
+                    </p:panelGrid>
+		        	</p:tab>    
+		        	                    	
+                	<p:tab id="contacto" title="#{msg['catalogo.Tab.Title.Contacto']}">
+                    <p:panelGrid 
+                    	columns="2" 
+                    	rendered="#{clienteBean.selected != null}">
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Calle']}"
+                        	for="calle" />
+                        <p:inputText 
+                        	id="calle" 
+                        	value="#{clienteBean.selected.persona.contacto.direcciones[0].calle}" 
+                        	readonly="true"/>
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.NumExt']}"
+                        	for="exterior" />
+                        <p:inputText 
+                        	id="exterior" 
+                        	value="#{clienteBean.selected.persona.contacto.direcciones[0].numext}" 
+                        	readonly="true"/>
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.NumInt']}"
+                        	for="interior" />
+                        <p:inputText 
+                        	id="interior" 
+                        	value="#{clienteBean.selected.persona.contacto.direcciones[0].numint}" 
+                        	readonly="true" />
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Colonia']}" 
+                        	for="colonia" />
+                        <p:inputText 
+                        	id="colonia" 
+                        	value="#{clienteBean.selected.persona.contacto.direcciones[0].colonia}" 
+                        	readonly="true"/>
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.CodigoPostal']}" 
+                        	for="cp" />
+                        <p:inputMask  
+                        	id="cp" 
+                        	value="#{clienteBean.selected.persona.contacto.direcciones[0].codigopostal}" 
+                        	readonly="true"
+                       		mask="99999" 
+                       		/>
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Estado']}"
+                        	for="estado" />
+                   		<p:inputText 
+                        	id="estado" 
+                        	value="#{clienteBean.estadoSeleccionado}" 
+                        	readonly="true"/>
+                        	    
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Municipio']}"
+                        	for="municipio" />
+                        <p:inputText 
+                        	id="municipio" 
+                        	value="#{clienteBean.municipioSeleccionado}"
+                        	readonly="true"/>
+                    	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Telefono1']}"
+                        	for="telefono1" />
+                        <p:inputMask
+                        	id="telefono1" 
+                        	value="#{clienteBean.selected.persona.contacto.telefono1}" 
+                        	readonly="true"
+                        	mask="(999)999999"
+                        	/>
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Telefono2']}"
+                        	for="telefono2" />
+                        <p:inputMask
+                        	id="telefono2" 
+                        	value="#{clienteBean.selected.persona.contacto.telefono2}" 
+                        	readonly="true"
+                        	mask="(999)999999"
+                        	/>
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Email']}"
+                        	for="correoelectronico" />
+                        <p:inputText 
+                        	id="correoelectronico" 
+                        	value="#{clienteBean.selected.persona.contacto.correoelectronico}"
+                        	readonly="true" 
+                        	/>
+                        	
+                    </p:panelGrid>
+		        	</p:tab>    
+		        	                    	
+		        	                    	
+                	<p:tab id="facturacion" title="#{msg['catalogo.Tab.Title.Facturacion']}">
+                    <p:panelGrid 
+                    	columns="2" 
+                    	rendered="#{clienteBean.selected != null}">
+
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.Rfc']}"
+                        	for="rfc" />
+                        <p:inputText 
+                        	id="rfc" 
+                        	value="#{clienteBean.selected.persona.rfc}" 
+                        	readonly="true" />
+                        	
+                        <p:outputLabel                         	
+                        	value="#{msg['catalogo.Label.RazonSocial']}"
+                        	for="razonsocial" />
+                        <p:inputText 
+                        	id="razonsocial" 
+                        	value="#{clienteBean.selected.persona.razonsocial}" 
+                        	readonly="true" />
+                        	
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.TipoPersona']}"
+                        	for="tipopersona" />
+				        <p:selectOneRadio 
+				        id="tipopersona" 
+				        value="#{clienteBean.selected.persona.tipopersona}"
+                        	disabled="true">
+        
+				            <f:selectItem itemLabel="Física" itemValue="1" />
+				            <f:selectItem itemLabel="Moral" itemValue="2" />
+				        </p:selectOneRadio>
+                                	                        	
+                    </p:panelGrid>
+		        	</p:tab>    
+
+    			</p:tabView>
+				<p:commandButton 
+                    value="#{msg['catalogo.Button.Cerrar']}" 
+					onclick="ClienteViewDialog.hide()" />
+			</h:panelGroup>
+		</h:form>
+	</p:dialog>
+
+</ui:composition>
+</html>

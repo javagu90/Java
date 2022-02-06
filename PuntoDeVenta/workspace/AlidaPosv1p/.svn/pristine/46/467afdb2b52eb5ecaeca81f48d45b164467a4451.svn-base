@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pos="http://pos.com/functions">
+
+    <ui:composition>
+
+        <p:dialog id="TiendaViewDlg"
+        	widgetVar="TiendaViewDialog"
+        	modal="true"
+        	resizable="false" 
+        	appendTo="@(body)" 
+        	header="#{msg['catalogo.Tienda.Ver.MsgHeader']}">
+            <h:form id="TiendaViewForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid 
+                    	columns="2" 
+                    	rendered="#{tiendaBean.selected != null}">
+                    	
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.Id']}" 
+                        	for="idtienda"
+                        	rendered="false" />
+                        <p:inputText 
+                        	rendered="false"
+                        	id="idtienda" 
+                        	value="#{tiendaBean.selected.idtienda}" 
+                        	title="#{msg['catalogo.Label.Id']}" 
+                        	readonly="true"
+                        	requiredMessage="#{msg['catalogo.MsgRequiredId']}"/>
+                        	
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.Nombre']}"
+                        	for="nombre" />
+                        <p:inputText 
+                        	id="nombre" 
+                        	value="#{tiendaBean.selected.nombre}" 
+                        	title="#{msg['catalogo.Label.Nombre']}" 
+                        	readonly="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredNombre']}"/>
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Descripcion']}"
+                        	for="descripcion" />
+                        <p:inputTextarea 
+                        	rows="6" 
+                        	cols="40"
+                        	id="descripcion" 
+                        	value="#{tiendaBean.selected.descripcion}" 
+                        	title="#{msg['catalogo.Label.Descripcion']}" 
+                        	readonly="true"
+                        	requiredMessage="#{msg['catalogo.MsgRequiredDescripcion']}"/>
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Comentarios']}" 
+                        	for="comentarios" />
+                        <p:inputTextarea 
+                        	rows="6" 
+                        	cols="40"
+                        	id="comentarios" 
+                        	value="#{tiendaBean.selected.comentarios}" 
+                        	title="#{msg['catalogo.Label.Comentarios']}" 
+                        	readonly="true"
+                        	requiredMessage="#{msg['catalogo.MsgRequiredComentarios']}"/>
+                       	<p:outputLabel
+	                        	styleClass="boldLabel"
+	                        	value="Responsable" />
+	                    <p:inputText 
+                        	id="nombreView" 
+                        	value="#{pos:personName(tiendaBean.selected.responsable.persona)}"
+                        	title="#{msg['catalogo.Label.Nombre']}" 
+                        	readonly="true" 
+                        	requiredMessage="#{msg['catalogo.MsgRequiredNombre']}"/>    	
+                    </p:panelGrid>
+                    <p:commandButton 
+                    value="#{msg['catalogo.Button.Cerrar']}" 
+					onclick="TiendaViewDialog.hide()" />
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

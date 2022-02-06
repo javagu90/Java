@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"      
+      xmlns:pos="http://pos.com/functions">
+	
+	<f:view
+ 		locale="#{sessionBean.locale}">	
+		<p:panel
+			id="apartadoViewPanel"
+			header="Información Apartado"
+			rendered="#{apartadoBean.showViewDialog}">
+			<p:panelGrid 
+	      		columns="2">
+		       	<p:column>
+					<p:panelGrid 
+						columns="3" >
+			      		<p:column>
+			      			<p:panelGrid>
+								<p:row>
+									<p:column>
+										<p:outputLabel
+											styleClass="boldLabel"
+											value="Cliente" />
+									</p:column>
+									<p:column colspan="3">
+										<p:inputText 
+											value="#{pos:clientName(apartadoBean.apartadoSelected.cliente)}"
+											readonly="true"
+											style="width:360px;" />
+									</p:column>															
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel
+											styleClass="boldLabel" 
+											value="Fecha Creación"/>
+									</p:column>
+									<p:column>
+										<p:inputText 
+											styleClass="centerLabel"
+											value="#{apartadoBean.apartadoSelected.fechaapartado}"
+											readonly="true"
+											style="width:100px;">
+											<f:convertDateTime pattern="dd-MM-yyyy" />
+										</p:inputText>
+									</p:column>
+									<p:column>
+										<p:outputLabel
+											styleClass="boldLabel" 
+											value="Folio"/>
+									</p:column>
+									<p:column>
+										<p:inputText 
+											styleClass="centerLabel"
+											value="#{apartadoBean.apartadoSelected.folio}"
+											readonly="true"
+											style="width:150px;" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel
+											styleClass="boldLabel"								
+											value="Vencimiento"/>
+									</p:column>
+									<p:column>
+										<p:inputText 	
+											styleClass="centerLabel"						
+											value="#{pos:getExpirationDate(apartadoBean.apartadoSelected.fechaapartado, apartadoBean.apartadoSelected.tipovencimiento.dias, apartadoBean.apartadoSelected.tipovencimiento.tipodias)}"
+											readonly="true"
+											style="width:100px;" >
+											<f:convertDateTime pattern="dd-MM-yyyy" />
+										</p:inputText>
+									</p:column>
+									<p:column>
+										<p:outputLabel
+											styleClass="boldLabel" 
+											value="Status"/>
+									</p:column>
+									<p:column>
+										<p:inputText 
+											styleClass="centerLabel"
+											value="#{pos:apartadoStatus(apartadoBean.apartadoSelected.status)}"
+											readonly="true"
+											style="width:150px;" />
+									</p:column>	
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel
+											styleClass="boldLabel" 
+											value="Pagos Realizados"/>
+									</p:column>
+									<p:column>
+										<p:inputText 
+												styleClass="centerLabel"
+												value="#{pos:getApartadoPagoCount(apartadoBean.apartadoSelected)}"
+												readonly="true"
+												style="width:100px;" />
+									</p:column>
+									<p:column>
+										<p:outputLabel
+											styleClass="boldLabel" 
+											value="Cantidad Pagada"/>
+									</p:column>
+									<p:column>
+										<p:inputText 
+											styleClass="centerLabel"
+											value="#{pos:getApartadoPagoMonto(apartadoBean.apartadoSelected)}"
+											readonly="true"
+											style="width:150px;">
+											<f:convertNumber 
+						     					currencySymbol="$"
+						     					type="currency"/>
+										</p:inputText>
+									</p:column>
+								</p:row>
+							</p:panelGrid>      			
+					    </p:column>
+					    <p:column>
+					    	<p:outputLabel 
+					    		styleClass="boldLabel"
+					    		value="Comentarios" />
+					    	<br/>
+					    	<p:inputTextarea
+					    		styleClass="justifyLabel"
+					    		value="#{apartadoBean.apartadoSelected.comentarios}"
+					    		readonly="true"
+					    		rows="5"
+					    		cols="50" />
+					    	<br/>
+					    	<br/>
+					    	<p:commandButton
+					    		rendered="#{pos:showAddPaymentApartado(apartadoBean.apartadoSelected.status)}"
+					    		icon="ui-icon-check"   
+				        		value="Realizar Pago"
+				        		actionListener="#{apartadoBean.addPayment}"
+				        		onclick="PF('pagoDialog').show()" />
+			        		<p:commandButton
+			        			rendered="#{pos:getApartadoPagoCount(apartadoBean.apartadoSelected) gt 0}"
+			        			icon="ui-icon-search"
+			        			value="Ver Pagos"
+			        			action="#{apartadoBean.showPaymentListAction}" />		        			
+					    </p:column>
+				    </p:panelGrid>
+				    <br/>
+				    <p:dataTable
+				    	value="#{apartadoBean.apartadoSelected.detalleapartados}"
+				    	var="item"
+				    	paginator="true"
+				    	rows="10"
+				    	paginatorPosition="bottom"
+				    	emptyMessage="No existen registros">\
+				    	<p:column
+				    		styleClass="leftLabel"
+				    		width="120">
+				    		<f:facet name="header">
+				    			<h:outputText value="Clave"/>
+				            </f:facet>
+				            <h:outputText	            	
+			      				value="#{item.producto.clave}"/>
+				        </p:column>
+				        <p:column
+				        	styleClass="leftLabel">
+				        	<f:facet name="header">
+				        		<h:outputText value="Producto"/>
+							</f:facet>
+							<h:outputText					
+								value="#{item.producto.nombre}"/>
+				        </p:column> 
+				        <p:column
+				        	styleClass="rightLabel" 
+				        	width="80">
+				            <f:facet name="header">
+				                <h:outputText value="Cantidad"/>
+				            </f:facet>
+				            <h:outputText	            	
+				            	value="#{item.cantidad}"/>
+				        </p:column>
+				        <p:column
+				        	styleClass="rightLabel"
+				        	width="100">
+				            <f:facet name="header">
+				                <h:outputText value="Precio Unitario"/>
+				            </f:facet>
+				            <h:outputText	            	  
+				            	value="#{item.preciounitario}">
+				            	<f:convertNumber 
+				            		currencySymbol="$"
+				            		type="currency"/>	            
+				            </h:outputText>
+				        </p:column>	
+				        <p:column
+		                	styleClass="rightLabel"
+		                	width="90">
+		                	<f:facet name="header">
+		                        <h:outputText value="Importe"/>
+		                    </f:facet>
+		                    <h:outputText value="#{pos:obtenImporte(item.preciounitario, item.cantidad)}">
+		                    	<f:convertNumber 
+		     						currencySymbol="$"
+		     						type="currency"/>
+		                    </h:outputText>
+		                </p:column>	                        
+				    </p:dataTable>
+				</p:column>	
+		       	<p:column>	       			
+		       		<h:outputText 
+		       			styleClass="boldLabel" 
+		       			value="Subtotal" />
+		        	<div 
+		        		class="number">
+		        		<h:outputText 
+		        			value="#{apartadoBean.payment.subtotal}">
+		        			<f:convertNumber 
+		        				currencySymbol="$"
+		        				type="currency"/>
+		        		</h:outputText>
+		        	</div>
+		        	<br/>
+		        	<h:outputText 
+		        		styleClass="boldLabel"  
+		        		value="IVA" />
+		        	<div
+		        		class="number">	            										
+						<h:outputText 
+							value="#{apartadoBean.payment.tax}">
+							<f:convertNumber 
+		         				currencySymbol="$"
+		         				type="currency" />
+		        		</h:outputText>
+					</div>
+					<br/>
+					<h:outputText 
+						styleClass="boldLabel"  
+						value="Total" />
+					<div 
+						class="number">							
+						<h:outputText 
+							value="#{apartadoBean.payment.total}">
+							<f:convertNumber 
+		         				currencySymbol="$"
+		         				type="currency" />
+		        		</h:outputText>
+		       		</div>	       		
+		       	</p:column>
+	       	</p:panelGrid>			    
+		</p:panel>
+	</f:view>
+</html>

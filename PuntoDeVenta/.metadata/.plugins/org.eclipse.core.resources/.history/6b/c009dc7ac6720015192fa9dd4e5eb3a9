@@ -1,0 +1,15 @@
+package com.alidasoftware.pos.helper;
+
+import javax.persistence.Entity;
+
+@Entity
+public class DetalleCorteParcialHelper {
+
+	private int idFormaPago;
+	
+	private float cantidad;
+	
+	public DetalleCorteParcalHelper
+	{}
+	
+}

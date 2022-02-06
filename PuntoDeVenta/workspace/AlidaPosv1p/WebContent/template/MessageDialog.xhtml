@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pos="http://pos.com/functions">
+
+	<ui:composition>
+		<f:view
+ 			locale="#{sessionBean.locale}">
+			<p:dialog 
+				modal="true" 
+				widgetVar="messageDialog"
+				showHeader="true"
+				header="#{sessionBean.messageTitle}"
+				appendTo="@(body)"			
+				resizable="false" 
+				draggable="false">
+				<p:panelGrid>
+					<p:outputLabel
+						styleClass="boldLabel" 
+						value="#{sessionBean.message}" />
+				</p:panelGrid>
+				<p:commandButton
+					value="Aceptar" 
+					action="#{sessionBean.cleanMessage}"
+					onclick="PF('messageDialog').hide();"/>							
+			</p:dialog>
+		</f:view>
+	</ui:composition>      
+</html>				

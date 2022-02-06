@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/template.xhtml">
+
+        <ui:define name="body">
+        	<h:form id="InventarioFisicoListForm">
+	            <p:layout>
+		            <p:layoutUnit id="westLayout" position="west" size="150" header="Menu" collapsible="true">	
+		            	<p:commandButton 			            	    
+		                	id="createButton" 
+		                	icon="ui-icon-plus"   
+		                	value="#{msg['catalogo.LeftMenu.Button.Nuevo']}" 		                	
+		                	action="#{inventarioFisicoBean.prepareCreate}"
+		                	update=":InventarioFisicoCreateForm"
+		                	oncomplete="PF('InventarioFisicoCreateDialog').show()"	
+		                	style="width:98%;height:50px"/>
+		                
+		            </p:layoutUnit>
+		            <p:layoutUnit position="center">
+		            <p:panel 
+		            		id="inventarioFisicoListPanel"
+       						header="#{msg['catalogo.InventarioFisico.List.MsgHeader']}">
+			                    <p:dataTable 
+			                    	id="datalist" 
+			                    	value="#{inventarioFisicoBean.inventarios}"
+			                    	var="item"
+			                    	selectionMode="single" 
+			                    	selection="#{inventarioFisicoBean.selected}"
+			                    	paginator="true"
+			                    	paginatorPosition="bottom"
+			                        rowKey="#{item.idinventariofisico}"
+			                        rows="10"
+			                        emptyMessage="#{msg['tbl.emptyMsg']}">
+			
+			                        <!--  p:ajax 
+		                        	event="rowDblselect" 
+		                        	update=":UnidadViewForm"
+		                        	oncomplete="PF('UnidadViewDialog').show()"
+		                        	listener="#{unidadBean.onRowDblClckSelect}" /-->
+			                        
+			                        <p:column>
+			                            <f:facet name="header">
+			                                <h:outputText value="#{msg['catalogo.Label.Fecha']}"/>
+			                            </f:facet>
+			                            <h:outputText value="#{item.fecha}"/>
+			                        </p:column>
+			                        
+			                        <p:column>
+			                            <f:facet name="header">
+			                                <h:outputText value="#{msg['catalogo.Label.HoraInicio']}"/>
+			                            </f:facet>
+			                            <h:outputText value="#{item.horainicio}"/>
+			                        </p:column>
+			                        
+			                        <p:column>
+			                            <f:facet name="header">
+			                                <h:outputText value="#{msg['catalogo.Label.HoraFin']}"/>
+			                            </f:facet>
+			                            <h:outputText value="#{item.horafin}"/>
+			                        </p:column>
+
+			                        <p:column>
+			                            <f:facet name="header">
+			                                <h:outputText value="#{msg['catalogo.Label.CostoTotal']}"/>
+			                            </f:facet>
+			                            <h:outputText value="#{item.costototal}"/>
+			                        </p:column>
+			                        
+			                    </p:dataTable>
+			                </p:panel>
+		         
+		            </p:layoutUnit>               
+	            </p:layout>
+			</h:form> 
+
+           	<!-- ui:include src="View.xhtml"/-->
+            <ui:include src="Create.xhtml"/>
+            
+        </ui:define>
+    </ui:composition>
+
+</html>

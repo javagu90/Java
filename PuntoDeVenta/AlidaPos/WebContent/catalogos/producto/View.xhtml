@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="ProductoViewDlg" widgetVar="ProductoViewDialog" modal="true"
+		resizable="false" appendTo="@(body)"
+        header="#{msg['catalogo.Producto.Ver.MsgHeader']}">
+		<h:form id="ProductoViewForm" 
+            	onkeyup="if (event.keyCode == 13) { return false; }"
+				onkeypress="if (event.keyCode == 13) { return false; }">
+				<p:layout id="display" style="width:860px;height:340px">
+				    <p:layoutUnit position="west" size="270">
+						<p:graphicImage id="imagenproducto" library="images" name="#{productoBean.filenameImage}" width="100%"/>                	
+				    </p:layoutUnit>
+				 
+				    <p:layoutUnit position="center">
+						<p:panelGrid columns="2"
+							rendered="#{productoBean.selected != null}">
+							
+							<h:outputText value="#{msg['catalogo.Label.Nombre']}"/>
+							<h:outputText value="#{productoBean.selected.nombre}"
+								title="#{msg['catalogo.Label.Nombre']}"/>
+											    
+							<h:outputText value="#{msg['catalogo.Label.Clave']}"/>
+							<h:outputText value="#{productoBean.selected.clave}"
+								title="#{msg['catalogo.Label.Clave']}"/>
+								
+							<h:outputText value="#{msg['catalogo.Label.Codigo']}"/>
+							<h:outputText value="#{productoBean.selected.codigo}"
+								title="#{msg['catalogo.Label.Codigo']}"/>
+								
+							<h:outputText value="#{msg['catalogo.Label.Proveedor']}"/>
+							<h:outputText value="#{productoBean.selected.proveedor.claveproveedor}"
+								title="#{msg['catalogo.Label.Proveedor']}"/>
+								
+							<h:outputText value="#{msg['catalogo.Label.PrecioProveedor']}"/>
+							<h:outputText value="#{productoBean.selected.precio}"
+								title="#{msg['catalogo.Label.PrecioProveedor']}">
+			                    	<f:convertNumber 
+			     					currencySymbol="$"
+			     					type="currency"/>
+                            </h:outputText>
+								
+							<h:outputText value="#{msg['catalogo.Label.Unidad']}"/>
+							<h:outputText value="#{productoBean.selected.unidad.nombre}"
+								title="#{msg['catalogo.Label.Unidad']}"/>
+								
+							<h:outputText value="#{msg['catalogo.Label.Iva']}"/>
+							<h:outputText value="#{productoBean.selected.iva}"
+								title="#{msg['catalogo.Label.Iva']}"/>
+																
+								
+							<h:outputText value="#{msg['catalogo.Label.Categorias']}"/>
+							<h:outputText value="#{productoBean.selected.categoriasString}"
+								title="#{msg['catalogo.Label.Categorias']}"/>
+
+							<h:outputText value="#{msg['catalogo.Label.Descripcion']}"/>
+							<h:outputText value="#{productoBean.selected.descripcion}"
+								title="#{msg['catalogo.Label.Descripcion']}"/>
+
+							<h:outputText value="#{msg['catalogo.Label.Comentarios']}"/>
+							<h:outputText value="#{productoBean.selected.comentarios}"
+								title="#{msg['catalogo.Label.Comentarios']}"/>
+								
+							<h:outputText value="#{msg['catalogo.Label.FechaAlta']}"/>
+							<h:outputText value="#{productoBean.selected.fechaingreso}"
+								title="#{msg['catalogo.Label.FechaAlta']}">
+					        	<f:convertDateTime pattern="dd/MM/yyyy" />
+					        </h:outputText>			    						
+
+						</p:panelGrid>
+				    </p:layoutUnit>
+				</p:layout>
+
+				<p:commandButton 
+                    value="#{msg['catalogo.Button.Cerrar']}" 
+					onclick="ProductoViewDialog.hide()" />
+		</h:form>
+	</p:dialog>
+
+</ui:composition>
+</html>

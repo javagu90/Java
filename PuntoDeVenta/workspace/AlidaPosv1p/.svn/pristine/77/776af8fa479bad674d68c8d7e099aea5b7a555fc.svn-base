@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<ui:composition>
+
+	<p:dialog id="EmpleadoViewDlg" widgetVar="EmpleadoViewDialog" modal="true"
+		resizable="false" appendTo="@(body)"
+        header="#{msg['catalogo.Empleado.Ver.MsgHeader']}">
+		<h:form id="EmpleadoViewForm">
+			<h:panelGroup id="display">
+                <p:tabView>
+                	<p:tab id="personal" title="#{msg['catalogo.Tab.Title.Personal']}">
+                    <p:panelGrid columns="2">
+                    	                       	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Nombre']}"
+                        	for="nombre" />
+                        <p:inputText 
+                        	id="nombre" 
+                        	value="#{empleadoBean.selected.persona.nombre}"
+                        	readonly="true"/>
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.ApellidoPaterno']}"
+                        	for="apellidopaterno" />
+                        <p:inputText 
+                        	id="apellidopaterno" 
+                        	value="#{empleadoBean.selected.persona.apellidopaterno}" 
+                        	readonly="true"/>
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.ApellidoMaterno']}"
+                        	for="apellidomaterno" />
+                        <p:inputText 
+                        	id="apellidomaterno" 
+                        	value="#{empleadoBean.selected.persona.apellidomaterno}"
+                        	readonly="true"/>
+
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.FechaNacimiento']}"
+                        	for="fecha" />
+						<p:calendar 
+                        	id="fecha" 
+                        	value="#{empleadoBean.selected.persona.fechanacimiento}" 
+                        	pattern="dd/MM/yyyy"
+                        	locale="es"
+                        	readonly="true"
+                        	disabled="true"/>
+                        	
+                         <p:outputLabel
+                        	value="#{msg['catalogo.Label.Clave']}"
+                        	for="clave" />
+                        <p:inputText 
+                        	id="clave" 
+                        	value="#{empleadoBean.selected.claveempleado}" 
+                        	readonly="true"/>
+               	
+               			<p:outputLabel
+                        	value="#{msg['catalogo.Label.Tienda']}" 
+                        	for="tienda" />
+                        <p:inputText 
+                        	id="tienda" 
+                        	value="#{empleadoBean.selected.tienda.nombre}" 
+                        	readonly="true"/>
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Comentarios']}" 
+                        	for="comentarios" />
+                        <p:inputTextarea 
+                        	rows="6" 
+                        	cols="40"
+                        	id="comentarios" 
+                        	value="#{empleadoBean.selected.comentarios}" 
+                        	readonly="true"/>
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.Estatus']}"/>	
+                        <p:selectBooleanCheckbox 
+                        	value="#{empleadoBean.selected.activo}" disabled="true"/>
+   	
+                    </p:panelGrid>
+		        	</p:tab>    
+		        	                    	
+                	<p:tab id="contacto" title="#{msg['catalogo.Tab.Title.Contacto']}">
+                    <p:panelGrid columns="2">
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Calle']}"
+                        	for="calle" />
+                        <p:inputText 
+                        	id="calle" 
+                        	value="#{empleadoBean.selected.persona.contacto.direcciones[0].calle}" 
+                        	readonly="true"/>
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.NumExt']}"
+                        	for="exterior" />
+                        <p:inputText 
+                        	id="exterior" 
+                        	value="#{empleadoBean.selected.persona.contacto.direcciones[0].numext}" 
+                        	readonly="true"/>
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.NumInt']}"
+                        	for="interior" />
+                        <p:inputText 
+                        	id="interior" 
+                        	value="#{empleadoBean.selected.persona.contacto.direcciones[0].numint}" 
+                        	readonly="true"/>
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Colonia']}" 
+                        	for="colonia" />
+                        <p:inputText 
+                        	id="colonia" 
+                        	value="#{empleadoBean.selected.persona.contacto.direcciones[0].colonia}" 
+                        	readonly="true"/>
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.CodigoPostal']}" 
+                        	for="cp" />
+                        <p:inputMask  
+                        	id="cp" 
+                        	value="#{empleadoBean.selected.persona.contacto.direcciones[0].codigopostal}" 
+                        	readonly="true"
+                       		mask="99999" 
+                       		/>
+                        	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Estado']}"
+                        	for="estado" />
+                        <p:inputText 
+                        	id="estado" 
+                        	value="#{empleadoBean.selected.persona.contacto.direcciones[0].municipio.estado.nombre}" 
+                        	readonly="true"/>           	
+                       	            
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Municipio']}"
+                        	for="municipio" />
+			            <p:inputText 
+                        	id="municipio" 
+                        	value="#{empleadoBean.selected.persona.contacto.direcciones[0].municipio.nombre}" 
+                        	readonly="true"/>
+                    	
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Telefono1']}"
+                        	for="telefono1" />
+                        <p:inputMask
+                        	id="telefono1" 
+                        	value="#{empleadoBean.selected.persona.contacto.telefono1}" 
+                        	readonly="true"
+                        	mask="(999)999999"
+                        	/>
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Telefono2']}"
+                        	for="telefono2" />
+                        <p:inputMask
+                        	id="telefono2" 
+                        	value="#{empleadoBean.selected.persona.contacto.telefono2}" 
+                        	readonly="true"
+                        	mask="(999)999999"
+                        	/>
+
+                        <p:outputLabel
+                        	value="#{msg['catalogo.Label.Email']}"
+                        	for="correoelectronico" />
+                        <p:inputText 
+                        	id="correoelectronico" 
+                        	value="#{empleadoBean.selected.persona.contacto.correoelectronico}" 
+                        	readonly="true"/>
+                        	
+                    </p:panelGrid>
+		        	</p:tab>    
+		        	                    	
+		        	                    	
+                	<p:tab id="facturacion" title="#{msg['catalogo.Tab.Title.Facturacion']}">
+                    <p:panelGrid columns="2">
+
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.Rfc']}"
+                        	for="rfc" />
+                        <p:inputText 
+                        	id="rfc" 
+                        	value="#{empleadoBean.selected.persona.rfc}" 
+                        	readonly="true" />
+                        	
+                        <p:outputLabel                         	
+                        	value="#{msg['catalogo.Label.RazonSocial']}"
+                        	for="razonsocial" />
+                        <p:inputText 
+                        	id="razonsocial" 
+                        	value="#{empleadoBean.selected.persona.razonsocial}" 
+                        	readonly="true" />
+                        	
+                        <p:outputLabel 
+                        	value="#{msg['catalogo.Label.TipoPersona']}"
+                        	for="tipopersona" />
+				        <p:selectOneRadio 
+				        id="tipopersona" 
+				        value="#{empleadoBean.selected.persona.tipopersona}"
+                        	title="#{msg['catalogo.Label.TipoPersona']}"
+                        	disabled="true">
+        
+				            <f:selectItem itemLabel="Física" itemValue="1" />
+				            <f:selectItem itemLabel="Moral" itemValue="2" />
+				        </p:selectOneRadio>
+                                	                        	
+                    </p:panelGrid>
+		        	</p:tab>    
+
+    			</p:tabView>
+
+                    <p:commandButton 
+                    value="#{msg['catalogo.Button.Cerrar']}" 
+					onclick="EmpleadoViewDialog.hide()" />                   
+                </h:panelGroup>
+		</h:form>
+	</p:dialog>
+
+</ui:composition>
+</html>

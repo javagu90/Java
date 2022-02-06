@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE facelet-taglib PUBLIC
+    "-//Sun Microsystems, Inc.//DTD Facelet Taglib 1.0//EN"
+    "http://java.sun.com/dtd/facelet-taglib_1_0.dtd">
+
+<facelet-taglib>
+	<namespace>http://pos.com/functions</namespace>	
+	<function>
+		<function-name>getApartadoPagoCount</function-name>
+        <function-class>com.alidasoftware.pos.util.Functions</function-class>
+        <function-signature>int getApartadoPagoCount(com.alidasoftware.pos.model.Apartado)</function-signature>
+	</function>
+	<function>
+		<function-name>getApartadoPagoMonto</function-name>
+        <function-class>com.alidasoftware.pos.util.Functions</function-class>
+        <function-signature>float getApartadoPagoMonto(com.alidasoftware.pos.model.Apartado)</function-signature>
+	</function>
+	<function>
+        <function-name>valeStatus</function-name>
+        <function-class>com.alidasoftware.pos.util.Functions</function-class>
+        <function-signature>String valeStatus(int)</function-signature>
+    </function> 
+    <function>
+    	<function-name>getStatusDescription</function-name>
+    	<function-class>com.alidasoftware.pos.util.Functions</function-class>
+    	<function-signature>String getStatusDescription(boolean)</function-signature>
+    </function>
+    <function>
+    	<function-name>getTipoDias</function-name>
+    	<function-class>com.alidasoftware.pos.util.Functions</function-class>
+    	<function-signature>String getTipoDias(java.lang.String)</function-signature>
+    </function>   
+	<function>
+        <function-name>apartadoStatus</function-name>
+        <function-class>com.alidasoftware.pos.util.Functions</function-class>
+        <function-signature>String apartadoStatus(int)</function-signature>
+    </function>
+    <function>
+    	<function-name>showAddPaymentApartado</function-name>
+        <function-class>com.alidasoftware.pos.util.Functions</function-class>
+        <function-signature>boolean showAddPaymentApartado(int)</function-signature>
+    </function>
+    <function>
+        <function-name>showDeleteApartado</function-name>
+        <function-class>com.alidasoftware.pos.util.Functions</function-class>
+        <function-signature>boolean showDeleteApartado(int)</function-signature>
+    </function>
+    <function>
+        <function-name>showEditApartado</function-name>
+        <function-class>com.alidasoftware.pos.util.Functions</function-class>
+        <function-signature>boolean showEditApartado(int)</function-signature>
+    </function>
+    <function>
+        <function-name>disabledEditApartadoButton</function-name>
+        <function-class>com.alidasoftware.pos.util.Functions</function-class>
+        <function-signature>boolean disabledEditApartadoButton(com.alidasoftware.pos.model.Apartado)</function-signature>
+    </function>
+    <function>
+        <function-name>vistaStatus</function-name>
+        <function-class>com.alidasoftware.pos.util.Functions</function-class>
+        <function-signature>String vistaStatus(int)</function-signature>
+    </function>
+    <function>
+        <function-name>showDeleteVista</function-name>
+        <function-class>com.alidasoftware.pos.util.Functions</function-class>
+        <function-signature>boolean showDeleteVista(int)</function-signature>
+    </function>
+    <function>
+        <function-name>disabledEditViewButton</function-name>
+        <function-class>com.alidasoftware.pos.util.Functions</function-class>
+        <function-signature>boolean disabledEditViewButton(com.alidasoftware.pos.model.Vista)</function-signature>
+    </function>    
+    <function>
+        <function-name>ventaStatus</function-name>
+        <function-class>com.alidasoftware.pos.util.Functions</function-class>
+        <function-signature>String ventaStatus(int)</function-signature>
+    </function>
+    <function>
+        <function-name>showDeleteVenta</function-name>
+        <function-class>com.alidasoftware.pos.util.Functions</function-class>
+        <function-signature>boolean showDeleteVenta(int)</function-signature>
+    </function>
+    <function>
+        <function-name>disabledEditVentaButton</function-name>
+        <function-class>com.alidasoftware.pos.util.Functions</function-class>
+        <function-signature>boolean disabledEditVentaButton(com.alidasoftware.pos.model.Venta)</function-signature>
+    </function>    
+    <function>
+    	<function-name>clientName</function-name>
+    	<function-class>com.alidasoftware.pos.util.Functions</function-class>
+    	<function-signature>String clientName(com.alidasoftware.pos.model.Cliente)</function-signature>
+    </function>
+    <function>
+    	<function-name>personName</function-name>
+    	<function-class>com.alidasoftware.pos.util.Functions</function-class>
+    	<function-signature>String personName(com.alidasoftware.pos.model.Persona)</function-signature>
+    </function>
+    <function>
+    	<function-name>empleadoInfo</function-name>
+    	<function-class>com.alidasoftware.pos.util.Functions</function-class>
+    	<function-signature>String empleadoInfo(com.alidasoftware.pos.model.Empleado)</function-signature>
+    </function>
+    <function>
+    	<function-name>contactInfo</function-name>
+    	<function-class>com.alidasoftware.pos.util.Functions</function-class>
+    	<function-signature>String contactInfo(com.alidasoftware.pos.model.Contacto)</function-signature>
+    </function>
+    <function>
+    	<function-name>productNameCode</function-name>
+    	<function-class>com.alidasoftware.pos.util.Functions</function-class>
+    	<function-signature>String productNameCode(com.alidasoftware.pos.model.Producto)</function-signature>
+    </function>
+    <function>
+    	<function-name>obtenImporte</function-name>
+    	<function-class>com.alidasoftware.pos.util.Functions</function-class>
+    	<function-signature>float obtenImporte(float, float)</function-signature>
+    </function>
+    <function>
+    	<function-name>getExpirationDate</function-name>
+    	<function-class>com.alidasoftware.pos.util.Utils</function-class>
+    	<function-signature>java.util.Date getExpirationDate(java.util.Date, int, int)</function-signature>
+    </function>       
+    <function>
+    	<function-name>getPorcentaje</function-name>
+    	<function-class>com.alidasoftware.pos.util.Functions</function-class>
+    	<function-signature>float getPorcentaje(float)</function-signature>
+    </function>
+    <function>
+    	<function-name>getTipoPromocion</function-name>
+    	<function-class>com.alidasoftware.pos.util.Functions</function-class>
+    	<function-signature>String getTipoPromocion(com.alidasoftware.pos.model.Promocion)</function-signature>
+    </function>
+    <function>
+    	<function-name>getElementosEnPromocion</function-name>
+    	<function-class>com.alidasoftware.pos.util.Functions</function-class>
+    	<function-signature>String getElementosEnPromocion(com.alidasoftware.pos.model.Promocion)</function-signature>
+    </function>
+</facelet-taglib>

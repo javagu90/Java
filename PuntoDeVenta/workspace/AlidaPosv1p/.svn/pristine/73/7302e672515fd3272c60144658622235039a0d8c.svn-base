@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/template.xhtml">
+
+        <ui:define name="body">
+        	<h:form id="ListForm">
+	            <p:layout>
+		            <p:layoutUnit id="westLayout" position="west" size="150" header="Menu" collapsible="true">	
+		            	<p:remoteCommand name="updateButtons" update="button1" />	            	
+		            	<p:commandButton 			            	    
+		                	id="button1" 		                	
+		                />		                     		                    
+		            </p:layoutUnit>
+		            <p:layoutUnit position="center">		            	
+		            	<p:panel header="Titulo">
+		            		<!--  value     = variable del backbean lista con el tipo de clase que se mostrara
+		            		      selection = variable del tipo de dato que se mostrara
+		            		      var       = variable que se manejara dentro del dataTable
+		            		      rows      = numero de filas que se mostraran
+		            		
+		            		 -->
+		                    <p:dataTable 
+		                    	id="datalist" 
+		                    	value="#{estadoBean.estados}"  
+		                    	var="item"
+		                    	selectionMode="single" 
+		                    	selection="#{estadoBean.selected}"
+		                        paginator="true"
+		                        rowKey="#{item.idEstado}"
+		                        rows="10"
+		                        emptyMessage="#{msg['tbl.emptyMsg']}">
+		                        	
+		                        <p:ajax event="rowSelect"   oncomplete="updateButtons()" />
+		                        <p:ajax event="rowUnselect" oncomplete="updateButtons()" />
+
+		                        <p:column>
+		                            <f:facet name="header">
+		                                <h:outputText value="Id Estado"/>
+		                            </f:facet>
+		                            <h:outputText value="#{item.idEstado}"/>
+		                        </p:column>
+		                    </p:dataTable>
+		                </p:panel>		         
+		            </p:layoutUnit>               
+	            </p:layout>
+			</h:form> 
+           	<ui:include src="View.xhtml"/>            
+        </ui:define>
+    </ui:composition>
+
+</html>

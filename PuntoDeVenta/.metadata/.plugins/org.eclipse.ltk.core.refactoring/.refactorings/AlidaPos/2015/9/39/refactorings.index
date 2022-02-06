@@ -1,0 +1,18 @@
+1442852231760	Encapsulate field 'strFecha'
+1442852393597	Encapsulate field 'strFecha'
+1442861283880	Encapsulate field 'searchFecha'
+1442861621299	Encapsulate field 'selected'
+1442940441650	Encapsulate field 'selected'
+1442955989739	Move file
+1442956220997	Move 1 resources to 'corteCaja'
+1443044866391	Encapsulate field 'nombreCaja'
+1443108045983	Encapsulate field 'idUsuario1'
+1443111754089	Encapsulate field 'idCaja'
+1443112318775	Encapsulate field 'usuarioFacade'
+1443112326930	Encapsulate field 'logeado'
+1443112461118	Delete element
+1443113777132	Copy compilation unit
+1443208757926	Encapsulate field 'permisoCorteParcial'
+1443208768525	Encapsulate field 'permisoCierreCaja'
+1443219344443	Encapsulate field 'listaSumatoriaPagos'
+1443219413268	Encapsulate field 'pagoVentaFacade'

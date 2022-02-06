@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition template="/template/template.xhtml">
+        <ui:define name="body">
+        	<h:form id="VentaForm">	            	
+	            <p:panel header="Módulo de Vista" >
+	            	<p:panelGrid columns="2">
+		            	<p:column>
+		            		<p:panelGrid columns="3">
+		                		<p:outputLabel
+		                			value="Cliente"/>
+		                		<p:autoComplete                 			
+		                			var="prod"
+		                			itemLabel="#{prod.nombre}"
+		                			itemValue="{prod}"
+		                			value="#{inventarioBean.producto}"                			
+		                			completeMethod="#{inventarioBean.completeProducto}" 
+		                			minQueryLength="3"
+		                			forceSelection="true"
+		                			queryDelay="300"
+		                			size="80" />
+		                		<p:commandButton value="Buscar" label="Buscar"/>
+		                		<p:outputLabel
+		                			value="Producto"/>
+		                		<p:autoComplete                 			
+		                			var="prod"
+		                			itemLabel="#{prod.clave}-#{prod.nombre}"
+		                			itemValue="{prod}"
+		                			value="#{inventarioBean.producto}"                			
+		                			completeMethod="#{inventarioBean.completeProducto}" 
+		                			minQueryLength="3"
+		                			forceSelection="true"
+		                			queryDelay="300"
+		                			size="80" />
+		                		<p:commandButton 
+		                			value="Agregar"
+		                			label="Agregar"
+		                			actionListener="#{inventarioBean.addProduct}"
+		                			/>
+		                	</p:panelGrid>
+		                	<br/>
+		                	<p:dataTable 
+		                    	value="#{inventarioBean.detalleInventarios}"
+		                    	var="item"
+		                    	selectionMode="single" 
+		                    	selection="#{inventarioBean.detalleSelected}"
+		                    	paginator="true"
+		                        rowKey="#{item.iddetalleinventario}"
+		                        rows="10"
+		                        scrollable="true"
+		                        scrollHeight="320"
+		                        paginatorPosition="bottom"	                        
+		                        emptyMessage="No existen registros">		
+		                        <p:column selectionMode="multiple" />		                        
+		                        <p:column>
+		                            <f:facet name="header">
+		                                <h:outputText value="Clave"/>
+		                            </f:facet>
+		                            <h:outputText value="#{item.producto.clave}"/>
+		                        </p:column>
+		                        <p:column>
+		                           <f:facet name="header">
+		                               <h:outputText value="Producto"/>
+		                           </f:facet>
+		                           <h:outputText value="#{item.producto.nombre}"/>
+		                        </p:column> 
+		                        <p:column>
+		                            <f:facet name="header">
+		                                <h:outputText value="Cantidad"/>
+		                            </f:facet>
+		                            <h:outputText value="#{item.existenciaventa}"/>
+		                        </p:column>
+		                        <p:column>
+		                            <f:facet name="header">
+		                                <h:outputText value="Precio Unitario"/>
+		                            </f:facet>
+		                            <h:outputText value="#{item.existenciaapvi}"/>
+		                        </p:column>
+		                        
+		                    </p:dataTable>
+		            	</p:column>	
+		            	<p:column>
+		            		<p:panel header="Información Venta">
+			            		<p:panelGrid columns="2">
+									<h:outputText value="SubTotal" />
+									<p:outputLabel value="0.00" style="width:50px;">
+									</p:outputLabel>											
+									<h:outputText value="IVA" />
+									<p:outputLabel value="0.00" style="width:50px;">
+									</p:outputLabel>
+									<h:outputText value="Total" />
+									<p:outputLabel value="0.00" style="width:50px;">
+									</p:outputLabel>
+								</p:panelGrid>
+			            	</p:panel>
+		            		<p:panel header="Vencimiento">
+		            			<p:selectOneMenu
+		            				style="width:200px;">				            			
+		            			</p:selectOneMenu>
+		            			<br/>
+		            			<br/>
+		            			<h:outputText value="Fecha: " />
+		            		</p:panel>				            		
+		            		<p:panel header="Comentarios">
+		            			<p:inputTextarea 
+	                       			value=""
+	                       			title="Comentarios"
+	                       			scrollHeight="150"
+	                       			style="width:200px;height:150px;" />
+		            		</p:panel>					            							            
+		            	</p:column>
+	            	</p:panelGrid>          	
+	            </p:panel>			            
+			</h:form>
+        </ui:define>
+    </ui:composition>
+</html>

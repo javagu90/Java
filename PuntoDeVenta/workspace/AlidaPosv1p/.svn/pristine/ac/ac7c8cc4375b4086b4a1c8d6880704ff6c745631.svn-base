@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+	  xmlns:pos="http://pos.com/functions">
+	  
+    <ui:composition template="/template/template.xhtml">
+
+        <ui:define name="body">
+        	<h:form id="TraspasoListForm">
+	            <p:layout>
+		            <p:layoutUnit id="westLayout" position="west" size="150" header="Menu" collapsible="true">	          	
+		            	<p:commandButton 			            	    
+		                	id="createButton" 
+		                	icon="ui-icon-plus"   
+		                	value="#{msg['catalogo.LeftMenu.Button.Nuevo']}" 		                	
+		                	action="#{traspasoBean.prepareCreate}"
+		                	update=":TraspasoCreateForm"
+		                	oncomplete="PF('TraspasoCreateDialog').show()"	
+		                	style="width:98%;height:50px"
+		                />
+		            </p:layoutUnit>
+		            <p:layoutUnit position="center">
+		            	
+			            	<p:panel 
+        						header="#{msg['catalogo.Traspaso.List.MsgHeader']}">
+			                    <p:dataTable 
+			                    	id="datalist" 
+			                    	value="#{traspasoBean.traspasos}"
+			                    	var="item"
+			                    	selectionMode="single" 
+			                    	selection="#{traspasoBean.selected}"
+			                    	paginator="true"
+			                    	paginatorPosition="bottom"
+			                        rowKey="#{item.idtraspaso}"
+			                        rows="10"
+			                        emptyMessage="#{msg['tbl.emptyMsg']}">
+			                        
+			                        <p:ajax 
+		                        	event="rowDblselect" 
+		                        	update=":TraspasoViewForm"
+		                        	oncomplete="PF('TraspasoViewDialog').show()"
+		                        	listener="#{traspasoBean.onRowDblClckSelect}" />
+			                        
+			                        <p:column>
+			                        	<f:facet name="header">
+			                        		<h:outputText value="Tienda Origen"/>
+			                        	</f:facet>
+			                        	<h:outputText value="#{item.tienda1.nombre}"/>	
+			                        </p:column>
+			                        
+			                        <p:column>
+			                        	<f:facet name="header">
+			                        		<h:outputText value="Tienda Destino"/>
+			                        	</f:facet>
+			                        	<h:outputText value="#{item.tienda2.nombre}"/>
+			                        </p:column>
+			                        
+			                        <p:column>
+			                            <f:facet name="header">
+			                                <h:outputText value="#{msg['catalogo.Label.Comentarios']}"/>
+			                            </f:facet>
+			                            <h:outputText value="#{item.comentarios}"/>
+			                        </p:column>
+			                        
+			                        <p:column styleClass="leftLabel">
+			                            <f:facet name="header">
+			                                <h:outputText value="#{msg['catalogo.Label.Estatus']}"/>
+			                            </f:facet>
+			                            <h:outputText value="#{item.activo eq true ? 'Activo':'Cancelado'}"/>
+		                        	</p:column>
+			                        
+			                        <p:column			                        	
+		                        		width="24" >
+			                        	<p:commandButton 
+						                	id="deleteButton" 
+						                	title="Cancelar Traspaso"
+						                	icon="ui-icon-trash"  		                	
+						                	action="#{traspasoBean.destroy}" 
+				                            update=":growl,datalist" 
+				                            onclick="if (confirm('Se cancelara el Traspaso seleccionado.\n\n¿Seguro de continuar ?\n') == false) return false;"
+						                	style="width:24px;height:24px;">
+						                	<f:setPropertyActionListener
+	             								target="#{traspasoBean.selected}"
+	             								value="#{item}" />
+		                        		</p:commandButton>						                
+			                        </p:column>		                        
+			                        	                        
+			                    </p:dataTable>
+			                </p:panel>
+		         
+		            </p:layoutUnit>               
+	            </p:layout>
+			</h:form> 
+
+           	<ui:include src="View.xhtml"/>
+            <ui:include src="Create.xhtml"/>
+            
+        </ui:define>
+    </ui:composition>
+
+</html>

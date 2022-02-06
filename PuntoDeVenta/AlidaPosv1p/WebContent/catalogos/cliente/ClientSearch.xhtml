@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pos="http://pos.com/functions">
+
+	<ui:composition>
+		<p:dialog
+			modal="true" 
+			widgetVar="clientSearchDialog"
+			showHeader="true"
+			header="Buscar Cliente"
+			appendTo="@(body)"			 
+			resizable="false" 
+			draggable="true">
+			<p:ajax
+				event="close"
+				listener="#{clienteBean.handleClose}"/>
+			<h:form 
+				id="clientSearchForm" 
+            	onkeyup="if (event.keyCode == 13) { return false; }"
+				onkeypress="if (event.keyCode == 13) { return false; }">
+				<p:panelGrid
+					id="clientSearchPanel" 
+					columns="3">
+					<p:outputLabel
+						styleClass="boldLabel" 
+	           			value="Filtro"/>
+					<p:inputText
+						value="#{clienteBean.clientQuery}" />
+					<p:commandButton
+						icon="ui-icon-search"
+						value="Buscar"
+						action="#{clienteBean.searchClientList}"
+						update="clientSearchDatatable" />
+				</p:panelGrid>				
+				<p:dataTable
+					id="clientSearchDatatable" 
+                   	value="#{clienteBean.clientesFiltrados}"
+                   	var="item"
+                   	selectionMode="single" 
+                   	selection="#{clienteBean.selected}"
+                   	paginator="true"
+                    rowKey="#{item.idcliente}"
+                    rows="5"                    
+                    paginatorPosition="bottom"
+                    emptyMessage="No existen registros"
+                    style="width:700px;" >
+                    <p:ajax 
+		            	event="rowSelect"   
+		                listener="#{clienteBean.handleRowSelect}" />
+                    <p:column
+                		styleClass="leftLabel"
+                		width="120">
+                   		<f:facet name="header">
+                   			<h:outputText value="Clave"/>
+                       	</f:facet>
+                       	<h:outputText
+                       		value="#{item.clavecliente}"/>
+                   	</p:column>
+                	<p:column
+                		styleClass="leftLabel">
+                   		<f:facet name="header">
+                   			<h:outputText value="Nombre"/>
+                       	</f:facet>
+                       	<h:outputText
+                       		value="#{pos:clientName(item)}"/>
+                   	</p:column>
+                   	<p:column
+                   		styleClass="leftLabel"
+                   		width="130">
+                   		<f:facet name="header">
+                   			<h:outputText value="Categoria Cliente"/>
+                 		</f:facet>
+			            <h:outputText 
+			            	value="#{item.categoriacliente.nombre}"/>
+	            	</p:column>
+	            	<p:column
+	            		styleClass="rightLabel"
+	            		width="80">	
+	            		<f:facet name="header">
+	            			<h:outputText value="Descuento"/>
+            			</f:facet>
+            			<h:outputText 
+            				value="#{item.categoriacliente.descuento}">
+            				<f:convertNumber 
+            					minFractionDigits="2"
+            					maxFractionDigits="2"
+            					type="percent" />
+            			</h:outputText>            				
+                    </p:column>                   	
+				</p:dataTable>	
+				<p:commandButton
+					value="Aceptar"
+					onclick="PF('clientSearchDialog').hide()"
+					/>
+			</h:form>
+		</p:dialog>      
+	</ui:composition>      
+</html>			

@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"      
+      xmlns:pos="http://pos.com/functions">
+	
+	<f:view
+ 		locale="#{sessionBean.locale}">	
+		<p:panel
+			id="vistaViewPanel"
+			header="Información Vista"
+			rendered="#{vistaBean.showViewDialog}">
+			<p:panelGrid 
+	      		columns="2">
+		       	<p:column>
+					<p:panelGrid 
+						columns="3" >
+			      		<p:column>
+			      			<p:panelGrid>
+								<p:row>
+									<p:column>
+										<p:outputLabel
+											styleClass="boldLabel"
+											value="Cliente" />
+									</p:column>
+									<p:column colspan="3">
+										<p:inputText 
+											value="#{pos:clientName(vistaBean.vistaSelected.cliente)}"
+											readonly="true"
+											style="width:360px;" />
+									</p:column>															
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel
+											styleClass="boldLabel" 
+											value="Fecha Creación"/>
+									</p:column>
+									<p:column>
+										<p:inputText 
+											styleClass="centerLabel"
+											value="#{vistaBean.vistaSelected.fecha}"
+											readonly="true"
+											style="width:120px;">
+											<f:convertDateTime pattern="dd-MM-yyyy" />
+										</p:inputText>
+									</p:column>
+									<p:column>
+										<p:outputLabel
+											styleClass="boldLabel" 
+											value="Folio"/>
+									</p:column>
+									<p:column>
+										<p:inputText 
+											styleClass="centerLabel"
+											value="#{vistaBean.vistaSelected.folio}"
+											readonly="true"
+											style="width:150px;" />
+									</p:column>
+								</p:row>
+								<p:row>
+									<p:column>
+										<p:outputLabel
+											styleClass="boldLabel"								
+											value="Vencimiento"/>
+									</p:column>
+									<p:column>
+										<p:inputText 	
+											styleClass="centerLabel"						
+											value="#{pos:getExpirationDate(vistaBean.vistaSelected.fecha, vistaBean.vistaSelected.tipovencimiento.dias, vistaBean.vistaSelected.tipovencimiento.tipodias)}"
+											readonly="true"
+											style="width:120px;" >
+											<f:convertDateTime pattern="dd-MM-yyyy" />
+										</p:inputText>
+									</p:column>
+									<p:column>
+										<p:outputLabel
+											styleClass="boldLabel" 
+											value="Status"/>
+									</p:column>
+									<p:column>
+										<p:inputText 
+											styleClass="centerLabel"
+											value="#{pos:vistaStatus(vistaBean.vistaSelected.status)}"
+											readonly="true"
+											style="width:150px;" />
+									</p:column>	
+								</p:row>
+							</p:panelGrid>      			
+					    </p:column>
+					    <p:column>
+					    	<p:outputLabel 
+					    		styleClass="boldLabel"
+					    		value="Comentarios" />
+					    	<br/>
+					    	<p:inputTextarea
+					    		styleClass="justifyLabel"
+					    		value="#{vistaBean.vistaSelected.comentarios}"
+					    		readonly="true"
+					    		rows="5"
+					    		cols="50" />
+					    </p:column>
+				    </p:panelGrid>
+				    <br/>
+				    <p:dataTable
+				    	value="#{vistaBean.vistaSelected.detallevistas}"
+				    	var="item"
+				    	paginator="true"
+				    	rows="10"
+				    	paginatorPosition="bottom"
+				    	emptyMessage="No existen registros">\
+				    	<p:column
+				    		styleClass="leftLabel"
+				    		width="120">
+				    		<f:facet name="header">
+				    			<h:outputText value="Clave"/>
+				            </f:facet>
+				            <h:outputText	            	
+			      				value="#{item.producto.clave}"/>
+				        </p:column>
+				        <p:column
+				        	styleClass="leftLabel">
+				        	<f:facet name="header">
+				        		<h:outputText value="Producto"/>
+							</f:facet>
+							<h:outputText					
+								value="#{item.producto.nombre}"/>
+				        </p:column> 
+				        <p:column
+				        	styleClass="rightLabel" 
+				        	width="80">
+				            <f:facet name="header">
+				                <h:outputText value="Cantidad"/>
+				            </f:facet>
+				            <h:outputText	            	
+				            	value="#{item.cantidad}"/>
+				        </p:column>
+				        <p:column
+				        	styleClass="rightLabel"
+				        	width="100">
+				            <f:facet name="header">
+				                <h:outputText value="Precio Unitario"/>
+				            </f:facet>
+				            <h:outputText	            	  
+				            	value="#{item.preciounitario}">
+				            	<f:convertNumber 
+				            		currencySymbol="$"
+				            		type="currency"/>	            
+				            </h:outputText>
+				        </p:column>		                        
+				    </p:dataTable>
+				</p:column>	
+		       	<p:column>	       			
+		       		<h:outputText 
+		       			styleClass="boldLabel" 
+		       			value="Subtotal" />
+		        	<div 
+		        		class="number">
+		        		<h:outputText 
+		        			value="#{vistaBean.payment.subtotal}">
+		        			<f:convertNumber 
+		        				currencySymbol="$"
+		        				type="currency"/>
+		        		</h:outputText>
+		        	</div>
+		        	<br/>
+		        	<h:outputText 
+		        		styleClass="boldLabel"  
+		        		value="IVA" />
+		        	<div
+		        		class="number">	            										
+						<h:outputText 
+							value="#{vistaBean.payment.tax}">
+							<f:convertNumber 
+		         				currencySymbol="$"
+		         				type="currency" />
+		        		</h:outputText>
+					</div>
+					<br/>
+					<h:outputText 
+						styleClass="boldLabel"  
+						value="Total" />
+					<div 
+						class="number">							
+						<h:outputText 
+							value="#{vistaBean.payment.total}">
+							<f:convertNumber 
+		         				currencySymbol="$"
+		         				type="currency" />
+		        		</h:outputText>
+		       		</div>	       		
+		       	</p:column>
+	       	</p:panelGrid>			    
+		</p:panel>
+	</f:view>
+</html>

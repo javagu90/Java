@@ -1,0 +1,15 @@
+127.0.0.1 - - [09/Sep/2015:09:58:56 -0500] "GET / HTTP/1.1" 404 961
+127.0.0.1 - - [09/Sep/2015:09:59:06 -0500] "GET /AlidaPos/corteCaja/cortecaja.xhtml HTTP/1.1" 200 15065
+127.0.0.1 - - [09/Sep/2015:09:59:06 -0500] "GET /AlidaPos/javax.faces.resource/jsfcrud.css.xhtml;jsessionid=E615C0D8846988F267849912C92E5F8F?ln=css HTTP/1.1" 200 3838
+127.0.0.1 - - [09/Sep/2015:09:59:06 -0500] "GET /AlidaPos/javax.faces.resource/jquery/jquery.js.xhtml;jsessionid=E615C0D8846988F267849912C92E5F8F?ln=primefaces&v=5.0 HTTP/1.1" 200 108195
+127.0.0.1 - - [09/Sep/2015:09:59:06 -0500] "GET /AlidaPos/javax.faces.resource/jquery/jquery-plugins.js.xhtml;jsessionid=E615C0D8846988F267849912C92E5F8F?ln=primefaces&v=5.0 HTTP/1.1" 200 220756
+127.0.0.1 - - [09/Sep/2015:09:59:06 -0500] "GET /AlidaPos/javax.faces.resource/layout/layout.css.xhtml;jsessionid=E615C0D8846988F267849912C92E5F8F?ln=primefaces&v=5.0 HTTP/1.1" 200 542
+127.0.0.1 - - [09/Sep/2015:09:59:06 -0500] "GET /AlidaPos/javax.faces.resource/primefaces.css.xhtml;jsessionid=E615C0D8846988F267849912C92E5F8F?ln=primefaces&v=5.0 HTTP/1.1" 200 55491
+127.0.0.1 - - [09/Sep/2015:09:59:06 -0500] "GET /AlidaPos/javax.faces.resource/primefaces.js.xhtml;jsessionid=E615C0D8846988F267849912C92E5F8F?ln=primefaces&v=5.0 HTTP/1.1" 200 300675
+127.0.0.1 - - [09/Sep/2015:09:59:06 -0500] "GET /AlidaPos/javax.faces.resource/layout/layout.js.xhtml;jsessionid=E615C0D8846988F267849912C92E5F8F?ln=primefaces&v=5.0 HTTP/1.1" 200 87647
+127.0.0.1 - - [09/Sep/2015:09:59:06 -0500] "GET /AlidaPos/javax.faces.resource/clock/clock.css.xhtml;jsessionid=E615C0D8846988F267849912C92E5F8F?ln=primefaces&v=5.0 HTTP/1.1" 200 28
+127.0.0.1 - - [09/Sep/2015:09:59:07 -0500] "GET /AlidaPos/javax.faces.resource/clock/clock.js.xhtml;jsessionid=E615C0D8846988F267849912C92E5F8F?ln=primefaces&v=5.0 HTTP/1.1" 200 5343
+127.0.0.1 - - [09/Sep/2015:09:59:07 -0500] "GET /AlidaPos/javax.faces.resource/jsfcrud.js.xhtml;jsessionid=E615C0D8846988F267849912C92E5F8F?ln=javascript HTTP/1.1" 200 2136
+127.0.0.1 - - [09/Sep/2015:09:59:07 -0500] "GET /AlidaPos/resources/images/ajax-loader.gif;jsessionid=E615C0D8846988F267849912C92E5F8F?pfdrid_c=true HTTP/1.1" 200 1924
+127.0.0.1 - - [09/Sep/2015:09:59:07 -0500] "GET /AlidaPos/javax.faces.resource/alida_logo.png.xhtml;jsessionid=E615C0D8846988F267849912C92E5F8F?ln=images HTTP/1.1" 200 9710
+127.0.0.1 - - [09/Sep/2015:11:00:35 -0500] "GET / HTTP/1.1" 404 961

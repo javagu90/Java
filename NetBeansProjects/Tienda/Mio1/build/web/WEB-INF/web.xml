@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+    <servlet>
+        <servlet-name>Hello Servlet</servlet-name>
+        <servlet-class>.HelloServlet</servlet-class>
+        <init-param>
+            <param-name>this</param-name>
+            <param-value>Hello!</param-value>
+        </init-param>
+    </servlet>
+    <servlet>
+        <servlet-name>S1</servlet-name>
+        <servlet-class>S1</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>S1</servlet-name>
+        <url-pattern>/S1</url-pattern>
+    </servlet-mapping>
+    <!-- se puedn hacer dos servlet-mapping o meter el url-pattern en uno solo-->
+    <servlet-mapping>
+        <servlet-name>S1</servlet-name>
+        <url-pattern>/S2</url-pattern>
+    </servlet-mapping>
+    <context-param>
+        <param-name>usuario</param-name>
+        <param-value>Jav</param-value>
+    </context-param>
+    <context-param>
+        <param-name>password</param-name>
+        <param-value>pass</param-value>
+    </context-param>
+    <context-param>
+        <param-name>edad</param-name>
+        <param-value>24</param-value>
+    </context-param>
+    <session-config>
+        <session-timeout>
+            30
+        </session-timeout>
+    </session-config>
+</web-app>

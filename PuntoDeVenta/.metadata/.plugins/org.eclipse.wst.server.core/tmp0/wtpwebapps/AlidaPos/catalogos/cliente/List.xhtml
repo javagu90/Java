@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+	  xmlns:pos="http://pos.com/functions">
+	  
+    <ui:composition template="/template/template.xhtml">
+
+        <ui:define name="body">
+        	<h:form id="ClienteListForm" 
+            	onkeyup="if (event.keyCode == 13) { return false; }"
+				onkeypress="if (event.keyCode == 13) { return false; }">
+	            <p:layout>
+		            <p:layoutUnit id="westLayout" position="west" size="150" header="Menu" collapsible="true">	
+		            	<p:commandButton 			            	    
+		                	id="createButton" 
+		                	icon="ui-icon-plus"   
+		                	value="#{msg['catalogo.LeftMenu.Button.Nuevo']}" 		                	
+		                	action="#{clienteBean.prepareCreate}"
+		                	update=":ClienteCreateForm"
+		                	oncomplete="PF('ClienteCreateDialog').show()"	
+		                	style="width:98%;height:50px"
+		                />	                		                
+		            </p:layoutUnit>
+		            <p:layoutUnit position="center">
+			            	<p:panel id="clienteListPanel"
+        						header="#{msg['catalogo.Cliente.List.MsgHeader']}">
+        						<p:panelGrid
+	       							columnClasses="columnPanelGrid"
+		            				id="clienteFilters">
+		            				<p:row>		
+			            				<p:column>
+			            					<h:outputText
+					            				styleClass="boldLabel" 
+					            				value="Nombre" />
+				            				<div/>
+				            				<p:inputText 
+					           					styleClass="centerLabel" 
+					           					style="width: 150px;"
+					           					value="#{clienteBean.searchNombre}" >
+					           				</p:inputText>
+				            			</p:column>
+				            			<p:column>
+			            					<h:outputText
+					            				styleClass="boldLabel" 
+					            				value="Clave" />
+				            				<div/>
+				            				<p:inputText 
+					           					styleClass="centerLabel" 
+					           					style="width: 150px;"
+					           					value="#{clienteBean.searchClave}" >
+					           				</p:inputText>
+				            			</p:column>
+				            			<p:column>
+			            					<h:outputText
+					            				styleClass="boldLabel" 
+					            				value="Categoria Cliente" />
+				            				<div/>
+				            				<p:selectOneMenu 
+							           			value="#{clienteBean.searchCategoria}">
+								                	<f:selectItem itemLabel="Selecciona una categoria" itemValue="" />
+								                	<f:selectItems
+								                		value="#{clienteBean.categoriasClientes}" 
+										           		var="categoriaseleccionada"
+									           			itemLabel="#{categoriaseleccionada.nombre}"
+									           			itemValue="#{categoriaseleccionada.nombre}"
+								                	/>
+			            					</p:selectOneMenu>
+				            			</p:column>
+				            			<p:column>
+				            				<div/>
+				            				<p:commandButton
+				            					icon="ui-icon-search"
+				            					value="Buscar"
+				            					action="#{clienteBean.doSearch}"
+				            					update="clienteListPanel"
+				            					/>
+				            			</p:column>
+				            		</p:row>
+		            			</p:panelGrid>
+			                    <p:dataTable 
+			                    	id="datalist" 
+			                    	value="#{clienteBean.clientes}"
+			                    	var="item"
+			                    	selectionMode="single" 
+			                    	selection="#{clienteBean.selected}"
+			                    	paginator="true"
+			                    	paginatorPosition="bottom"
+			                        rowKey="#{item.idcliente}"
+			                        rows="10"
+			                        emptyMessage="#{msg['tbl.emptyMsg']}">
+			                        
+			                        <p:ajax 
+		                        	event="rowDblselect" 
+		                        	update=":ClienteViewForm"
+		                        	oncomplete="PF('ClienteViewDialog').show()"
+		                        	listener="#{clienteBean.onRowDblClckSelect}" />
+
+			                        <p:column>
+			                            <f:facet name="header">
+			                                <h:outputText value="#{msg['catalogo.Label.Nombre']}"/>
+			                            </f:facet>
+			                            <h:outputText
+			                            	value="#{pos:personName(item.persona)}" />
+			                        </p:column>		                        
+			                        
+			                        <p:column>
+			                            <f:facet name="header">
+			                                <h:outputText value="#{msg['catalogo.Label.Clave']}"/>
+			                            </f:facet>
+			                            <h:outputText value="#{item.clavecliente}"/>
+			                        </p:column>
+
+			                        <p:column>
+			                            <f:facet name="header">
+			                                <h:outputText value="#{msg['catalogo.Label.Telefonos']}"/>
+			                            </f:facet>
+			                            <h:outputText value="#{item.persona.contacto.telefono1}, #{item.persona.contacto.telefono2}"/>
+			                        </p:column>		                        	                        
+			                        <p:column>
+			                            <f:facet name="header">
+			                                <h:outputText value="#{msg['catalogo.Label.Email']}"/>
+			                            </f:facet>
+			                            <h:outputText value="#{item.persona.contacto.correoelectronico}"/>
+			                        </p:column>		                        
+			                        <p:column>
+			                            <f:facet name="header">
+			                                <h:outputText value="#{msg['catalogo.Label.CategoriaCliente']}"/>
+			                            </f:facet>
+			                            <h:outputText value="#{item.categoriacliente.nombre}"/>
+			                        </p:column>
+			                        <p:column>
+			                            <f:facet name="header">
+			                                <h:outputText value="#{msg['catalogo.Label.Descuento']}"/>
+			                            </f:facet>
+			                            <h:outputText 
+			                            	value="#{item.categoriacliente.descuento}" >
+			                            	<f:convertNumber 
+			                            		minFractionDigits="2"
+			                            		maxFractionDigits="2"
+            									type="percent" />
+			                            </h:outputText>
+			                        </p:column>
+			                        
+			                        <p:column styleClass="leftLabel">
+			                            <f:facet name="header">
+			                                <h:outputText value="#{msg['catalogo.Label.Estatus']}"/>
+			                            </f:facet>
+			                            <h:outputText value="#{item.activo eq true ? 'Activo':'Inactivo'}"/>
+		                        	</p:column>
+			                        
+			                        <p:column width="24" exportable="false">
+	                        			<p:commandButton 
+		                        			id="editButton"  
+						                	icon="ui-icon-pencil" 
+						                	update=":ClienteEditForm"
+						                	action="#{clienteBean.prepareUpdate}" 
+						                	oncomplete="PF('ClienteEditDialog').show()" 
+						                	style="width:24px;height:24px;"
+						                	rendered="true">
+						                	<f:setPropertyActionListener
+	             								target="#{clienteBean.selected}"
+	             								value="#{item}" />
+		                        		</p:commandButton>
+		                        	</p:column>
+			                        <p:column			                        	
+		                        		width="24" exportable="false">
+			                        	<p:commandButton 
+						                	id="deleteButton" 
+						                	title="Eliminar Cliente"
+						                	icon="ui-icon-trash"  		                	
+						                	action="#{clienteBean.destroy}" 
+				                            update=":growl,datalist" 
+				                            onclick="if (confirm('Se desactivara el registro del Cliente.\n\n¿Seguro de continuar ?\n') == false) return false;"
+						                	style="width:24px;height:24px;">
+						                	<f:setPropertyActionListener
+	             								target="#{clienteBean.selected}"
+	             								value="#{item}" />
+		                        		</p:commandButton>						                
+			                        </p:column>
+			                    </p:dataTable>
+			                    <h:commandLink>
+					                <p:graphicImage library="images" name="print.png" width="24"/>
+					                <p:printer target="datalist"/>
+					            </h:commandLink>
+			                    <h:commandLink>
+					                <p:graphicImage library="images" name="pdf.png" width="24"/>
+					                <p:dataExporter type="pdf" target="datalist" fileName="clientes"
+					                 preProcessor="#{clienteBean.preProcessPDF}"  encoding="iso-8859-1"/>
+					            </h:commandLink>
+					            <h:commandLink>
+					                <p:graphicImage library="images" name="excel.png" width="24"/>
+					                <p:dataExporter type="xls" target="datalist" fileName="clientes" />
+					            </h:commandLink>
+			                </p:panel>
+		         
+		            </p:layoutUnit>               
+	            </p:layout>
+			</h:form> 
+
+           	<ui:include src="View.xhtml"/>
+           	<ui:include src="Edit.xhtml"/>
+            <ui:include src="Create.xhtml"/>
+            
+        </ui:define>
+    </ui:composition>
+
+</html>
